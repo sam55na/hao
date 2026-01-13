@@ -3,10 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎰 Slot Machine Pro - العبة السلوت الاحترافية</title>
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
+    <title>🎰 Slot Machine Pro</title>
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -20,59 +17,39 @@
         }
 
         :root {
-            /* الألوان الرئيسية */
-            --primary: #8B5CF6;
-            --primary-dark: #7C3AED;
-            --primary-light: #A78BFA;
-            --secondary: #EC4899;
-            --secondary-dark: #DB2777;
-            --accent: #10B981;
-            --accent-dark: #059669;
-            --danger: #EF4444;
-            --danger-dark: #DC2626;
-            --warning: #F59E0B;
-            --warning-dark: #D97706;
-            --info: #3B82F6;
-            --dark: #1F2937;
-            --darker: #111827;
-            --darkest: #0B1121;
-            --light: #F3F4F6;
-            --lighter: #F9FAFB;
-            --gray: #6B7280;
-            --gray-light: #9CA3AF;
-            --gray-dark: #4B5563;
-            
-            /* ألوان المخازن */
-            --store-1: #3B82F6;
-            --store-2: #8B5CF6;
-            --store-3: #10B981;
-            
-            /* الظلال */
-            --shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-            --shadow-light: 0 5px 15px rgba(0, 0, 0, 0.2);
-            --shadow-dark: 0 15px 35px rgba(0, 0, 0, 0.4);
-            --shadow-inset: inset 0 2px 5px rgba(0, 0, 0, 0.2);
-            --shadow-glow: 0 0 20px rgba(139, 92, 246, 0.5);
-            
-            /* الزوايا */
-            --radius: 16px;
-            --radius-sm: 10px;
-            --radius-lg: 24px;
-            --radius-xl: 32px;
-            --radius-full: 9999px;
-            
-            /* الانتقالات */
+            --primary: #FF6B6B;
+            --primary-dark: #FF4757;
+            --secondary: #1E90FF;
+            --secondary-dark: #3742FA;
+            --accent: #00D2D3;
+            --accent-dark: #00A8A8;
+            --gold: #FFD700;
+            --gold-dark: #FFA500;
+            --dark: #1A1A2E;
+            --darker: #16213E;
+            --darkest: #0F1123;
+            --light: #F1F2F6;
+            --lighter: #FFFFFF;
+            --shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            --shadow-light: 0 5px 15px rgba(0, 0, 0, 0.3);
+            --shadow-glow: 0 0 30px rgba(255, 107, 107, 0.5);
+            --radius: 20px;
+            --radius-sm: 12px;
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         body {
-            font-family: 'Tajawal', sans-serif;
-            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--darkest) 0%, var(--darker) 100%);
             color: var(--light);
             min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             padding: 20px;
-            direction: rtl;
-            overflow-x: hidden;
+            overflow: hidden;
+            position: relative;
         }
 
         body::before {
@@ -83,156 +60,177 @@
             right: 0;
             bottom: 0;
             background: 
-                radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(236, 72, 153, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+                radial-gradient(circle at 20% 80%, rgba(255, 107, 107, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(30, 144, 255, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(0, 210, 211, 0.1) 0%, transparent 50%);
             z-index: -1;
             pointer-events: none;
         }
 
-        /* ===== CONTAINER ===== */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
+        /* ===== GAME CONTAINER ===== */
+        .game-container {
+            width: 100%;
+            max-width: 800px;
+            height: 95vh;
+            max-height: 900px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
             position: relative;
         }
 
-        /* ===== HEADER ===== */
-        .header {
-            background: rgba(31, 41, 55, 0.9);
+        /* ===== PLAYER INFO ===== */
+        .player-info {
+            background: rgba(26, 26, 46, 0.85);
             backdrop-filter: blur(10px);
             border-radius: var(--radius);
-            padding: 20px 30px;
-            margin-bottom: 30px;
-            border: 2px solid rgba(139, 92, 246, 0.3);
-            box-shadow: var(--shadow);
+            padding: 15px 25px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 20px;
+            border: 2px solid rgba(255, 107, 107, 0.3);
+            box-shadow: var(--shadow);
+            position: relative;
+            overflow: hidden;
+            z-index: 2;
         }
 
-        .player-info {
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            flex-wrap: wrap;
+        .player-info::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
         }
 
         .balance-container {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            padding: 12px 25px;
-            border-radius: var(--radius);
             display: flex;
             align-items: center;
-            gap: 12px;
-            box-shadow: var(--shadow);
-            border: 2px solid rgba(255, 255, 255, 0.1);
+            gap: 15px;
         }
 
         .balance-icon {
-            font-size: 1.8em;
+            font-size: 2em;
+            color: var(--gold);
+            animation: shine 2s infinite;
+        }
+
+        @keyframes shine {
+            0%, 100% { 
+                text-shadow: 0 0 10px var(--gold);
+                transform: scale(1);
+            }
+            50% { 
+                text-shadow: 0 0 20px var(--gold);
+                transform: scale(1.1);
+            }
+        }
+
+        .balance-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .balance-label {
+            font-size: 0.9em;
+            color: var(--accent);
+            opacity: 0.8;
+            margin-bottom: 3px;
         }
 
         .balance-amount {
-            font-size: 2em;
+            font-size: 1.8em;
             font-weight: 800;
+            color: var(--lighter);
+            text-shadow: 0 2px 10px rgba(255, 255, 255, 0.2);
         }
 
         .player-id {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 107, 107, 0.15);
             padding: 8px 15px;
-            border-radius: var(--radius-sm);
+            border-radius: 20px;
             font-size: 0.9em;
-            color: var(--gray-light);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-        }
-
-        .game-title {
-            text-align: center;
-            flex-grow: 1;
-        }
-
-        .game-title h1 {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            font-size: 2.5em;
-            font-weight: 800;
-            margin-bottom: 5px;
-        }
-
-        .game-title p {
-            color: var(--gray-light);
-            font-size: 1.1em;
-        }
-
-        .controls-header {
-            display: flex;
-            gap: 12px;
-        }
-
-        /* ===== GAME AREA ===== */
-        .game-area {
-            display: grid;
-            grid-template-columns: 1fr 450px;
-            gap: 30px;
-            margin-bottom: 30px;
-        }
-
-        @media (max-width: 1200px) {
-            .game-area {
-                grid-template-columns: 1fr;
-            }
+            color: var(--light);
+            border: 1px solid rgba(255, 107, 107, 0.3);
+            font-family: monospace;
+            letter-spacing: 1px;
         }
 
         /* ===== SLOT MACHINE ===== */
         .slot-machine {
-            background: rgba(31, 41, 55, 0.9);
+            flex: 1;
+            background: rgba(26, 26, 46, 0.85);
             backdrop-filter: blur(10px);
             border-radius: var(--radius);
-            padding: 30px;
+            padding: 25px;
+            border: 3px solid rgba(30, 144, 255, 0.3);
             box-shadow: var(--shadow);
-            border: 3px solid rgba(139, 92, 246, 0.3);
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
             position: relative;
             overflow: hidden;
         }
 
-        .slot-frame {
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: var(--radius-sm);
-            padding: 20px;
-            border: 2px solid rgba(236, 72, 153, 0.3);
-            margin-bottom: 25px;
-            position: relative;
-            overflow: hidden;
+        .slot-machine::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--secondary), var(--accent), var(--primary));
         }
 
         .reels-container {
+            flex: 1;
             display: grid;
             grid-template-columns: repeat(5, 1fr);
             grid-template-rows: repeat(3, 1fr);
-            gap: 10px;
-            height: 300px;
+            gap: 12px;
+            padding: 15px;
+            background: rgba(0, 0, 0, 0.4);
+            border-radius: var(--radius-sm);
+            border: 2px solid rgba(255, 255, 255, 0.1);
         }
 
         .reel-cell {
             background: linear-gradient(145deg, #2D3748, #1F2937);
-            border-radius: var(--radius-sm);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 3em;
+            font-size: 3.5em;
             position: relative;
             transition: var(--transition);
-            box-shadow: var(--shadow-inset);
-            border: 2px solid rgba(255, 255, 255, 0.05);
+            box-shadow: inset 0 4px 15px rgba(0, 0, 0, 0.5);
+            border: 2px solid rgba(255, 255, 255, 0.08);
+            overflow: hidden;
+        }
+
+        .reel-cell::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.1) 0%, 
+                rgba(255, 255, 255, 0.05) 50%, 
+                rgba(255, 255, 255, 0.1) 100%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .reel-cell:hover::before {
+            opacity: 1;
         }
 
         .reel-cell.spinning {
-            animation: spin 0.1s linear infinite;
+            animation: spin 0.08s linear infinite;
         }
 
         @keyframes spin {
@@ -241,203 +239,239 @@
         }
 
         .reel-cell.matched {
-            animation: pulse 0.5s ease infinite alternate;
+            animation: pulse 0.5s ease infinite alternate, glow 0.5s ease infinite alternate;
             border-color: var(--accent);
-            box-shadow: 0 0 20px var(--accent);
         }
 
         @keyframes pulse {
             0% { transform: scale(1); }
-            100% { transform: scale(1.1); }
+            100% { transform: scale(1.05); }
         }
 
-        /* ===== CONTROL PANEL ===== */
-        .control-panel {
-            background: rgba(31, 41, 55, 0.9);
-            backdrop-filter: blur(10px);
-            border-radius: var(--radius);
-            padding: 30px;
-            box-shadow: var(--shadow);
-            border: 2px solid rgba(236, 72, 153, 0.3);
+        @keyframes glow {
+            0% { box-shadow: 0 0 20px var(--accent); }
+            100% { box-shadow: 0 0 40px var(--accent); }
         }
 
-        .section-title {
-            color: var(--accent);
-            font-size: 1.3em;
-            font-weight: 700;
-            margin-bottom: 20px;
-            text-align: center;
-        }
+        /* ===== CUSTOM SYMBOLS ===== */
+        .symbol-1 { color: #FF6B6B; } /* Ruby */
+        .symbol-2 { color: #1E90FF; } /* Diamond */
+        .symbol-3 { color: #00D2D3; } /* Emerald */
+        .symbol-4 { color: #FFD700; } /* Gold Bar */
+        .symbol-5 { color: #9B59B6; } /* Amethyst */
+        .symbol-6 { color: #2ECC71; } /* Jade */
+        .symbol-7 { color: #E74C3C; } /* Fire */
+        .symbol-8 { color: #3498DB; } /* Water */
+        .symbol-9 { color: #F1C40F; } /* Lightning */
 
+        /* ===== BET CONTROLS ===== */
         .bet-controls {
-            background: rgba(0, 0, 0, 0.3);
+            background: rgba(0, 0, 0, 0.4);
             border-radius: var(--radius-sm);
             padding: 20px;
-            margin-bottom: 25px;
-        }
-
-        .bet-display {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .bet-amount {
-            font-size: 3em;
-            font-weight: 800;
-            color: var(--accent);
-        }
-
-        .bet-buttons {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .spin-controls {
             display: flex;
+            flex-direction: column;
             gap: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
         }
 
-        .btn {
-            border: none;
-            border-radius: var(--radius-sm);
-            font-family: 'Tajawal', sans-serif;
+        .bet-title {
+            color: var(--accent);
             font-size: 1.1em;
             font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            padding: 15px;
-        }
-
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .btn-primary {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            flex: 2;
-        }
-
-        .btn-danger {
-            background: linear-gradient(135deg, var(--danger), var(--danger-dark));
-            color: white;
-            flex: 1;
-        }
-
-        .btn-warning {
-            background: linear-gradient(135deg, var(--warning), var(--warning-dark));
-            color: white;
-        }
-
-        .btn-success {
-            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
-            color: white;
-        }
-
-        .btn-info {
-            background: linear-gradient(135deg, var(--info), #2563EB);
-            color: white;
-        }
-
-        .btn-bet {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--light);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .btn-bet.active {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            box-shadow: var(--shadow-light);
-        }
-
-        /* ===== STORES PANEL ===== */
-        .stores-panel {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: var(--radius-sm);
-            padding: 20px;
-            margin-bottom: 25px;
-        }
-
-        .store {
-            margin-bottom: 20px;
-        }
-
-        .store-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            text-align: center;
             margin-bottom: 10px;
         }
 
-        .store-label {
-            font-weight: 600;
+        .bet-scroll {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            padding: 10px;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) rgba(255, 255, 255, 0.1);
         }
 
-        .store-amount {
-            font-weight: 700;
-            color: var(--accent);
+        .bet-scroll::-webkit-scrollbar {
+            height: 6px;
         }
 
-        .store-bar {
-            height: 20px;
+        .bet-scroll::-webkit-scrollbar-track {
             background: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 5px;
+            border-radius: 3px;
         }
 
-        .store-fill {
-            height: 100%;
-            transition: width 0.5s ease;
+        .bet-scroll::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 3px;
         }
 
-        .store-1 .store-fill { 
-            background: linear-gradient(90deg, var(--store-1), #60A5FA);
-        }
-        .store-2 .store-fill { 
-            background: linear-gradient(90deg, var(--store-2), #A78BFA);
-        }
-        .store-3 .store-fill { 
-            background: linear-gradient(90deg, var(--store-3), #34D399);
-        }
-
-        /* ===== STATS PANEL ===== */
-        .stats-panel {
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: var(--radius-sm);
-            padding: 20px;
-        }
-
-        .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-
-        .stat-item {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 15px;
-            border-radius: var(--radius-sm);
-            text-align: center;
-        }
-
-        .stat-label {
-            font-size: 0.9em;
-            color: var(--gray-light);
-            margin-bottom: 5px;
-        }
-
-        .stat-value {
-            font-size: 1.3em;
+        .bet-chip {
+            min-width: 90px;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            border: none;
+            border-radius: 20px;
+            color: white;
             font-weight: 700;
-            color: var(--accent);
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .bet-chip::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, 
+                rgba(255, 255, 255, 0.2) 0%, 
+                rgba(255, 255, 255, 0.1) 50%, 
+                rgba(255, 255, 255, 0.2) 100%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .bet-chip:hover::before {
+            opacity: 1;
+        }
+
+        .bet-chip:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        .bet-chip.active {
+            background: linear-gradient(135deg, var(--gold), var(--gold-dark));
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.5);
+            transform: scale(1.05);
+        }
+
+        .bet-chip.active::before {
+            opacity: 1;
+        }
+
+        .chip-icon {
+            font-size: 1.2em;
+        }
+
+        /* ===== SPIN BUTTON ===== */
+        .spin-container {
+            display: flex;
+            justify-content: center;
+            padding-top: 10px;
+        }
+
+        .spin-btn {
+            width: 180px;
+            height: 180px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border: none;
+            border-radius: 50%;
+            color: white;
+            font-size: 1.5em;
+            font-weight: 800;
+            cursor: pointer;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            box-shadow: 
+                0 15px 35px rgba(255, 107, 107, 0.4),
+                inset 0 4px 15px rgba(255, 255, 255, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .spin-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, 
+                rgba(255, 255, 255, 0.3) 0%, 
+                transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .spin-btn:hover::before {
+            opacity: 1;
+        }
+
+        .spin-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 
+                0 20px 40px rgba(255, 107, 107, 0.6),
+                inset 0 4px 20px rgba(255, 255, 255, 0.3);
+        }
+
+        .spin-btn.spinning {
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            animation: spinGlow 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes spinGlow {
+            0% { 
+                box-shadow: 
+                    0 15px 35px rgba(30, 144, 255, 0.4),
+                    inset 0 4px 15px rgba(255, 255, 255, 0.2);
+            }
+            100% { 
+                box-shadow: 
+                    0 15px 45px rgba(30, 144, 255, 0.8),
+                    inset 0 4px 20px rgba(255, 255, 255, 0.3);
+            }
+        }
+
+        .spin-btn.winning {
+            background: linear-gradient(135deg, var(--gold), var(--accent));
+            animation: winGlow 0.5s ease-in-out infinite alternate;
+        }
+
+        @keyframes winGlow {
+            0% { 
+                box-shadow: 
+                    0 15px 35px rgba(255, 215, 0, 0.4),
+                    inset 0 4px 15px rgba(255, 255, 255, 0.2);
+                transform: scale(1);
+            }
+            100% { 
+                box-shadow: 
+                    0 15px 45px rgba(255, 215, 0, 0.8),
+                    inset 0 4px 20px rgba(255, 255, 255, 0.3);
+                transform: scale(1.05);
+            }
+        }
+
+        .spin-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .spin-icon {
+            font-size: 2.5em;
+            margin-bottom: 5px;
+        }
+
+        .spin-text {
+            font-size: 1.3em;
         }
 
         /* ===== WIN DISPLAY ===== */
@@ -445,102 +479,87 @@
             position: fixed;
             top: 50%;
             left: 50%;
-            transform: translate(-50%, -50%);
-            background: linear-gradient(135deg, rgba(31, 41, 55, 0.95), rgba(17, 24, 39, 0.95));
+            transform: translate(-50%, -50%) scale(0);
+            background: linear-gradient(135deg, 
+                rgba(26, 26, 46, 0.95), 
+                rgba(22, 33, 62, 0.95));
             padding: 40px 60px;
-            border-radius: var(--radius-lg);
-            border: 4px solid var(--accent);
+            border-radius: var(--radius);
+            border: 4px solid var(--gold);
             text-align: center;
             z-index: 1000;
-            display: none;
-            box-shadow: var(--shadow-dark);
-            backdrop-filter: blur(10px);
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            backdrop-filter: blur(20px);
+            box-shadow: 
+                0 25px 50px rgba(0, 0, 0, 0.5),
+                inset 0 4px 25px rgba(255, 255, 255, 0.1);
         }
 
         .win-display.active {
-            display: block;
-            animation: popIn 0.5s ease;
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1);
         }
 
-        @keyframes popIn {
-            0% { transform: translate(-50%, -50%) scale(0); }
-            100% { transform: translate(-50%, -50%) scale(1); }
+        .win-title {
+            font-size: 2.5em;
+            color: var(--gold);
+            margin-bottom: 20px;
+            text-shadow: 0 0 20px var(--gold);
+            animation: winTitle 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes winTitle {
+            0% { text-shadow: 0 0 20px var(--gold); }
+            100% { text-shadow: 0 0 40px var(--gold), 0 0 60px var(--gold); }
         }
 
         .win-amount {
             font-size: 4em;
             font-weight: 900;
-            color: #FBBF24;
+            color: var(--gold);
             margin: 20px 0;
-            text-shadow: 0 0 20px #FBBF24;
+            text-shadow: 
+                0 0 30px var(--gold),
+                0 0 60px var(--gold);
+            animation: winAmount 1s ease-in-out infinite alternate;
+        }
+
+        @keyframes winAmount {
+            0% { 
+                transform: scale(1);
+                text-shadow: 0 0 30px var(--gold);
+            }
+            100% { 
+                transform: scale(1.1);
+                text-shadow: 
+                    0 0 40px var(--gold),
+                    0 0 80px var(--gold);
+            }
+        }
+
+        .win-multiplier {
+            color: var(--accent);
+            font-size: 1.5em;
+            margin-bottom: 30px;
         }
 
         .win-close {
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             color: white;
             border: none;
-            padding: 12px 30px;
-            border-radius: var(--radius-sm);
+            padding: 15px 40px;
+            border-radius: 25px;
             font-size: 1.1em;
+            font-weight: 600;
             cursor: pointer;
-            margin-top: 20px;
+            transition: var(--transition);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.3);
         }
 
-        /* ===== LOADING ===== */
-        .loading {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-        }
-
-        .loading-spinner {
-            width: 60px;
-            height: 60px;
-            border: 5px solid rgba(139, 92, 246, 0.3);
-            border-radius: 50%;
-            border-top-color: var(--primary);
-            animation: spin 1s linear infinite;
-            margin-bottom: 20px;
-        }
-
-        .loading-message {
-            color: var(--light);
-            font-size: 1.2em;
-            margin-top: 10px;
-        }
-
-        /* ===== CLOUD STATUS ===== */
-        .cloud-status {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            background: rgba(31, 41, 55, 0.9);
-            color: white;
-            padding: 8px 15px;
-            border-radius: var(--radius);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.9em;
-            z-index: 100;
-            border: 2px solid transparent;
-            backdrop-filter: blur(10px);
-        }
-
-        .cloud-status.connected {
-            border-color: var(--accent);
-        }
-
-        .cloud-status.disconnected {
-            border-color: var(--danger);
+        .win-close:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(255, 107, 107, 0.4);
         }
 
         /* ===== TOAST ===== */
@@ -548,11 +567,13 @@
             position: fixed;
             bottom: 30px;
             right: 30px;
-            background: rgba(31, 41, 55, 0.95);
+            background: linear-gradient(135deg, 
+                rgba(26, 26, 46, 0.95), 
+                rgba(22, 33, 62, 0.95));
             color: white;
             padding: 15px 25px;
-            border-radius: var(--radius);
-            border-right: 4px solid var(--accent);
+            border-radius: var(--radius-sm);
+            border-left: 4px solid var(--accent);
             box-shadow: var(--shadow);
             transform: translateX(100%);
             transition: transform 0.3s;
@@ -565,27 +586,77 @@
             transform: translateX(0);
         }
 
+        /* ===== BACKGROUND MUSIC ===== */
+        .music-control {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: rgba(26, 26, 46, 0.8);
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid rgba(255, 107, 107, 0.3);
+            cursor: pointer;
+            z-index: 100;
+            transition: var(--transition);
+        }
+
+        .music-control:hover {
+            background: rgba(255, 107, 107, 0.2);
+            transform: scale(1.1);
+        }
+
+        .music-control i {
+            font-size: 1.5em;
+            color: var(--light);
+        }
+
         /* ===== RESPONSIVE ===== */
         @media (max-width: 768px) {
-            .game-area {
-                grid-template-columns: 1fr;
+            .game-container {
+                max-height: 95vh;
+                padding: 10px;
             }
             
-            .header {
-                flex-direction: column;
-                text-align: center;
+            .player-info {
+                padding: 12px 20px;
+            }
+            
+            .balance-amount {
+                font-size: 1.5em;
+            }
+            
+            .player-id {
+                font-size: 0.8em;
+                padding: 6px 12px;
+            }
+            
+            .slot-machine {
+                padding: 15px;
             }
             
             .reels-container {
-                height: 250px;
+                gap: 8px;
+                padding: 10px;
             }
             
             .reel-cell {
                 font-size: 2.5em;
             }
             
-            .bet-buttons {
-                grid-template-columns: repeat(2, 1fr);
+            .bet-chip {
+                min-width: 80px;
+                padding: 10px 15px;
+                font-size: 1em;
+            }
+            
+            .spin-btn {
+                width: 150px;
+                height: 150px;
+                font-size: 1.3em;
             }
             
             .win-display {
@@ -593,162 +664,76 @@
                 width: 90%;
             }
             
-            .cloud-status {
-                top: 10px;
-                left: 10px;
-                font-size: 0.8em;
+            .win-amount {
+                font-size: 3em;
+            }
+        }
+
+        @media (max-height: 800px) {
+            .game-container {
+                max-height: 92vh;
+            }
+            
+            .reel-cell {
+                font-size: 2.8em;
+            }
+            
+            .spin-btn {
+                width: 160px;
+                height: 160px;
             }
         }
     </style>
 </head>
 <body>
-    <!-- Loading Screen -->
-    <div class="loading" id="loading">
-        <div class="loading-spinner"></div>
-        <div class="loading-message" id="loadingMessage">جاري تحميل اللعبة...</div>
+    <!-- Background Music Control -->
+    <div class="music-control" id="musicControl">
+        <i class="fas fa-volume-up"></i>
     </div>
 
-    <!-- Cloud Status -->
-    <div class="cloud-status disconnected" id="cloudStatus">
-        <i class="fas fa-cloud-slash"></i>
-        <span>غير متصل</span>
-    </div>
-
-    <div class="container">
-        <!-- Header -->
-        <header class="header">
-            <div class="player-info">
-                <div class="balance-container">
-                    <span class="balance-icon">💎</span>
-                    <span class="balance-amount" id="balance">10,000</span>
-                </div>
-                <div class="player-id" id="playerId">...</div>
-            </div>
-            
-            <div class="game-title">
-                <h1>🎰 Slot Machine Pro</h1>
-                <p>العبة السلوت الاحترافية</p>
-            </div>
-            
-            <div class="controls-header">
-                <button class="btn btn-info" id="syncBtn">
-                    <i class="fas fa-sync-alt"></i>
-                </button>
-                <button class="btn btn-warning" id="soundToggle">
-                    <i class="fas fa-volume-up"></i>
-                </button>
-                <button class="btn btn-success" id="resetGame">
-                    <i class="fas fa-redo"></i>
-                </button>
-            </div>
-        </header>
-
-        <!-- Game Area -->
-        <div class="game-area">
-            <!-- Slot Machine -->
-            <div class="slot-machine">
-                <div class="slot-frame">
-                    <div class="reels-container" id="reels">
-                        <!-- Will be filled by JavaScript -->
-                    </div>
+    <!-- Game Container -->
+    <div class="game-container">
+        <!-- Player Info -->
+        <div class="player-info">
+            <div class="balance-container">
+                <div class="balance-icon">💰</div>
+                <div class="balance-info">
+                    <div class="balance-label">رصيدك</div>
+                    <div class="balance-amount" id="balance">10,000</div>
                 </div>
             </div>
+            <div class="player-id" id="playerId">ID: #######</div>
+        </div>
 
-            <!-- Control Panel -->
-            <div class="control-panel">
-                <!-- Bet Controls -->
-                <div class="bet-controls">
-                    <div class="section-title">🎯 الرهان الحالي</div>
-                    <div class="bet-display">
-                        <div class="bet-amount" id="currentBet">500</div>
-                    </div>
-                    
-                    <div class="bet-buttons">
-                        <button class="btn btn-bet" data-bet="100">100</button>
-                        <button class="btn btn-bet" data-bet="250">250</button>
-                        <button class="btn btn-bet active" data-bet="500">500</button>
-                        <button class="btn btn-bet" data-bet="1000">1,000</button>
-                        <button class="btn btn-bet" data-bet="2500">2,500</button>
-                        <button class="btn btn-bet" data-bet="5000">5,000</button>
-                    </div>
-                    
-                    <div class="spin-controls">
-                        <button class="btn btn-primary" id="spinBtn">
-                            <i class="fas fa-play"></i> تدوير (Space)
-                        </button>
-                        <button class="btn btn-danger" id="stopBtn" disabled>
-                            <i class="fas fa-stop"></i> إيقاف (Space)
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Stores Panel -->
-                <div class="stores-panel">
-                    <div class="section-title">🏦 نظام المخازن</div>
-                    <div class="store">
-                        <div class="store-header">
-                            <div class="store-label">المخزن الصغير</div>
-                            <div class="store-amount" id="store1Amount">300,000</div>
-                        </div>
-                        <div class="store-bar">
-                            <div class="store-fill" id="store1Fill" style="width: 60%;"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="store">
-                        <div class="store-header">
-                            <div class="store-label">المخزن الكبير</div>
-                            <div class="store-amount" id="store2Amount">900,000</div>
-                        </div>
-                        <div class="store-bar">
-                            <div class="store-fill" id="store2Fill" style="width: 45%;"></div>
-                        </div>
-                    </div>
-                    
-                    <div class="store">
-                        <div class="store-header">
-                            <div class="store-label">مخزن الطوارئ</div>
-                            <div class="store-amount" id="store3Amount">200,000</div>
-                        </div>
-                        <div class="store-bar">
-                            <div class="store-fill" id="store3Fill" style="width: 20%;"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Stats Panel -->
-                <div class="stats-panel">
-                    <div class="section-title">📊 الإحصائيات</div>
-                    <div class="stats-grid">
-                        <div class="stat-item">
-                            <div class="stat-label">عدد الدورات</div>
-                            <div class="stat-value" id="totalSpins">0</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-label">نسبة الفوز</div>
-                            <div class="stat-value" id="winRate">0%</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-label">أكبر فوز</div>
-                            <div class="stat-value" id="biggestWin">0</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-label">معدل RTP</div>
-                            <div class="stat-value" id="rtpRate">96.5%</div>
-                        </div>
-                    </div>
-                </div>
+        <!-- Slot Machine -->
+        <div class="slot-machine">
+            <div class="reels-container" id="reels">
+                <!-- Filled by JavaScript -->
             </div>
+        </div>
+
+        <!-- Bet Controls -->
+        <div class="bet-controls">
+            <div class="bet-title">🎯 اختر رهانك</div>
+            <div class="bet-scroll">
+                <!-- Bet chips will be generated by JavaScript -->
+            </div>
+        </div>
+
+        <!-- Spin Button -->
+        <div class="spin-container">
+            <button class="spin-btn" id="spinBtn">
+                <div class="spin-icon">🎰</div>
+                <div class="spin-text">SPIN</div>
+            </button>
         </div>
     </div>
 
     <!-- Win Display -->
     <div class="win-display" id="winDisplay">
-        <div style="font-size: 2em; color: var(--accent); margin-bottom: 10px;">🎉 فوز رائع! 🎉</div>
+        <div class="win-title">🎊 فوز رائع! 🎊</div>
         <div class="win-amount" id="winAmount">0</div>
-        <div style="color: var(--warning); font-size: 1.2em; margin-bottom: 20px;">
-            مضاعف: <span id="winMultiplier">×1</span>
-        </div>
+        <div class="win-multiplier">مضاعف: <span id="winMultiplier">×1</span></div>
         <button class="win-close" id="closeWin">متابعة اللعب</button>
     </div>
 
@@ -756,401 +741,108 @@
     <div class="toast" id="toast"></div>
 
     <!-- Audio Elements -->
-    <audio id="spinSound" preload="auto">
+    <audio id="bgMusic" loop>
+        <source src="https://assets.mixkit.co/music/preview/mixkit-game-show-suspense-waiting-667.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="spinSound">
         <source src="https://assets.mixkit.co/sfx/preview/mixkit-slot-machine-spin-1073.mp3" type="audio/mpeg">
     </audio>
-    <audio id="stopSound" preload="auto">
+    <audio id="stopSound">
         <source src="https://assets.mixkit.co/sfx/preview/mixkit-arcade-game-jump-coin-216.mp3" type="audio/mpeg">
     </audio>
-    <audio id="winSound" preload="auto">
+    <audio id="winSound">
         <source src="https://assets.mixkit.co/sfx/preview/mixkit-winning-chimes-2015.mp3" type="audio/mpeg">
     </audio>
-    <audio id="clickSound" preload="auto">
+    <audio id="clickSound">
         <source src="https://assets.mixkit.co/sfx/preview/mixkit-select-click-1109.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="betSound">
+        <source src="https://assets.mixkit.co/sfx/preview/mixkit-unlock-game-notification-253.mp3" type="audio/mpeg">
     </audio>
 
     <!-- JavaScript -->
     <script>
-        // ===== GOOGLE APPS SCRIPT API CONFIG =====
-        const API_URL = 'https://script.google.com/macros/s/AKfycbxzdOGbJgp7zz2IVtnD-sbcyKpcEPSuRGMMq2fOe_0sL6vTwL3pUT2PQ0_Dg43dAxHAoQ/exec';
-
         // ===== GAME CONSTANTS =====
-        const SYMBOLS = ['💎', '👑', '🔥', '⭐', '🍒', '💖', '🌀', '⚡', '🛡️'];
-        const BET_OPTIONS = [100, 250, 500, 1000, 2500, 5000];
-        const INITIAL_BALANCE = 10000;
+        // Custom symbols using Unicode characters and emojis
+        const SYMBOLS = [
+            { char: '♦', class: 'symbol-1', name: 'Ruby' },
+            { char: '💎', class: 'symbol-2', name: 'Diamond' },
+            { char: '💚', class: 'symbol-3', name: 'Emerald' },
+            { char: '💰', class: 'symbol-4', name: 'Gold Bar' },
+            { char: '🔮', class: 'symbol-5', name: 'Amethyst' },
+            { char: '🟢', class: 'symbol-6', name: 'Jade' },
+            { char: '🔥', class: 'symbol-7', name: 'Fire' },
+            { char: '💧', class: 'symbol-8', name: 'Water' },
+            { char: '⚡', class: 'symbol-9', name: 'Lightning' }
+        ];
 
-        // ===== GOOGLE APPS SCRIPT API SERVICE =====
-        class APIService {
-            constructor() {
-                this.apiUrl = API_URL;
-                this.playerId = localStorage.getItem('slotPlayerId') || this.generatePlayerId();
-                this.pendingSync = JSON.parse(localStorage.getItem('pendingSync') || '[]');
-            }
-
-            generatePlayerId() {
-                const id = 'PLAYER_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-                localStorage.setItem('slotPlayerId', id);
-                return id;
-            }
-
-            async makeRequest(action, params = {}) {
-                try {
-                    // بناء URL مع المعلمات
-                    const urlParams = new URLSearchParams({
-                        action: action,
-                        ...params,
-                        timestamp: Date.now(),
-                        playerId: this.playerId
-                    });
-                    
-                    const url = `${this.apiUrl}?${urlParams}`;
-                    
-                    const response = await fetch(url);
-                    
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    
-                    const data = await response.json();
-                    return data;
-                    
-                } catch (error) {
-                    console.warn(`API request failed for ${action}:`, error);
-                    return { 
-                        success: false, 
-                        error: error.message,
-                        message: 'API connection failed'
-                    };
-                }
-            }
-
-            async ping() {
-                return await this.makeRequest('ping');
-            }
-
-            async getStats() {
-                return await this.makeRequest('getStats');
-            }
-
-            async getStores() {
-                return await this.makeRequest('getStores');
-            }
-
-            async initializeDatabase() {
-                return await this.makeRequest('initialize');
-            }
-
-            async savePlayerData(playerData) {
-                try {
-                    const formData = new URLSearchParams();
-                    formData.append('action', 'savePlayer');
-                    formData.append('playerData', JSON.stringify(playerData));
-                    
-                    const response = await fetch(this.apiUrl, {
-                        method: 'POST',
-                        body: formData
-                    });
-                    
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    
-                    return await response.json();
-                    
-                } catch (error) {
-                    console.warn('Failed to save player data:', error);
-                    this.addToPendingSync('player', playerData);
-                    return { 
-                        success: true, 
-                        message: 'Data queued for later sync',
-                        queued: true 
-                    };
-                }
-            }
-
-            async saveGameData(gameData) {
-                try {
-                    const formData = new URLSearchParams();
-                    formData.append('action', 'saveGame');
-                    formData.append('gameData', JSON.stringify(gameData));
-                    
-                    const response = await fetch(this.apiUrl, {
-                        method: 'POST',
-                        body: formData
-                    });
-                    
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    
-                    return await response.json();
-                    
-                } catch (error) {
-                    console.warn('Failed to save game data:', error);
-                    this.addToPendingSync('game', gameData);
-                    return { 
-                        success: true, 
-                        message: 'Game data queued for sync',
-                        queued: true 
-                    };
-                }
-            }
-
-            async updateStores(storesData) {
-                try {
-                    const formData = new URLSearchParams();
-                    formData.append('action', 'updateStores');
-                    formData.append('storesData', JSON.stringify(storesData));
-                    
-                    const response = await fetch(this.apiUrl, {
-                        method: 'POST',
-                        body: formData
-                    });
-                    
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    
-                    return await response.json();
-                    
-                } catch (error) {
-                    console.warn('Failed to update stores:', error);
-                    this.addToPendingSync('stores', storesData);
-                    return { 
-                        success: true, 
-                        message: 'Stores data queued for sync',
-                        queued: true 
-                    };
-                }
-            }
-
-            addToPendingSync(type, data) {
-                this.pendingSync.push({
-                    type: type,
-                    data: data,
-                    timestamp: Date.now()
-                });
-                localStorage.setItem('pendingSync', JSON.stringify(this.pendingSync));
-            }
-
-            async syncPendingData() {
-                if (this.pendingSync.length === 0) {
-                    return { success: true, message: 'لا توجد بيانات معلقة' };
-                }
-
-                let synced = 0;
-                let failed = 0;
-                
-                for (let i = this.pendingSync.length - 1; i >= 0; i--) {
-                    const item = this.pendingSync[i];
-                    
-                    try {
-                        let result;
-                        
-                        switch(item.type) {
-                            case 'player':
-                                result = await this.savePlayerData(item.data);
-                                break;
-                            case 'game':
-                                result = await this.saveGameData(item.data);
-                                break;
-                            case 'stores':
-                                result = await this.updateStores(item.data);
-                                break;
-                        }
-                        
-                        if (result.success) {
-                            this.pendingSync.splice(i, 1);
-                            synced++;
-                        } else {
-                            failed++;
-                        }
-                        
-                    } catch (error) {
-                        console.error('Error syncing item:', error);
-                        failed++;
-                    }
-                }
-                
-                localStorage.setItem('pendingSync', JSON.stringify(this.pendingSync));
-                
-                return { 
-                    success: true, 
-                    message: `تمت مزامنة ${synced} عناصر، فشل ${failed}`,
-                    synced: synced,
-                    failed: failed
-                };
-            }
+        // Bet options: 300, 600, 900, 1200, 1500, 1800, 2100, ... 30000
+        const BET_OPTIONS = [];
+        for (let i = 300; i <= 30000; i += 300) {
+            BET_OPTIONS.push(i);
         }
+
+        const INITIAL_BALANCE = 10000;
 
         // ===== GAME CLASS =====
         class SlotGame {
             constructor() {
                 this.balance = INITIAL_BALANCE;
-                this.currentBet = 500;
+                this.currentBet = 300; // Start with minimum bet
                 this.isSpinning = false;
-                this.totalSpins = 0;
-                this.totalWins = 0;
-                this.totalWon = 0;
-                this.biggestWin = 0;
-                this.consecutiveLosses = 0;
-                
-                // Stores System
-                this.stores = {
-                    store1: { balance: 300000, target: 0.30 },
-                    store2: { balance: 900000, target: 0.50 },
-                    store3: { balance: 200000, target: 0.20, maxUsage: 0.10 }
-                };
+                this.spinSpeed = 100; // ms per spin
+                this.spinAcceleration = 0.9; // Speed multiplier on second click
                 
                 // Grid
                 this.grid = Array(3).fill().map(() => Array(5).fill(null));
                 
-                // API Service
-                this.api = new APIService();
-                this.cloudConnected = false;
-                
                 // DOM Elements
                 this.elements = {
-                    loading: document.getElementById('loading'),
-                    loadingMessage: document.getElementById('loadingMessage'),
-                    cloudStatus: document.getElementById('cloudStatus'),
-                    syncBtn: document.getElementById('syncBtn'),
-                    reels: document.getElementById('reels'),
                     balance: document.getElementById('balance'),
-                    currentBet: document.getElementById('currentBet'),
+                    playerId: document.getElementById('playerId'),
+                    reels: document.getElementById('reels'),
                     spinBtn: document.getElementById('spinBtn'),
-                    stopBtn: document.getElementById('stopBtn'),
-                    soundToggle: document.getElementById('soundToggle'),
-                    resetGame: document.getElementById('resetGame'),
                     winDisplay: document.getElementById('winDisplay'),
                     winAmount: document.getElementById('winAmount'),
                     winMultiplier: document.getElementById('winMultiplier'),
                     closeWin: document.getElementById('closeWin'),
                     toast: document.getElementById('toast'),
-                    playerId: document.getElementById('playerId'),
-                    
-                    // Stores
-                    store1Amount: document.getElementById('store1Amount'),
-                    store1Fill: document.getElementById('store1Fill'),
-                    store2Amount: document.getElementById('store2Amount'),
-                    store2Fill: document.getElementById('store2Fill'),
-                    store3Amount: document.getElementById('store3Amount'),
-                    store3Fill: document.getElementById('store3Fill'),
-                    
-                    // Stats
-                    totalSpins: document.getElementById('totalSpins'),
-                    winRate: document.getElementById('winRate'),
-                    biggestWin: document.getElementById('biggestWin'),
-                    rtpRate: document.getElementById('rtpRate')
+                    musicControl: document.getElementById('musicControl'),
+                    betScroll: document.querySelector('.bet-scroll')
                 };
                 
                 // Audio
                 this.audio = {
+                    bgMusic: document.getElementById('bgMusic'),
                     spin: document.getElementById('spinSound'),
                     stop: document.getElementById('stopSound'),
                     win: document.getElementById('winSound'),
-                    click: document.getElementById('clickSound')
+                    click: document.getElementById('clickSound'),
+                    bet: document.getElementById('betSound')
                 };
                 
                 this.soundEnabled = true;
-                this.lastGameResult = null;
-                this.lastStoreUsed = null;
+                this.musicEnabled = false;
+                this.init();
             }
             
-            async init() {
+            init() {
+                this.generatePlayerId();
                 this.createGrid();
+                this.createBetChips();
                 this.setupEventListeners();
-                await this.loadGameData();
                 this.updateUI();
                 
-                await this.testCloudConnection();
-                
-                setTimeout(() => {
-                    this.elements.loading.style.display = 'none';
-                }, 1500);
+                // Set initial bet chip as active
+                this.setBet(this.currentBet);
             }
             
-            async testCloudConnection() {
-                try {
-                    this.elements.loadingMessage.textContent = 'جاري الاتصال بالسحابة...';
-                    
-                    const pingResult = await this.api.ping();
-                    
-                    if (pingResult.success) {
-                        this.cloudConnected = true;
-                        this.elements.cloudStatus.innerHTML = '<i class="fas fa-cloud"></i> <span>متصل بالسحابة</span>';
-                        this.elements.cloudStatus.classList.remove('disconnected');
-                        this.elements.cloudStatus.classList.add('connected');
-                        
-                        await this.loadCloudData();
-                        
-                        this.showToast('✅ متصل بالسحابة بنجاح', 'success');
-                    } else {
-                        this.setOfflineMode();
-                    }
-                } catch (error) {
-                    console.log('Cloud connection failed:', error);
-                    this.setOfflineMode();
-                }
-            }
-            
-            setOfflineMode() {
-                this.cloudConnected = false;
-                this.elements.cloudStatus.innerHTML = '<i class="fas fa-cloud-slash"></i> <span>وضع عدم الاتصال</span>';
-                this.elements.cloudStatus.classList.remove('connected');
-                this.elements.cloudStatus.classList.add('disconnected');
-                
-                this.showToast('⚠️ العمل في وضع عدم الاتصال', 'warning');
-            }
-            
-            async loadCloudData() {
-                if (!this.cloudConnected) return;
-                
-                try {
-                    const statsResult = await this.api.getStats();
-                    if (statsResult.success) {
-                        this.updateGlobalStats(statsResult.stats);
-                    }
-                    
-                    const storesResult = await this.api.getStores();
-                    if (storesResult.success) {
-                        this.stores.store1.balance = storesResult.stores.Store1?.balance || this.stores.store1.balance;
-                        this.stores.store2.balance = storesResult.stores.Store2?.balance || this.stores.store2.balance;
-                        this.stores.store3.balance = storesResult.stores.Store3?.balance || this.stores.store3.balance;
-                    }
-                    
-                } catch (error) {
-                    console.warn('Error loading cloud data:', error);
-                }
-            }
-            
-            updateGlobalStats(cloudStats) {
-                if (cloudStats.totalPlayers > 0) {
-                    console.log('Global stats loaded:', cloudStats);
-                }
-            }
-            
-            async syncWithCloud() {
-                try {
-                    this.showToast('🔄 جاري المزامنة مع السحابة...', 'info');
-                    
-                    const syncResult = await this.api.syncPendingData();
-                    
-                    if (syncResult.success) {
-                        if (syncResult.synced > 0) {
-                            this.showToast(`✅ تمت مزامنة ${syncResult.synced} عنصر`, 'success');
-                        } else {
-                            this.showToast('✅ البيانات محدثة بالفعل', 'info');
-                        }
-                        
-                        await this.loadCloudData();
-                    } else {
-                        this.showToast('❌ فشلت المزامنة', 'error');
-                    }
-                } catch (error) {
-                    this.showToast('❌ خطأ في المزامنة', 'error');
-                    console.error('Sync error:', error);
-                }
+            generatePlayerId() {
+                // Generate player ID from Google account (simulated)
+                const timestamp = Date.now().toString(36);
+                const random = Math.random().toString(36).substr(2, 4);
+                this.playerId = `PLAYER_${timestamp}_${random}`.toUpperCase();
+                this.elements.playerId.textContent = `ID: ${this.playerId.substr(0, 10)}`;
             }
             
             createGrid() {
@@ -1162,23 +854,72 @@
                         cell.className = 'reel-cell';
                         cell.dataset.row = row;
                         cell.dataset.col = col;
-                        cell.textContent = SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
+                        
+                        const symbol = SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
+                        cell.textContent = symbol.char;
+                        cell.classList.add(symbol.class);
+                        
                         this.elements.reels.appendChild(cell);
-                        this.grid[row][col] = cell.textContent;
+                        this.grid[row][col] = symbol.char;
                     }
                 }
             }
             
-            setupEventListeners() {
-                this.elements.spinBtn.addEventListener('click', () => this.spin());
-                this.elements.stopBtn.addEventListener('click', () => this.stop());
+            createBetChips() {
+                this.elements.betScroll.innerHTML = '';
                 
-                document.querySelectorAll('.btn-bet').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const bet = parseInt(e.target.dataset.bet);
+                BET_OPTIONS.forEach(bet => {
+                    const chip = document.createElement('button');
+                    chip.className = 'bet-chip';
+                    chip.dataset.bet = bet;
+                    
+                    // Add chip icon based on bet amount
+                    let chipIcon = '🪙';
+                    if (bet >= 3000) chipIcon = '💰';
+                    if (bet >= 10000) chipIcon = '💎';
+                    if (bet >= 20000) chipIcon = '👑';
+                    
+                    chip.innerHTML = `
+                        <div class="chip-icon">${chipIcon}</div>
+                        <div>${bet.toLocaleString()}</div>
+                    `;
+                    
+                    chip.addEventListener('click', () => {
                         this.setBet(bet);
-                        this.playSound('click');
+                        this.playSound('bet');
                     });
+                    
+                    this.elements.betScroll.appendChild(chip);
+                });
+            }
+            
+            setBet(bet) {
+                if (this.isSpinning || this.balance < bet) return;
+                
+                this.currentBet = bet;
+                
+                // Update active chip
+                document.querySelectorAll('.bet-chip').forEach(chip => {
+                    const chipBet = parseInt(chip.dataset.bet);
+                    if (chipBet === bet) {
+                        chip.classList.add('active');
+                        // Scroll to active chip
+                        chip.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+                    } else {
+                        chip.classList.remove('active');
+                    }
+                });
+                
+                this.playSound('click');
+            }
+            
+            setupEventListeners() {
+                this.elements.spinBtn.addEventListener('click', () => {
+                    if (this.isSpinning) {
+                        this.stop();
+                    } else {
+                        this.spin();
+                    }
                 });
                 
                 this.elements.closeWin.addEventListener('click', () => {
@@ -1186,18 +927,11 @@
                     this.playSound('click');
                 });
                 
-                this.elements.soundToggle.addEventListener('click', () => {
-                    this.toggleSound();
+                this.elements.musicControl.addEventListener('click', () => {
+                    this.toggleMusic();
                 });
                 
-                this.elements.resetGame.addEventListener('click', () => {
-                    this.resetGame();
-                });
-                
-                this.elements.syncBtn.addEventListener('click', () => {
-                    this.syncWithCloud();
-                });
-                
+                // Keyboard support
                 document.addEventListener('keydown', (e) => {
                     if (e.code === 'Space') {
                         e.preventDefault();
@@ -1207,25 +941,16 @@
                             this.spin();
                         }
                     }
-                });
-            }
-            
-            setBet(bet) {
-                if (this.isSpinning) return;
-                
-                this.currentBet = bet;
-                
-                document.querySelectorAll('.btn-bet').forEach(btn => {
-                    const btnBet = parseInt(btn.dataset.bet);
-                    if (btnBet === bet) {
-                        btn.classList.add('active');
-                    } else {
-                        btn.classList.remove('active');
+                    
+                    // Number keys for quick bets
+                    if (e.code.startsWith('Digit')) {
+                        const num = parseInt(e.code[5]);
+                        if (num >= 1 && num <= 9) {
+                            const betIndex = Math.min(num - 1, BET_OPTIONS.length - 1);
+                            this.setBet(BET_OPTIONS[betIndex]);
+                        }
                     }
                 });
-                
-                this.elements.currentBet.textContent = bet.toLocaleString();
-                this.playSound('click');
             }
             
             async spin() {
@@ -1237,27 +962,20 @@
                 }
                 
                 this.balance -= this.currentBet;
-                this.totalSpins++;
-                this.consecutiveLosses++;
-                
-                this.addToStores(this.currentBet);
-                
                 this.isSpinning = true;
-                this.elements.spinBtn.disabled = true;
-                this.elements.stopBtn.disabled = false;
+                
+                // Update spin button
+                this.elements.spinBtn.classList.add('spinning');
+                this.elements.spinBtn.querySelector('.spin-text').textContent = 'STOP';
                 
                 this.playSound('spin');
                 this.animateSpin();
+                
+                // Generate results
                 this.generateResults();
                 
-                setTimeout(() => {
-                    if (this.isSpinning) {
-                        this.stop();
-                    }
-                }, 3000);
-                
+                // Update UI
                 this.updateUI();
-                await this.saveGameData();
             }
             
             animateSpin() {
@@ -1266,162 +984,114 @@
                     cell.classList.add('spinning');
                     
                     const interval = setInterval(() => {
-                        cell.textContent = SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
-                    }, 50);
+                        const symbol = SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)];
+                        cell.textContent = symbol.char;
+                        cell.className = `reel-cell spinning ${symbol.class}`;
+                    }, this.spinSpeed);
                     
                     cell.dataset.interval = interval;
                 });
             }
             
             generateResults() {
-                const volatility = this.getVolatility();
+                const volatility = Math.random();
                 
                 for (let row = 0; row < 3; row++) {
                     for (let col = 0; col < 5; col++) {
-                        this.grid[row][col] = this.getWeightedSymbol(volatility);
+                        // Weighted random based on volatility
+                        let index;
+                        if (volatility < 0.3) {
+                            // Low volatility - more common symbols
+                            index = Math.floor(Math.random() * 6); // First 6 symbols
+                        } else if (volatility < 0.7) {
+                            // Medium volatility
+                            index = Math.floor(Math.random() * SYMBOLS.length);
+                        } else {
+                            // High volatility - more rare symbols
+                            index = Math.min(SYMBOLS.length - 1, Math.floor(Math.random() * 3) + 6);
+                        }
+                        
+                        const symbol = SYMBOLS[index];
+                        this.grid[row][col] = symbol.char;
                     }
                 }
                 
-                this.applyStoreLogic();
-                
-                if (this.consecutiveLosses >= 8) {
-                    this.forceWin();
-                    this.consecutiveLosses = 0;
+                // Force occasional wins for better user experience
+                if (Math.random() < 0.3) {
+                    this.createWinPattern();
                 }
             }
             
-            getVolatility() {
-                const totalBalance = this.getTotalStoreBalance();
-                const avgBalance = totalBalance / 3;
+            createWinPattern() {
+                const winTypes = ['horizontal', 'diagonal', 'scatter'];
+                const winType = winTypes[Math.floor(Math.random() * winTypes.length)];
+                const symbol = SYMBOLS[Math.floor(Math.random() * 6)]; // Use common symbols for wins
                 
-                const lowStores = Object.values(this.stores).filter(
-                    store => store.balance < avgBalance * 0.3
-                ).length;
-                
-                if (lowStores > 0) return 'low';
-                
-                const highStores = Object.values(this.stores).filter(
-                    store => store.balance > avgBalance * 1.7
-                ).length;
-                
-                if (highStores > 0) return 'high';
-                
-                return 'medium';
-            }
-            
-            getWeightedSymbol(volatility) {
-                const weights = {
-                    low: [15, 12, 10, 8, 7, 6, 5, 4, 3],
-                    medium: [5, 8, 10, 12, 15, 12, 10, 8, 5],
-                    high: [3, 4, 5, 6, 7, 8, 10, 12, 15]
-                };
-                
-                const weightArray = weights[volatility];
-                const totalWeight = weightArray.reduce((a, b) => a + b, 0);
-                let random = Math.random() * totalWeight;
-                
-                for (let i = 0; i < SYMBOLS.length; i++) {
-                    random -= weightArray[i];
-                    if (random <= 0) {
-                        return SYMBOLS[i];
-                    }
-                }
-                
-                return SYMBOLS[SYMBOLS.length - 1];
-            }
-            
-            applyStoreLogic() {
-                const store1 = this.stores.store1;
-                const store2 = this.stores.store2;
-                const totalBalance = this.getTotalStoreBalance();
-                
-                const store1Target = (store1.balance / totalBalance) * 0.4;
-                const store2Target = (store2.balance / totalBalance) * 0.4;
-                
-                const store1Chance = Math.max(0.2, Math.min(0.8, store1Target));
-                const store2Chance = Math.max(0.1, Math.min(0.6, store2Target));
-                
-                const storeChoice = Math.random();
-                let useStore = null;
-                
-                if (storeChoice < store1Chance) {
-                    useStore = 'store1';
-                } else if (storeChoice < store1Chance + store2Chance) {
-                    useStore = 'store2';
-                }
-                
-                if (useStore) {
-                    this.createStoreWin(useStore);
+                switch(winType) {
+                    case 'horizontal':
+                        const row = Math.floor(Math.random() * 3);
+                        for (let col = 0; col < 5; col++) {
+                            this.grid[row][col] = symbol.char;
+                        }
+                        break;
+                        
+                    case 'diagonal':
+                        if (Math.random() > 0.5) {
+                            // Main diagonal
+                            for (let i = 0; i < 3; i++) {
+                                this.grid[i][i] = symbol.char;
+                            }
+                        } else {
+                            // Anti-diagonal
+                            for (let i = 0; i < 3; i++) {
+                                this.grid[i][2-i] = symbol.char;
+                            }
+                        }
+                        break;
+                        
+                    case 'scatter':
+                        // Random 3 positions
+                        for (let i = 0; i < 3; i++) {
+                            const r = Math.floor(Math.random() * 3);
+                            const c = Math.floor(Math.random() * 5);
+                            this.grid[r][c] = symbol.char;
+                        }
+                        break;
                 }
             }
             
-            createStoreWin(storeName) {
-                const winType = storeName === 'store1' ? 
-                    (Math.random() < 0.7 ? 'small' : 'medium') :
-                    (Math.random() < 0.5 ? 'medium' : 'large');
-                
-                const symbol = this.getStoreSymbol(storeName, winType);
-                const matchLength = winType === 'small' ? 3 : winType === 'medium' ? 4 : 5;
-                const row = Math.floor(Math.random() * 3);
-                
-                for (let col = 0; col < matchLength; col++) {
-                    this.grid[row][col] = symbol;
-                }
-            }
-            
-            getStoreSymbol(storeName, winType) {
-                if (storeName === 'store1') {
-                    return SYMBOLS[winType === 'small' ? 
-                        Math.floor(Math.random() * 6) + 3 :
-                        Math.floor(Math.random() * 3) + 6];
-                } else {
-                    return SYMBOLS[winType === 'medium' ? 
-                        Math.floor(Math.random() * 3) + 3 :
-                        Math.floor(Math.random() * 3)];
-                }
-            }
-            
-            forceWin() {
-                const row = Math.floor(Math.random() * 3);
-                const symbol = SYMBOLS[Math.floor(Math.random() * 3) + 6];
-                
-                for (let col = 0; col < 3; col++) {
-                    this.grid[row][col] = symbol;
-                }
-                
-                this.showToast('🍀 حظاً أفضل هذه المرة!', 'warning');
-            }
-            
-            async stop() {
+            stop() {
                 if (!this.isSpinning) return;
                 
-                this.isSpinning = false;
-                this.elements.spinBtn.disabled = false;
-                this.elements.stopBtn.disabled = true;
+                // Accelerate spin
+                this.spinSpeed *= this.spinAcceleration;
+                if (this.spinSpeed < 20) this.spinSpeed = 20; // Minimum speed
                 
-                const cells = document.querySelectorAll('.reel-cell');
-                cells.forEach(cell => {
-                    cell.classList.remove('spinning');
-                    clearInterval(cell.dataset.interval);
-                });
-                
-                this.playSound('stop');
-                this.showResults();
-                
-                setTimeout(async () => {
-                    const results = this.checkWins();
-                    await this.processResults(results);
-                }, 500);
-            }
-            
-            showResults() {
-                const cells = document.querySelectorAll('.reel-cell');
-                
-                cells.forEach(cell => {
-                    const row = parseInt(cell.dataset.row);
-                    const col = parseInt(cell.dataset.col);
-                    cell.textContent = this.grid[row][col];
-                });
+                // Stop after delay for dramatic effect
+                setTimeout(() => {
+                    this.isSpinning = false;
+                    this.spinSpeed = 100; // Reset speed
+                    
+                    const cells = document.querySelectorAll('.reel-cell');
+                    cells.forEach(cell => {
+                        cell.classList.remove('spinning');
+                        clearInterval(cell.dataset.interval);
+                        
+                        const row = parseInt(cell.dataset.row);
+                        const col = parseInt(cell.dataset.col);
+                        const symbol = SYMBOLS.find(s => s.char === this.grid[row][col]);
+                        cell.textContent = symbol.char;
+                        cell.className = `reel-cell ${symbol.class}`;
+                    });
+                    
+                    this.playSound('stop');
+                    this.checkWins();
+                    
+                    // Reset spin button
+                    this.elements.spinBtn.classList.remove('spinning');
+                    this.elements.spinBtn.querySelector('.spin-text').textContent = 'SPIN';
+                    
+                }, 500); // Half second delay
             }
             
             checkWins() {
@@ -1446,7 +1116,7 @@
                     }
                     
                     if (count >= 3) {
-                        const multiplier = count === 3 ? 1 : count === 4 ? 3 : 15;
+                        const multiplier = count === 3 ? 2 : count === 4 ? 5 : 15;
                         results.wins.push({
                             type: 'horizontal',
                             row: row,
@@ -1459,68 +1129,69 @@
                     }
                 }
                 
-                // Check V shape
-                const vPositions = [[0,0], [1,1], [2,2], [1,3], [0,4]];
-                const vSymbols = vPositions.map(([r, c]) => this.grid[r][c]);
-                const isV = vSymbols.every(s => s === vSymbols[0]);
+                // Check diagonal wins
+                const mainDiagonal = [this.grid[0][0], this.grid[1][1], this.grid[2][2]];
+                const antiDiagonal = [this.grid[0][2], this.grid[1][1], this.grid[2][0]];
                 
-                if (isV) {
+                if (mainDiagonal.every(s => s === mainDiagonal[0])) {
                     results.wins.push({
-                        type: 'v-shape',
-                        count: 5,
-                        symbol: vSymbols[0],
-                        multiplier: 15
+                        type: 'diagonal',
+                        count: 3,
+                        symbol: mainDiagonal[0],
+                        multiplier: 10
                     });
-                    results.totalMultiplier += 15;
-                    results.totalWin += this.currentBet * 15;
+                    results.totalMultiplier += 10;
+                    results.totalWin += this.currentBet * 10;
                 }
                 
-                return results;
+                if (antiDiagonal.every(s => s === antiDiagonal[0])) {
+                    results.wins.push({
+                        type: 'diagonal',
+                        count: 3,
+                        symbol: antiDiagonal[0],
+                        multiplier: 10
+                    });
+                    results.totalMultiplier += 10;
+                    results.totalWin += this.currentBet * 10;
+                }
+                
+                // Process results
+                if (results.totalWin > 0) {
+                    this.processWin(results);
+                }
             }
             
-            async processResults(results) {
+            processWin(results) {
+                this.balance += results.totalWin;
+                
+                // Highlight winning symbols
                 this.highlightWins(results);
                 
-                if (results.totalWin > 0) {
-                    this.consecutiveLosses = 0;
-                    this.totalWins++;
-                    this.totalWon += results.totalWin;
-                    this.balance += results.totalWin;
-                    
-                    if (results.totalWin > this.biggestWin) {
-                        this.biggestWin = results.totalWin;
-                    }
-                    
-                    this.lastStoreUsed = this.deductFromStores(results.totalWin);
-                    
-                    if (results.totalWin >= this.currentBet * 10) {
-                        this.playSound('win');
-                    }
-                    
+                // Play win sound
+                if (results.totalWin >= this.currentBet * 5) {
+                    this.playSound('win');
+                }
+                
+                // Show win animation on spin button
+                this.elements.spinBtn.classList.add('winning');
+                setTimeout(() => {
+                    this.elements.spinBtn.classList.remove('winning');
+                }, 2000);
+                
+                // Show win display for big wins
+                if (results.totalWin >= this.currentBet * 10) {
                     this.showWinDisplay(results.totalWin, results.totalMultiplier);
-                    
-                    if (results.totalWin >= this.currentBet * 15) {
-                        this.showToast(`🎊 فوز كبير! ${results.totalWin.toLocaleString()}`, 'success');
-                    }
-                    
-                    this.lastGameResult = results;
-                    
-                } else {
-                    const nearWins = this.checkNearWins();
-                    if (nearWins > 0) {
-                        this.showToast('⚡ كادت أن تفوز!', 'warning');
-                    }
+                }
+                
+                // Show toast for small wins
+                if (results.totalWin > 0 && results.totalWin < this.currentBet * 10) {
+                    this.showToast(`🎉 فوز! +${results.totalWin.toLocaleString()}`, 'success');
                 }
                 
                 this.updateUI();
-                await this.saveGameData();
             }
             
             highlightWins(results) {
-                document.querySelectorAll('.reel-cell').forEach(cell => {
-                    cell.classList.remove('matched');
-                });
-                
                 results.wins.forEach(win => {
                     if (win.type === 'horizontal') {
                         for (let col = 0; col < win.count; col++) {
@@ -1529,8 +1200,11 @@
                             );
                             if (cell) cell.classList.add('matched');
                         }
-                    } else if (win.type === 'v-shape') {
-                        const positions = [[0,0], [1,1], [2,2], [1,3], [0,4]];
+                    } else if (win.type === 'diagonal') {
+                        const positions = win.symbol === this.grid[0][0] ? 
+                            [[0,0], [1,1], [2,2]] : 
+                            [[0,2], [1,1], [2,0]];
+                        
                         positions.forEach(([row, col]) => {
                             const cell = document.querySelector(
                                 `.reel-cell[data-row="${row}"][data-col="${col}"]`
@@ -1539,139 +1213,62 @@
                         });
                     }
                 });
-            }
-            
-            checkNearWins() {
-                let nearWins = 0;
-                for (let row = 0; row < 3; row++) {
-                    for (let col = 0; col < 4; col++) {
-                        if (this.grid[row][col] === this.grid[row][col + 1]) {
-                            nearWins++;
-                        }
-                    }
-                }
-                return nearWins;
+                
+                // Remove highlight after 3 seconds
+                setTimeout(() => {
+                    document.querySelectorAll('.reel-cell').forEach(cell => {
+                        cell.classList.remove('matched');
+                    });
+                }, 3000);
             }
             
             showWinDisplay(amount, multiplier) {
                 this.elements.winAmount.textContent = amount.toLocaleString();
                 this.elements.winMultiplier.textContent = `×${multiplier}`;
                 this.elements.winDisplay.classList.add('active');
-            }
-            
-            // ===== STORES SYSTEM =====
-            getTotalStoreBalance() {
-                return Object.values(this.stores).reduce((sum, store) => sum + store.balance, 0);
-            }
-            
-            addToStores(amount) {
-                const totalBalance = this.getTotalStoreBalance();
                 
-                let targets = {
-                    store1: 0.30,
-                    store2: 0.50,
-                    store3: 0.20
-                };
-                
-                Object.keys(this.stores).forEach(storeKey => {
-                    const store = this.stores[storeKey];
-                    const currentPercentage = store.balance / totalBalance;
-                    const targetPercentage = targets[storeKey];
-                    
-                    if (currentPercentage < targetPercentage * 0.5) {
-                        targets[storeKey] = targetPercentage * 1.5;
-                        Object.keys(targets).forEach(key => {
-                            if (key !== storeKey) {
-                                targets[key] *= 0.9;
-                            }
-                        });
+                // Auto close after 5 seconds
+                setTimeout(() => {
+                    if (this.elements.winDisplay.classList.contains('active')) {
+                        this.elements.winDisplay.classList.remove('active');
                     }
-                });
-                
-                const totalTarget = Object.values(targets).reduce((a, b) => a + b, 0);
-                Object.keys(targets).forEach(key => {
-                    targets[key] /= totalTarget;
-                });
-                
-                Object.keys(this.stores).forEach(storeKey => {
-                    this.stores[storeKey].balance += amount * targets[storeKey];
-                });
-                
-                this.rebalanceStores();
+                }, 5000);
             }
             
-            deductFromStores(amount) {
-                let remaining = amount;
-                let storeUsed = 'none';
+            showToast(message, type = 'info') {
+                const toast = this.elements.toast;
+                toast.textContent = message;
                 
-                if (this.stores.store1.balance >= amount * 0.7) {
-                    this.stores.store1.balance -= amount * 0.7;
-                    remaining -= amount * 0.7;
-                    storeUsed = 'store1';
-                } else if (this.stores.store1.balance > 0) {
-                    remaining -= this.stores.store1.balance;
-                    this.stores.store1.balance = 0;
-                    storeUsed = 'store1';
+                // Remove any existing classes
+                toast.className = 'toast';
+                if (type === 'error') {
+                    toast.style.borderLeftColor = 'var(--primary)';
+                } else if (type === 'success') {
+                    toast.style.borderLeftColor = 'var(--accent)';
+                } else {
+                    toast.style.borderLeftColor = 'var(--secondary)';
                 }
                 
-                if (remaining > 0 && this.stores.store2.balance >= remaining) {
-                    this.stores.store2.balance -= remaining;
-                    remaining = 0;
-                    storeUsed = storeUsed === 'store1' ? 'both' : 'store2';
-                } else if (remaining > 0 && this.stores.store2.balance > 0) {
-                    remaining -= this.stores.store2.balance;
-                    this.stores.store2.balance = 0;
-                    storeUsed = storeUsed === 'store1' ? 'both' : 'store2';
-                }
+                toast.classList.add('show');
                 
-                if (remaining > 0) {
-                    const maxEmergency = this.stores.store3.balance * this.stores.store3.maxUsage;
-                    const actualDeduction = Math.min(remaining, maxEmergency);
-                    
-                    this.stores.store3.balance -= actualDeduction;
-                    
-                    if (actualDeduction > 0) {
-                        this.showToast('⚠️ استخدام مخزن الطوارئ', 'warning');
-                        storeUsed = 'emergency';
-                    }
-                }
-                
-                this.rebalanceStores();
-                return storeUsed;
+                // Remove after 3 seconds
+                setTimeout(() => {
+                    toast.classList.remove('show');
+                }, 3000);
             }
             
-            rebalanceStores() {
-                const totalBalance = this.getTotalStoreBalance();
+            updateUI() {
+                this.elements.balance.textContent = this.balance.toLocaleString();
                 
-                const targets = {
-                    store1: totalBalance * this.stores.store1.target,
-                    store2: totalBalance * this.stores.store2.target,
-                    store3: totalBalance * this.stores.store3.target
-                };
-                
-                const imbalances = {};
-                Object.keys(this.stores).forEach(storeKey => {
-                    imbalances[storeKey] = this.stores[storeKey].balance - targets[storeKey];
-                });
-                
-                Object.keys(imbalances).forEach(sourceKey => {
-                    if (imbalances[sourceKey] > 0) {
-                        Object.keys(imbalances).forEach(targetKey => {
-                            if (targetKey !== sourceKey && imbalances[targetKey] < 0) {
-                                const transfer = Math.min(
-                                    imbalances[sourceKey],
-                                    -imbalances[targetKey]
-                                );
-                                
-                                if (transfer > 0) {
-                                    this.stores[sourceKey].balance -= transfer;
-                                    this.stores[targetKey].balance += transfer;
-                                    
-                                    imbalances[sourceKey] -= transfer;
-                                    imbalances[targetKey] += transfer;
-                                }
-                            }
-                        });
+                // Disable bet chips if balance is insufficient
+                document.querySelectorAll('.bet-chip').forEach(chip => {
+                    const bet = parseInt(chip.dataset.bet);
+                    if (this.balance < bet) {
+                        chip.style.opacity = '0.5';
+                        chip.style.cursor = 'not-allowed';
+                    } else {
+                        chip.style.opacity = '1';
+                        chip.style.cursor = 'pointer';
                     }
                 });
             }
@@ -1682,214 +1279,42 @@
                 
                 try {
                     const sound = this.audio[soundName].cloneNode();
-                    sound.volume = 0.4;
+                    
+                    // Adjust volumes
+                    if (soundName === 'bgMusic') {
+                        sound.volume = 0.3;
+                    } else if (soundName === 'win') {
+                        sound.volume = 0.5;
+                    } else {
+                        sound.volume = 0.4;
+                    }
+                    
                     sound.play().catch(() => {});
                 } catch (error) {
                     console.warn('Error playing sound:', error);
                 }
             }
             
-            toggleSound() {
-                this.soundEnabled = !this.soundEnabled;
+            toggleMusic() {
+                this.musicEnabled = !this.musicEnabled;
                 
-                const icon = this.elements.soundToggle.querySelector('i');
-                icon.className = this.soundEnabled ? 'fas fa-volume-up' : 'fas fa-volume-mute';
-                
-                localStorage.setItem('slotSoundEnabled', this.soundEnabled.toString());
-                
-                const message = this.soundEnabled ? '🔊 الصوت مفعل' : '🔇 الصوت معطل';
-                this.showToast(message);
-                
-                if (this.soundEnabled) {
-                    this.playSound('click');
+                const icon = this.elements.musicControl.querySelector('i');
+                if (this.musicEnabled) {
+                    this.audio.bgMusic.play();
+                    icon.className = 'fas fa-volume-up';
+                    this.showToast('🎵 موسيقى الخلفية مفعلة', 'info');
+                } else {
+                    this.audio.bgMusic.pause();
+                    this.audio.bgMusic.currentTime = 0;
+                    icon.className = 'fas fa-volume-mute';
+                    this.showToast('🔇 موسيقى الخلفية معطلة', 'info');
                 }
-            }
-            
-            // ===== UI =====
-            updateUI() {
-                this.elements.balance.textContent = this.balance.toLocaleString();
-                
-                const totalStoreBalance = this.getTotalStoreBalance();
-                
-                Object.keys(this.stores).forEach((storeKey, index) => {
-                    const store = this.stores[storeKey];
-                    const percentage = (store.balance / totalStoreBalance) * 100;
-                    const displayPercentage = (store.balance / (storeKey === 'store1' ? 500000 : 
-                                                                storeKey === 'store2' ? 1500000 : 400000)) * 100;
-                    
-                    this.elements[`store${index + 1}Amount`].textContent = 
-                        Math.round(store.balance).toLocaleString();
-                    
-                    const fillElement = this.elements[`store${index + 1}Fill`];
-                    fillElement.style.width = `${Math.min(displayPercentage, 100)}%`;
-                });
-                
-                this.elements.totalSpins.textContent = this.totalSpins.toLocaleString();
-                
-                const winRate = this.totalSpins > 0 ? 
-                    ((this.totalWins / this.totalSpins) * 100).toFixed(1) : 0;
-                this.elements.winRate.textContent = `${winRate}%`;
-                
-                this.elements.biggestWin.textContent = this.biggestWin.toLocaleString();
-                
-                const totalBet = this.totalSpins * this.currentBet;
-                const rtp = totalBet > 0 ? 
-                    ((this.totalWon / totalBet) * 100).toFixed(1) : 96.5;
-                this.elements.rtpRate.textContent = `${Math.min(rtp, 99.9)}%`;
-                
-                this.elements.playerId.textContent = `ID: ${this.api.playerId.substr(0, 8)}...`;
-            }
-            
-            showToast(message, type = 'info') {
-                const toast = this.elements.toast;
-                toast.textContent = message;
-                
-                toast.className = 'toast';
-                if (type === 'error') toast.style.borderRightColor = 'var(--danger)';
-                else if (type === 'warning') toast.style.borderRightColor = 'var(--warning)';
-                else if (type === 'success') toast.style.borderRightColor = 'var(--accent)';
-                else toast.style.borderRightColor = 'var(--info)';
-                
-                toast.classList.add('show');
-                
-                clearTimeout(this.toastTimeout);
-                this.toastTimeout = setTimeout(() => {
-                    toast.classList.remove('show');
-                }, 3000);
-            }
-            
-            // ===== DATA MANAGEMENT =====
-            async loadGameData() {
-                try {
-                    const saved = localStorage.getItem('slotGameData');
-                    if (saved) {
-                        const data = JSON.parse(saved);
-                        
-                        this.balance = data.balance || INITIAL_BALANCE;
-                        this.currentBet = data.currentBet || 500;
-                        this.totalSpins = data.totalSpins || 0;
-                        this.totalWins = data.totalWins || 0;
-                        this.totalWon = data.totalWon || 0;
-                        this.biggestWin = data.biggestWin || 0;
-                        
-                        const savedStores = localStorage.getItem('slotStores');
-                        if (savedStores) {
-                            const storesData = JSON.parse(savedStores);
-                            Object.keys(storesData).forEach(key => {
-                                if (this.stores[key]) {
-                                    this.stores[key].balance = storesData[key].balance || this.stores[key].balance;
-                                }
-                            });
-                        }
-                    }
-                    
-                    this.soundEnabled = localStorage.getItem('slotSoundEnabled') !== 'false';
-                    const icon = this.elements.soundToggle.querySelector('i');
-                    icon.className = this.soundEnabled ? 'fas fa-volume-up' : 'fas fa-volume-mute';
-                    
-                } catch (error) {
-                    console.error('Error loading game data:', error);
-                }
-            }
-            
-            async saveGameData() {
-                // حفظ محلي
-                const gameData = {
-                    balance: this.balance,
-                    currentBet: this.currentBet,
-                    totalSpins: this.totalSpins,
-                    totalWins: this.totalWins,
-                    totalWon: this.totalWon,
-                    biggestWin: this.biggestWin
-                };
-                
-                localStorage.setItem('slotGameData', JSON.stringify(gameData));
-                localStorage.setItem('slotStores', JSON.stringify(this.stores));
-                
-                // حفظ بيانات اللاعب
-                await this.api.savePlayerData({
-                    id: this.api.playerId,
-                    name: `Player_${this.api.playerId.substr(0, 6)}`,
-                    balance: this.balance,
-                    spins: this.totalSpins,
-                    wins: this.totalWins,
-                    totalWin: this.totalWon
-                });
-                
-                // حفظ بيانات المخازن
-                await this.api.updateStores({
-                    Store1: {
-                        balance: this.stores.store1.balance,
-                        maxLimit: 500000,
-                        minLimit: 100000
-                    },
-                    Store2: {
-                        balance: this.stores.store2.balance,
-                        maxLimit: 1500000,
-                        minLimit: 300000
-                    },
-                    Store3: {
-                        balance: this.stores.store3.balance,
-                        maxLimit: 400000,
-                        minLimit: 50000
-                    }
-                });
-                
-                // حفظ بيانات الجلسة إذا كان هناك فوز
-                if (this.lastGameResult && this.lastGameResult.totalWin > 0) {
-                    await this.api.saveGameData({
-                        playerId: this.api.playerId,
-                        bet: this.currentBet,
-                        win: this.lastGameResult.totalWin,
-                        storeUsed: this.lastStoreUsed || 'none',
-                        multiplier: this.lastGameResult.totalMultiplier
-                    });
-                }
-            }
-            
-            resetGame() {
-                if (!confirm('⚠️ هل تريد إعادة تعيين اللعبة؟\nسيتم فقدان جميع التقدم والإحصائيات.')) {
-                    return;
-                }
-                
-                this.balance = INITIAL_BALANCE;
-                this.currentBet = 500;
-                this.totalSpins = 0;
-                this.totalWins = 0;
-                this.totalWon = 0;
-                this.biggestWin = 0;
-                this.consecutiveLosses = 0;
-                
-                this.stores = {
-                    store1: { balance: 300000, target: 0.30 },
-                    store2: { balance: 900000, target: 0.50 },
-                    store3: { balance: 200000, target: 0.20, maxUsage: 0.10 }
-                };
-                
-                this.createGrid();
-                
-                localStorage.removeItem('slotGameData');
-                localStorage.removeItem('slotStores');
-                localStorage.removeItem('pendingSync');
-                
-                document.querySelectorAll('.btn-bet').forEach(btn => {
-                    const btnBet = parseInt(btn.dataset.bet);
-                    if (btnBet === 500) {
-                        btn.classList.add('active');
-                    } else {
-                        btn.classList.remove('active');
-                    }
-                });
-                
-                this.updateUI();
-                this.showToast('🔄 تم إعادة تعيين اللعبة بنجاح!', 'success');
             }
         }
 
         // ===== INITIALIZE GAME =====
-        window.addEventListener('DOMContentLoaded', async () => {
+        window.addEventListener('DOMContentLoaded', () => {
             window.slotGame = new SlotGame();
-            await window.slotGame.init();
         });
     </script>
 </body>
