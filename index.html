@@ -1130,7 +1130,7 @@
         // ===== CONFIGURATION =====
         const CLIENT_ID = '739516782894-1q82fhnajlc7fqa3n8jgck7bv9qc4bc5.apps.googleusercontent.com';
         const SPREADSHEET_ID = '1v_y9uJsOgDigKk4Iqsb630IbnLciBIsz5kWOqcjLkbs';
-        const API_URL = 'https://script.google.com/macros/s/AKfycbw9Qh22v2mU9czg0nWuo_gbYC8FOuxOYaa9qig4MUgcO15_553eh16boAID75LPsQaalA/exec';
+        const API_URL = 'https://script.google.com/macros/s/AKfycbwM2mbGXmGzM0Cg3kp0w9UXkvXlDrX29d9VIeaADZiE9DKyPX6ZoxEeUqzKn-72g6Ov2g/exec';
 
         // ===== APPLICATION CLASS =====
         class GamingPlatform {
@@ -1349,6 +1349,10 @@
                     if (data.success) {
                         this.userId = data.userId;
                         this.balance = data.balance || 100;
+                        this.userStats.totalDeposits = data.totalDeposits || 0;
+                        this.userStats.totalWithdrawals = data.totalWithdrawals || 0;
+                        this.userStats.totalGames = data.totalGames || 0;
+                        this.userStats.totalWins = data.totalWins || 0;
                         return data;
                     } else {
                         throw new Error(data.message || 'Failed to register user');
@@ -1412,16 +1416,15 @@
                         body: new URLSearchParams({
                             action: 'updateBalance',
                             userId: this.userId,
-                            balance: newBalance,
-                            type: type,
-                            amount: amount
+                            amount: amount,
+                            type: type
                         })
                     });
                     
                     const data = await response.json();
                     
                     if (data.success) {
-                        this.balance = newBalance;
+                        this.balance = data.newBalance;
                         
                         // تحديث الإحصائيات
                         if (type === 'deposit') {
@@ -1438,6 +1441,27 @@
                 } catch (error) {
                     console.error('Error updating balance:', error);
                     throw error;
+                }
+            }
+            
+            async createTransaction(amount, type) {
+                try {
+                    const response = await fetch(API_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: new URLSearchParams({
+                            action: 'createTransaction',
+                            userId: this.userId,
+                            type: type,
+                            amount: amount
+                        })
+                    });
+                    
+                    return await response.json();
+                } catch (error) {
+                    console.error('Error creating transaction:', error);
                 }
             }
             
@@ -1815,22 +1839,11 @@
                 this.showToast('💰 جاري معالجة الإيداع...', 'info');
                 
                 try {
+                    // تحديث الرصيد
                     await this.updateBalance(amount, 'deposit');
                     
                     // تسجيل المعاملة
-                    await fetch(API_URL, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
-                        },
-                        body: new URLSearchParams({
-                            action: 'createTransaction',
-                            userId: this.userId,
-                            type: 'deposit',
-                            amount: amount,
-                            status: 'completed'
-                        })
-                    });
+                    await this.createTransaction(amount, 'deposit');
                     
                     this.closeModal('deposit');
                     this.showToast(`✨ تم إيداع ${amount.toLocaleString()} NSP بنجاح`, 'success');
@@ -1857,22 +1870,11 @@
                 this.showToast('💰 جاري معالجة السحب...', 'info');
                 
                 try {
+                    // تحديث الرصيد
                     await this.updateBalance(amount, 'withdrawal');
                     
                     // تسجيل المعاملة
-                    await fetch(API_URL, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
-                        },
-                        body: new URLSearchParams({
-                            action: 'createTransaction',
-                            userId: this.userId,
-                            type: 'withdrawal',
-                            amount: amount,
-                            status: 'pending' // في انتظار المراجعة
-                        })
-                    });
+                    await this.createTransaction(amount, 'withdrawal');
                     
                     this.closeModal('withdraw');
                     this.showToast(`✨ تم تقديم طلب سحب ${amount.toLocaleString()} NSP`, 'success');
