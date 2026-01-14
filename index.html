@@ -1157,7 +1157,24 @@
     <script>
         // ===== CONFIGURATION =====
         const CLIENT_ID = '739516782894-1q82fhnajlc7fqa3n8jgck7bv9qc4bc5.apps.googleusercontent.com';
-        const API_URL = 'https://script.google.com/macros/s/AKfycbwh7VeV1yQ1QQOZ0P7AmEZcWiof8xzMSdGN76J0SmuQ4T-Mz5WtK_JWNOm3e8755DvzXg/exec';
+        const API_URL = 'https://script.google.com/macros/s/AKfycbxEpLyjn1dvbvMfvGNl6x-CNpVK6yB8VyOXgh_JTVv-xEfJCeH55r2JoLXMRxlJv65ZFQ/exec';
+
+        // ===== HELPER FUNCTIONS =====
+        // دالة بديلة لـ URLSearchParams في المتصفحات القديمة
+        function createFormData(data) {
+            if (typeof URLSearchParams !== 'undefined') {
+                return new URLSearchParams(data);
+            } else {
+                // بديل لمتصفحات Internet Explorer
+                let formBody = [];
+                for (let key in data) {
+                    const encodedKey = encodeURIComponent(key);
+                    const encodedValue = encodeURIComponent(data[key]);
+                    formBody.push(encodedKey + '=' + encodedValue);
+                }
+                return formBody.join('&');
+            }
+        }
 
         // ===== APPLICATION CLASS =====
         class GamingPlatform {
@@ -1261,6 +1278,13 @@
                 if (this.googleAuthInitialized) return;
                 
                 try {
+                    // التحقق من أن Google Auth متاح
+                    if (!window.google || !window.google.accounts) {
+                        console.error('Google Identity Services not loaded');
+                        setTimeout(() => this.initializeGoogleAuth(), 1000);
+                        return;
+                    }
+                    
                     window.google.accounts.id.initialize({
                         client_id: CLIENT_ID,
                         callback: this.handleCredentialResponse.bind(this),
@@ -1281,9 +1305,6 @@
                             width: 280
                         }
                     );
-                    
-                    // عرض نصائح تسجيل الدخول
-                    window.google.accounts.id.prompt();
                     
                     this.googleAuthInitialized = true;
                     console.log('Google Auth initialized successfully');
@@ -1449,16 +1470,20 @@
                 try {
                     console.log('Calling API:', action, data);
                     
-                    const formData = new URLSearchParams();
-                    formData.append('action', action);
-                    formData.append('data', JSON.stringify(data));
+                    const formData = {
+                        action: action,
+                        data: JSON.stringify(data)
+                    };
+                    
+                    // استخدام الأسلوب المتوافق مع جميع المتصفحات
+                    const formBody = createFormData(formData);
                     
                     const response = await fetch(API_URL, {
                         method: 'POST',
                         headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
+                            'Content-Type': 'application/x-www-form-urlencoded;charset=UTF-8',
                         },
-                        body: formData
+                        body: formBody
                     });
                     
                     if (!response.ok) {
