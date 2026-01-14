@@ -3,10 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎮 NSP GAMES - منصة الألعاب الاحترافية</title>
+    <title>🎮 NSP GAMES - المنصة الذهبية</title>
     
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
     
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -23,28 +23,34 @@
         }
 
         :root {
-            --primary: #8B5CF6;
-            --primary-dark: #7C3AED;
-            --secondary: #EC4899;
-            --accent: #10B981;
-            --danger: #EF4444;
-            --dark: #1F2937;
-            --darker: #111827;
-            --light: #F3F4F6;
-            --gray: #6B7280;
+            --gold: #FFD700;
+            --gold-light: #FFED4E;
+            --gold-dark: #D4AF37;
+            --black: #000000;
+            --black-light: #1A1A1A;
+            --red: #DC2626;
+            --red-light: #EF4444;
+            --white: #FFFFFF;
+            --gray: #333333;
+            --gray-light: #666666;
             
-            --radius: 12px;
-            --radius-sm: 8px;
-            --transition: all 0.3s ease;
+            --radius: 10px;
+            --radius-sm: 6px;
+            --radius-lg: 15px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            
+            --shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            --shadow-gold: 0 4px 20px rgba(255, 215, 0, 0.3);
+            --shadow-red: 0 4px 20px rgba(220, 38, 38, 0.3);
         }
 
         body {
             font-family: 'Tajawal', sans-serif;
-            background: linear-gradient(135deg, var(--darker) 0%, var(--dark) 100%);
-            color: var(--light);
+            background: linear-gradient(135deg, var(--black) 0%, var(--black-light) 100%);
+            color: var(--white);
             direction: rtl;
             min-height: 100vh;
-            font-size: 14px;
+            overflow-x: hidden;
         }
 
         /* ===== LOGIN SCREEN ===== */
@@ -55,116 +61,175 @@
             justify-content: center;
             padding: 20px;
             background: linear-gradient(135deg, 
-                rgba(17, 24, 39, 0.95) 0%, 
-                rgba(31, 41, 55, 0.95) 100%);
+                rgba(0, 0, 0, 0.95) 0%, 
+                rgba(26, 26, 26, 0.95) 100%),
+                url('https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .login-screen::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 80%, rgba(255, 215, 0, 0.2) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(220, 38, 38, 0.2) 0%, transparent 50%);
+            z-index: 1;
         }
 
         .login-content {
-            background: rgba(17, 24, 39, 0.95);
-            padding: 40px 30px;
-            border-radius: var(--radius);
-            border: 1px solid rgba(139, 92, 246, 0.3);
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(20px);
+            padding: 50px 40px;
+            border-radius: var(--radius-lg);
+            border: 2px solid var(--gold);
             text-align: center;
-            max-width: 400px;
+            max-width: 450px;
             width: 100%;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+            box-shadow: var(--shadow-gold);
+            position: relative;
+            z-index: 2;
+            animation: slideUp 0.8s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
         .login-logo {
-            font-size: 3.5em;
-            margin-bottom: 15px;
-            animation: logoFloat 3s ease-in-out infinite;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
+            font-size: 4em;
+            margin-bottom: 20px;
+            animation: logoGlow 2s ease-in-out infinite alternate;
+            filter: drop-shadow(0 5px 15px rgba(255, 215, 0, 0.5));
         }
 
-        @keyframes logoFloat {
-            0%, 100% { transform: translateY(0) rotate(0); }
-            50% { transform: translateY(-10px) rotate(5deg); }
+        @keyframes logoGlow {
+            from {
+                transform: scale(1);
+                filter: drop-shadow(0 5px 15px rgba(255, 215, 0, 0.5));
+            }
+            to {
+                transform: scale(1.05);
+                filter: drop-shadow(0 5px 25px rgba(255, 215, 0, 0.8));
+            }
         }
 
         .login-title {
-            font-size: 1.8em;
-            font-weight: 700;
+            font-size: 2.2em;
+            font-weight: 800;
             margin-bottom: 10px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(45deg, var(--gold), var(--white));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            text-shadow: 0 2px 10px rgba(255, 215, 0, 0.3);
         }
 
         .login-subtitle {
-            color: var(--gray);
+            color: var(--gray-light);
             margin-bottom: 30px;
-            font-size: 0.9em;
+            font-size: 1em;
             line-height: 1.5;
         }
 
-        #gsi-button {
-            margin-bottom: 20px;
+        .gsi-material-button {
+            background: linear-gradient(45deg, var(--gold-dark), var(--gold)) !important;
+            color: var(--black) !important;
+            border: none !important;
+            border-radius: var(--radius) !important;
+            padding: 16px 35px !important;
+            font-size: 1.1em !important;
+            font-weight: 700 !important;
+            cursor: pointer !important;
+            display: flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            gap: 12px !important;
+            margin: 0 auto 25px !important;
+            transition: var(--transition) !important;
+            box-shadow: var(--shadow-gold) !important;
+            min-width: 250px !important;
+            position: relative !important;
+            overflow: hidden !important;
+        }
+
+        .gsi-material-button:hover {
+            transform: translateY(-2px) !important;
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4) !important;
         }
 
         .login-features {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
+            gap: 15px;
             margin-top: 30px;
         }
 
         .feature-item {
             background: rgba(255, 255, 255, 0.05);
-            padding: 12px;
-            border-radius: var(--radius-sm);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: var(--radius);
+            border: 1px solid rgba(255, 215, 0, 0.2);
             transition: var(--transition);
         }
 
         .feature-item:hover {
-            transform: translateY(-2px);
-            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-3px);
+            background: rgba(255, 215, 0, 0.1);
+            border-color: var(--gold);
         }
 
         .feature-icon {
-            font-size: 1.2em;
+            font-size: 1.3em;
             margin-bottom: 8px;
-            color: var(--primary);
+            color: var(--gold);
         }
 
         .feature-text {
-            font-size: 0.8em;
-            color: var(--gray);
+            font-size: 0.85em;
+            color: var(--gray-light);
         }
 
         /* ===== DASHBOARD ===== */
         .dashboard {
             display: none;
             min-height: 100vh;
-            padding: 20px;
         }
 
         /* Header */
         .header {
-            background: rgba(17, 24, 39, 0.95);
-            padding: 15px;
-            border-radius: var(--radius);
-            border: 1px solid rgba(139, 92, 246, 0.3);
-            margin-bottom: 20px;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            padding: 15px 25px;
+            border-bottom: 2px solid var(--gold);
+            box-shadow: var(--shadow);
             display: flex;
-            align-items: center;
             justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 15px;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 10px;
-            font-size: 1.3em;
-            font-weight: 700;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            gap: 12px;
+            font-size: 1.5em;
+            font-weight: 800;
+            background: linear-gradient(45deg, var(--gold), var(--white));
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
@@ -180,169 +245,141 @@
         }
 
         .balance-container {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(45deg, var(--gold-dark), var(--gold));
             padding: 12px 20px;
             border-radius: var(--radius);
             display: flex;
             align-items: center;
             gap: 10px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            min-width: 180px;
+            box-shadow: var(--shadow-gold);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            min-width: 160px;
+            transition: var(--transition);
+        }
+
+        .balance-container:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
         }
 
         .balance-icon {
-            font-size: 1.3em;
+            font-size: 1.2em;
+            color: var(--black);
+            filter: drop-shadow(0 2px 3px rgba(0,0,0,0.3));
         }
 
         .balance-amount {
-            font-size: 1.4em;
-            font-weight: 700;
+            font-size: 1.3em;
+            font-weight: 900;
+            color: var(--black);
+            text-shadow: 0 1px 3px rgba(0,0,0,0.3);
         }
 
         .wallet-buttons {
             display: flex;
             gap: 10px;
+            align-items: center;
         }
 
         .wallet-btn {
             background: rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            color: var(--light);
-            padding: 10px 15px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: var(--white);
+            padding: 10px 18px;
             border-radius: var(--radius);
-            font-size: 0.85em;
-            font-weight: 600;
+            font-size: 0.9em;
+            font-weight: 700;
             cursor: pointer;
             transition: var(--transition);
             display: flex;
             align-items: center;
             gap: 8px;
-            white-space: nowrap;
+            backdrop-filter: blur(10px);
         }
 
         .wallet-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .wallet-btn.deposit {
+            background: linear-gradient(45deg, var(--gold-dark), var(--gold));
+            border-color: var(--gold);
+            color: var(--black);
+        }
+
+        .wallet-btn.deposit:hover {
+            box-shadow: var(--shadow-gold);
+        }
+
+        .wallet-btn.withdraw {
+            background: linear-gradient(45deg, var(--red), var(--red-light));
+            border-color: var(--red);
+            color: var(--white);
+        }
+
+        .wallet-btn.withdraw:hover {
+            box-shadow: var(--shadow-red);
+        }
+
+        .wallet-btn.info {
             background: rgba(255, 255, 255, 0.15);
-            transform: translateY(-2px);
-            border-color: var(--primary);
+            border-color: rgba(255, 255, 255, 0.3);
         }
 
-        /* User Info */
-        .user-info {
-            background: rgba(17, 24, 39, 0.95);
-            padding: 12px 15px;
-            border-radius: var(--radius);
-            border: 1px solid rgba(139, 92, 246, 0.3);
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            position: relative;
-        }
-
-        .user-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1em;
-            font-weight: bold;
-            flex-shrink: 0;
-        }
-
-        .user-details {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .user-name {
-            font-weight: 600;
-            font-size: 0.95em;
-            margin-bottom: 5px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        .user-stats {
-            display: flex;
-            gap: 15px;
-            font-size: 0.8em;
-            color: var(--gray);
-        }
-
-        .stat-item {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .logout-btn {
-            background: rgba(239, 68, 68, 0.1);
-            color: var(--danger);
-            border: 1px solid rgba(239, 68, 68, 0.2);
-            padding: 8px 12px;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            transition: var(--transition);
-            font-size: 0.8em;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            white-space: nowrap;
-        }
-
-        .logout-btn:hover {
-            background: rgba(239, 68, 68, 0.2);
-            transform: translateY(-2px);
+        .wallet-btn.info:hover {
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
         }
 
         /* Offers Section */
         .offers-section {
-            margin-bottom: 20px;
+            padding: 30px 25px;
         }
 
         .section-title {
-            font-size: 1.3em;
-            font-weight: 700;
-            margin-bottom: 15px;
-            color: var(--light);
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .section-title i {
-            color: var(--primary);
-        }
-
-        .offers-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 15px;
-        }
-
-        .offer-card {
-            background: rgba(17, 24, 39, 0.8);
-            border-radius: var(--radius);
-            overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: var(--transition);
-            height: 200px;
+            font-size: 1.5em;
+            font-weight: 800;
+            margin-bottom: 20px;
+            text-align: center;
+            color: var(--gold);
             position: relative;
+            padding-bottom: 10px;
         }
 
-        .offer-card:hover {
-            transform: translateY(-5px);
-            border-color: var(--primary);
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 40%;
+            left: 40%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--gold), transparent);
+            border-radius: 2px;
         }
 
-        .offer-image {
+        .offers-slider {
+            position: relative;
+            width: 100%;
+            height: 250px;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+        }
+
+        .offer-slide {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            opacity: 0;
+            transition: opacity 0.8s ease-in-out;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .offer-slide.active {
+            opacity: 1;
         }
 
         .offer-overlay {
@@ -351,46 +388,74 @@
             right: 0;
             left: 0;
             background: linear-gradient(transparent, rgba(0,0,0,0.9));
-            padding: 15px;
+            padding: 25px;
+            color: white;
         }
 
         .offer-title {
-            font-size: 1em;
-            font-weight: 600;
-            margin-bottom: 5px;
-            color: var(--light);
+            font-size: 1.3em;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: var(--gold);
         }
 
         .offer-desc {
-            font-size: 0.8em;
-            color: var(--gray);
+            font-size: 0.95em;
+            color: var(--white);
         }
 
-        /* Games Section */
+        .slider-controls {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            gap: 10px;
+            z-index: 10;
+        }
+
+        .slider-btn {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.3);
+            cursor: pointer;
+            transition: var(--transition);
+            border: none;
+        }
+
+        .slider-btn.active {
+            background: var(--gold);
+            transform: scale(1.2);
+        }
+
+        /* Games Tabs */
         .games-section {
-            margin-bottom: 30px;
+            padding: 0 25px 30px;
         }
 
         .tabs-header {
             display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 25px;
         }
 
         .tab-btn {
             background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--light);
-            padding: 10px 20px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            color: var(--white);
+            padding: 12px 25px;
             border-radius: var(--radius);
-            font-size: 0.9em;
-            font-weight: 600;
+            font-size: 0.95em;
+            font-weight: 700;
             cursor: pointer;
             transition: var(--transition);
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            min-width: 180px;
+            justify-content: center;
+            backdrop-filter: blur(10px);
         }
 
         .tab-btn:hover {
@@ -399,132 +464,92 @@
         }
 
         .tab-btn.active {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(45deg, var(--gold-dark), var(--gold));
             border-color: transparent;
+            box-shadow: var(--shadow-gold);
+            color: var(--black);
+            transform: translateY(-2px);
         }
 
         .games-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
         }
 
         .game-card {
-            background: rgba(17, 24, 39, 0.8);
+            background: rgba(0, 0, 0, 0.8);
             border-radius: var(--radius);
             overflow: hidden;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 215, 0, 0.2);
             transition: var(--transition);
+            box-shadow: var(--shadow);
+            position: relative;
         }
 
         .game-card:hover {
             transform: translateY(-5px);
-            border-color: var(--primary);
+            border-color: var(--gold);
+            box-shadow: var(--shadow-gold);
         }
 
         .game-image {
             width: 100%;
-            height: 150px;
+            height: 160px;
             object-fit: cover;
         }
 
         .game-badge {
             position: absolute;
-            top: 10px;
-            left: 10px;
-            background: var(--accent);
-            color: white;
-            padding: 4px 12px;
+            top: 15px;
+            left: 15px;
+            background: var(--gold);
+            color: var(--black);
+            padding: 6px 15px;
             border-radius: var(--radius-sm);
-            font-weight: 600;
-            font-size: 0.75em;
+            font-weight: 700;
+            font-size: 0.8em;
         }
 
         .game-content {
-            padding: 15px;
+            padding: 20px;
         }
 
         .game-title {
-            font-size: 1em;
-            font-weight: 600;
+            font-size: 1.1em;
+            font-weight: 700;
             margin-bottom: 8px;
-            color: var(--light);
+            color: var(--gold);
         }
 
         .game-desc {
-            color: var(--gray);
+            color: var(--gray-light);
             margin-bottom: 15px;
-            line-height: 1.4;
-            font-size: 0.85em;
-            height: 40px;
-            overflow: hidden;
+            line-height: 1.5;
+            font-size: 0.9em;
+            min-height: 40px;
         }
 
         .game-coming-soon {
             display: flex;
             align-items: center;
             gap: 8px;
-            background: rgba(245, 158, 11, 0.1);
-            color: #F59E0B;
-            padding: 8px;
+            background: rgba(255, 215, 0, 0.1);
+            color: var(--gold);
+            padding: 10px;
             border-radius: var(--radius-sm);
-            font-size: 0.8em;
+            font-size: 0.85em;
+            border: 1px solid rgba(255, 215, 0, 0.3);
         }
 
-        /* Toast */
-        .toast {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(17, 24, 39, 0.95);
-            color: white;
-            padding: 12px 20px;
-            border-radius: var(--radius);
-            border-right: 4px solid;
-            transform: translateX(100%);
-            transition: transform 0.3s ease;
-            z-index: 3000;
-            max-width: 300px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 0.9em;
-        }
-
-        .toast.show {
-            transform: translateX(0);
-        }
-
-        .toast.success {
-            border-right-color: var(--accent);
-        }
-
-        .toast.error {
-            border-right-color: var(--danger);
-        }
-
-        .toast.warning {
-            border-right-color: #F59E0B;
-        }
-
-        .toast.info {
-            border-right-color: var(--primary);
-        }
-
-        .toast-icon {
-            font-size: 1.2em;
-            flex-shrink: 0;
-        }
-
-        /* Deposit/Withdraw Modal */
+        /* User Info Modal */
         .modal-overlay {
             position: fixed;
             top: 0;
             left: 0;
             right: 0;
             bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.8);
             display: none;
             align-items: center;
             justify-content: center;
@@ -536,93 +561,232 @@
             display: flex;
         }
 
-        .modal {
-            background: var(--darker);
-            padding: 25px;
-            border-radius: var(--radius);
-            border: 1px solid rgba(139, 92, 246, 0.3);
+        .user-info-modal {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(26, 26, 26, 0.95));
+            padding: 30px;
+            border-radius: var(--radius-lg);
+            border: 2px solid var(--gold);
             max-width: 400px;
             width: 100%;
+            box-shadow: var(--shadow-gold);
         }
 
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(255, 215, 0, 0.3);
         }
 
         .modal-title {
-            font-size: 1.2em;
+            font-size: 1.4em;
             font-weight: 700;
+            color: var(--gold);
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
 
         .close-btn {
             background: none;
             border: none;
-            color: var(--gray);
+            color: var(--gray-light);
             font-size: 1.2em;
             cursor: pointer;
             transition: var(--transition);
         }
 
         .close-btn:hover {
-            color: var(--light);
+            color: var(--gold);
+        }
+
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--gold-dark), var(--gold));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            margin: 0 auto 20px;
+            color: var(--black);
+        }
+
+        .user-details {
+            margin-bottom: 25px;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .detail-label {
+            color: var(--gray-light);
+            font-size: 0.9em;
+        }
+
+        .detail-value {
+            color: var(--white);
+            font-weight: 600;
+            font-size: 0.95em;
+        }
+
+        .detail-value.gold {
+            color: var(--gold);
+            font-weight: 700;
+        }
+
+        .user-id {
+            background: rgba(255, 215, 0, 0.1);
+            padding: 12px;
+            border-radius: var(--radius-sm);
+            margin-top: 20px;
+            text-align: center;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+        }
+
+        .user-id-label {
+            color: var(--gray-light);
+            font-size: 0.85em;
+            margin-bottom: 5px;
+        }
+
+        .user-id-value {
+            color: var(--gold);
+            font-family: monospace;
+            font-size: 0.9em;
+            word-break: break-all;
+        }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background: rgba(0, 0, 0, 0.95);
+            backdrop-filter: blur(20px);
+            color: white;
+            padding: 15px 25px;
+            border-radius: var(--radius);
+            border-right: 4px solid;
+            box-shadow: var(--shadow);
+            transform: translateX(100%);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 3000;
+            max-width: 350px;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .toast.show {
+            transform: translateX(0);
+        }
+
+        .toast.success {
+            border-right-color: var(--gold);
+        }
+
+        .toast.error {
+            border-right-color: var(--red);
+        }
+
+        .toast.warning {
+            border-right-color: #F59E0B;
+        }
+
+        .toast.info {
+            border-right-color: var(--white);
+        }
+
+        .toast-icon {
+            font-size: 1.3em;
+            flex-shrink: 0;
+        }
+
+        .toast-message {
+            font-size: 0.9em;
+            line-height: 1.4;
+        }
+
+        /* Deposit/Withdraw Modal */
+        .transaction-modal {
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.95), rgba(26, 26, 26, 0.95));
+            padding: 30px;
+            border-radius: var(--radius-lg);
+            border: 2px solid var(--gold);
+            max-width: 400px;
+            width: 100%;
+            box-shadow: var(--shadow-gold);
         }
 
         .amount-input {
             width: 100%;
-            padding: 12px;
-            border-radius: var(--radius-sm);
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--light);
-            margin-bottom: 15px;
+            padding: 14px;
+            border-radius: var(--radius);
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: var(--white);
+            margin-bottom: 20px;
             font-size: 1em;
             font-family: inherit;
+            text-align: center;
         }
 
         .amount-input:focus {
             outline: none;
-            border-color: var(--primary);
+            border-color: var(--gold);
+            background: rgba(255, 255, 255, 0.15);
         }
 
         .amount-buttons {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 10px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .amount-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: var(--light);
-            padding: 10px;
-            border-radius: var(--radius-sm);
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: var(--white);
+            padding: 12px;
+            border-radius: var(--radius);
             cursor: pointer;
             transition: var(--transition);
             font-size: 0.9em;
+            font-weight: 600;
         }
 
         .amount-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
         }
 
         .amount-btn.active {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            border-color: transparent;
+            background: linear-gradient(45deg, var(--gold-dark), var(--gold));
+            border-color: var(--gold);
+            color: var(--black);
+            transform: translateY(-2px);
         }
 
         .submit-btn {
             width: 100%;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
+            background: linear-gradient(45deg, var(--gold-dark), var(--gold));
+            color: var(--black);
             border: none;
-            padding: 12px;
-            border-radius: var(--radius-sm);
+            padding: 15px;
+            border-radius: var(--radius);
             font-size: 1em;
-            font-weight: 600;
+            font-weight: 700;
             cursor: pointer;
             transition: var(--transition);
             font-family: inherit;
@@ -630,57 +794,110 @@
 
         .submit-btn:hover {
             transform: translateY(-2px);
+            box-shadow: var(--shadow-gold);
+        }
+
+        .submit-btn.withdraw {
+            background: linear-gradient(45deg, var(--red), var(--red-light));
+            color: var(--white);
+        }
+
+        .submit-btn.withdraw:hover {
+            box-shadow: var(--shadow-red);
         }
 
         /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .games-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+
         @media (max-width: 768px) {
+            .login-content {
+                padding: 40px 30px;
+            }
+            
+            .login-title {
+                font-size: 1.8em;
+            }
+            
             .header {
                 flex-direction: column;
-                align-items: stretch;
+                gap: 15px;
+                padding: 15px;
             }
             
             .wallet-section {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            
-            .wallet-buttons {
-                order: -1;
+                width: 100%;
+                justify-content: center;
             }
             
             .balance-container {
                 width: 100%;
+                max-width: 300px;
+            }
+            
+            .wallet-buttons {
+                width: 100%;
+                justify-content: center;
+            }
+            
+            .tabs-header {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .tab-btn {
+                width: 100%;
+                max-width: 250px;
             }
             
             .games-grid {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            }
-            
-            .offers-grid {
                 grid-template-columns: 1fr;
             }
             
-            .user-stats {
-                flex-direction: column;
-                gap: 5px;
+            .offers-slider {
+                height: 200px;
             }
         }
 
         @media (max-width: 480px) {
-            .dashboard {
-                padding: 10px;
+            .login-title {
+                font-size: 1.5em;
             }
             
-            .login-content {
-                padding: 30px 20px;
+            .section-title {
+                font-size: 1.3em;
             }
             
-            .games-grid {
-                grid-template-columns: 1fr;
+            .balance-container {
+                min-width: auto;
+                padding: 10px 15px;
             }
             
-            .tabs-header {
-                justify-content: center;
+            .balance-amount {
+                font-size: 1.1em;
+            }
+            
+            .wallet-btn {
+                padding: 8px 12px;
+                font-size: 0.85em;
+            }
+            
+            .games-section,
+            .offers-section {
+                padding: 20px 15px;
+            }
+            
+            .amount-buttons {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            
+            .toast {
+                right: 15px;
+                left: 15px;
+                max-width: none;
             }
         }
     </style>
@@ -692,28 +909,28 @@
             <div class="login-logo">🎮</div>
             <div class="login-title">NSP GAMES</div>
             <div class="login-subtitle">
-                منصة الألعاب الاحترافية<br>
-                تسجيل الدخول باستخدام حساب Google
+                المنصة الذهبية للألعاب الاحترافية<br>
+                سجل دخولك وابدأ رحلتك نحو الثروة
             </div>
             
             <div id="gsi-button"></div>
             
             <div class="login-features">
                 <div class="feature-item">
-                    <div class="feature-icon">🛡️</div>
-                    <div class="feature-text">حماية وأمان تام</div>
+                    <div class="feature-icon">👑</div>
+                    <div class="feature-text">تجربة ذهبية فاخرة</div>
                 </div>
                 <div class="feature-item">
                     <div class="feature-icon">⚡</div>
-                    <div class="feature-text">سرعة فائقة</div>
+                    <div class="feature-text">سرعة وأداء استثنائي</div>
                 </div>
                 <div class="feature-item">
                     <div class="feature-icon">💰</div>
-                    <div class="feature-text">مدفوعات آمنة</div>
+                    <div class="feature-text">مدفوعات آمنة وفورية</div>
                 </div>
                 <div class="feature-item">
-                    <div class="feature-icon">🎯</div>
-                    <div class="feature-text">ألعاب متنوعة</div>
+                    <div class="feature-icon">🛡️</div>
+                    <div class="feature-text">حماية وأمان تام</div>
                 </div>
             </div>
         </div>
@@ -721,69 +938,48 @@
 
     <!-- Dashboard -->
     <div class="dashboard" id="dashboard">
-        <!-- User Info -->
-        <div class="user-info" id="userInfo">
-            <div class="user-avatar" id="userAvatar"></div>
-            <div class="user-details">
-                <div class="user-name" id="userName"></div>
-                <div class="user-stats">
-                    <div class="stat-item">
-                        <i class="fas fa-gamepad"></i>
-                        <span id="totalGames">0</span>
-                    </div>
-                    <div class="stat-item">
-                        <i class="fas fa-trophy"></i>
-                        <span id="totalWins">0</span>
-                    </div>
-                    <div class="stat-item">
-                        <i class="fas fa-coins"></i>
-                        <span id="totalCoins">0</span>
-                    </div>
-                </div>
-            </div>
-            <button class="logout-btn" id="logoutBtn">
-                <i class="fas fa-sign-out-alt"></i> خروج
-            </button>
-        </div>
-
         <!-- Header -->
         <header class="header">
             <div class="logo">
-                <span>🎮</span>
+                <span>👑</span>
                 <span>NSP GAMES</span>
             </div>
             
             <div class="wallet-section">
-                <div class="wallet-buttons">
-                    <button class="wallet-btn" id="depositBtn">
-                        <i class="fas fa-money-bill-wave"></i>
-                        إيداع
-                    </button>
-                    <button class="wallet-btn" id="withdrawBtn">
-                        <i class="fas fa-wallet"></i>
-                        سحب
-                    </button>
-                </div>
-                
                 <div class="balance-container">
                     <span class="balance-icon">💰</span>
                     <span class="balance-amount" id="balanceAmount">0 NSP</span>
                 </div>
+                
+                <div class="wallet-buttons">
+                    <button class="wallet-btn info" id="infoBtn">
+                        <i class="fas fa-user-circle"></i>
+                        معلومات الحساب
+                    </button>
+                    <button class="wallet-btn deposit" id="depositBtn">
+                        <i class="fas fa-plus-circle"></i>
+                        إيداع
+                    </button>
+                    <button class="wallet-btn withdraw" id="withdrawBtn">
+                        <i class="fas fa-minus-circle"></i>
+                        سحب
+                    </button>
+                </div>
             </div>
         </header>
 
-        <!-- Offers Section -->
+        <!-- Offers Slider -->
         <div class="offers-section">
-            <div class="section-title">
-                <i class="fas fa-fire"></i>
-                العروض الحصرية
-            </div>
-            <div class="offers-grid" id="offersContainer">
-                <!-- Offers will be loaded here -->
+            <div class="section-title">🔥 العروض الحصرية</div>
+            <div class="offers-slider" id="offersSlider">
+                <!-- Slides will be inserted here by JavaScript -->
+                <div class="slider-controls" id="sliderControls">
+                    <!-- Controls will be inserted here by JavaScript -->
+                </div>
             </div>
         </div>
 
-        <!-- Games Section -->
+        <!-- Games Tabs -->
         <div class="games-section">
             <div class="tabs-header">
                 <button class="tab-btn active" data-tab="challenge">
@@ -808,54 +1004,125 @@
         </div>
     </div>
 
-    <!-- Toast -->
-    <div class="toast" id="toast">
-        <span class="toast-icon"></span>
-        <span class="toast-message"></span>
+    <!-- User Info Modal -->
+    <div class="modal-overlay" id="userInfoModal">
+        <div class="user-info-modal">
+            <div class="modal-header">
+                <div class="modal-title">
+                    <i class="fas fa-user-circle"></i>
+                    معلومات الحساب
+                </div>
+                <button class="close-btn" onclick="app.closeModal('userInfo')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="user-avatar" id="modalUserAvatar"></div>
+            
+            <div class="user-details">
+                <div class="detail-row">
+                    <span class="detail-label">الاسم:</span>
+                    <span class="detail-value" id="modalUserName"></span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">البريد الإلكتروني:</span>
+                    <span class="detail-value" id="modalUserEmail"></span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">الرصيد الحالي:</span>
+                    <span class="detail-value gold" id="modalUserBalance">0 NSP</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">إجمالي الإيداعات:</span>
+                    <span class="detail-value" id="modalTotalDeposits">0 NSP</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">إجمالي السحوبات:</span>
+                    <span class="detail-value" id="modalTotalWithdrawals">0 NSP</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">عدد الألعاب:</span>
+                    <span class="detail-value" id="modalTotalGames">0</span>
+                </div>
+                <div class="detail-row">
+                    <span class="detail-label">إجمالي الفوز:</span>
+                    <span class="detail-value gold" id="modalTotalWins">0 NSP</span>
+                </div>
+            </div>
+            
+            <div class="user-id">
+                <div class="user-id-label">معرف المستخدم:</div>
+                <div class="user-id-value" id="modalUserId"></div>
+            </div>
+        </div>
     </div>
 
     <!-- Deposit Modal -->
     <div class="modal-overlay" id="depositModal">
-        <div class="modal">
+        <div class="transaction-modal">
             <div class="modal-header">
-                <div class="modal-title">إيداع رصيد</div>
+                <div class="modal-title">
+                    <i class="fas fa-plus-circle"></i>
+                    إيداع رصيد
+                </div>
                 <button class="close-btn" onclick="app.closeModal('deposit')">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            <input type="number" class="amount-input" id="depositAmount" placeholder="المبلغ المراد إيداعه" min="1">
-            <div class="amount-buttons">
-                <button class="amount-btn" data-amount="50">50</button>
-                <button class="amount-btn" data-amount="100">100</button>
-                <button class="amount-btn" data-amount="200">200</button>
-                <button class="amount-btn" data-amount="500">500</button>
-                <button class="amount-btn" data-amount="1000">1000</button>
-                <button class="amount-btn" data-amount="5000">5000</button>
+            
+            <input type="number" 
+                   class="amount-input" 
+                   id="depositAmount" 
+                   placeholder="أدخل المبلغ المراد إيداعه" 
+                   min="1"
+                   oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+            
+            <div class="amount-buttons" id="depositAmountButtons">
+                <!-- Buttons will be inserted here by JavaScript -->
             </div>
-            <button class="submit-btn" onclick="app.processDeposit()">إيداع</button>
+            
+            <button class="submit-btn" onclick="app.processDeposit()">
+                <i class="fas fa-check-circle"></i>
+                تأكيد الإيداع
+            </button>
         </div>
     </div>
 
     <!-- Withdraw Modal -->
     <div class="modal-overlay" id="withdrawModal">
-        <div class="modal">
+        <div class="transaction-modal">
             <div class="modal-header">
-                <div class="modal-title">سحب رصيد</div>
+                <div class="modal-title">
+                    <i class="fas fa-minus-circle"></i>
+                    سحب رصيد
+                </div>
                 <button class="close-btn" onclick="app.closeModal('withdraw')">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
-            <input type="number" class="amount-input" id="withdrawAmount" placeholder="المبلغ المراد سحبه" min="1">
-            <div class="amount-buttons">
-                <button class="amount-btn" data-amount="50">50</button>
-                <button class="amount-btn" data-amount="100">100</button>
-                <button class="amount-btn" data-amount="200">200</button>
-                <button class="amount-btn" data-amount="500">500</button>
-                <button class="amount-btn" data-amount="1000">1000</button>
-                <button class="amount-btn" data-amount="5000">5000</button>
+            
+            <input type="number" 
+                   class="amount-input" 
+                   id="withdrawAmount" 
+                   placeholder="أدخل المبلغ المراد سحبه" 
+                   min="1"
+                   oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+            
+            <div class="amount-buttons" id="withdrawAmountButtons">
+                <!-- Buttons will be inserted here by JavaScript -->
             </div>
-            <button class="submit-btn" onclick="app.processWithdrawal()">سحب</button>
+            
+            <button class="submit-btn withdraw" onclick="app.processWithdrawal()">
+                <i class="fas fa-check-circle"></i>
+                تأكيد السحب
+            </button>
         </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <span class="toast-icon"></span>
+        <span class="toast-message"></span>
     </div>
 
     <!-- JavaScript -->
@@ -863,40 +1130,70 @@
         // ===== CONFIGURATION =====
         const CLIENT_ID = '739516782894-1q82fhnajlc7fqa3n8jgck7bv9qc4bc5.apps.googleusercontent.com';
         const SPREADSHEET_ID = '1v_y9uJsOgDigKk4Iqsb630IbnLciBIsz5kWOqcjLkbs';
-        const API_URL = 'https://script.google.com/macros/s/AKfycbyfxE-NycrXlY5L8Plpt_oBA7qedU5Vqt4Yf2IfD8wOaiKPVKyMoHmWhwg7d3qUDEY/exec';
+        const API_URL = 'https://script.google.com/macros/s/AKfycbw9Qh22v2mU9czg0nWuo_gbYC8FOuxOYaa9qig4MUgcO15_553eh16boAID75LPsQaalA/exec';
 
         // ===== APPLICATION CLASS =====
         class GamingPlatform {
             constructor() {
                 this.user = null;
-                this.balance = 0;
                 this.userId = null;
-                this.isAuthenticated = false;
+                this.balance = 0;
+                this.userStats = {
+                    totalGames: 0,
+                    totalWins: 0,
+                    totalDeposits: 0,
+                    totalWithdrawals: 0
+                };
                 
                 this.elements = {
                     loginScreen: document.getElementById('loginScreen'),
                     dashboard: document.getElementById('dashboard'),
                     gsiButton: document.getElementById('gsi-button'),
+                    
+                    // Header Elements
                     balanceAmount: document.getElementById('balanceAmount'),
-                    userInfo: document.getElementById('userInfo'),
-                    userAvatar: document.getElementById('userAvatar'),
-                    userName: document.getElementById('userName'),
-                    totalGames: document.getElementById('totalGames'),
-                    totalWins: document.getElementById('totalWins'),
-                    totalCoins: document.getElementById('totalCoins'),
-                    logoutBtn: document.getElementById('logoutBtn'),
+                    infoBtn: document.getElementById('infoBtn'),
                     depositBtn: document.getElementById('depositBtn'),
                     withdrawBtn: document.getElementById('withdrawBtn'),
-                    offersContainer: document.getElementById('offersContainer'),
+                    
+                    // Offers Slider
+                    offersSlider: document.getElementById('offersSlider'),
+                    sliderControls: document.getElementById('sliderControls'),
+                    
+                    // Games
                     challengeGames: document.getElementById('challengeGames'),
                     luckGames: document.getElementById('luckGames'),
-                    toast: document.getElementById('toast'),
                     tabBtns: document.querySelectorAll('.tab-btn'),
+                    
+                    // Modals
+                    userInfoModal: document.getElementById('userInfoModal'),
                     depositModal: document.getElementById('depositModal'),
                     withdrawModal: document.getElementById('withdrawModal'),
+                    
+                    // User Info Modal Elements
+                    modalUserAvatar: document.getElementById('modalUserAvatar'),
+                    modalUserName: document.getElementById('modalUserName'),
+                    modalUserEmail: document.getElementById('modalUserEmail'),
+                    modalUserBalance: document.getElementById('modalUserBalance'),
+                    modalTotalDeposits: document.getElementById('modalTotalDeposits'),
+                    modalTotalWithdrawals: document.getElementById('modalTotalWithdrawals'),
+                    modalTotalGames: document.getElementById('modalTotalGames'),
+                    modalTotalWins: document.getElementById('modalTotalWins'),
+                    modalUserId: document.getElementById('modalUserId'),
+                    
+                    // Transaction Elements
                     depositAmount: document.getElementById('depositAmount'),
-                    withdrawAmount: document.getElementById('withdrawAmount')
+                    withdrawAmount: document.getElementById('withdrawAmount'),
+                    depositAmountButtons: document.getElementById('depositAmountButtons'),
+                    withdrawAmountButtons: document.getElementById('withdrawAmountButtons'),
+                    
+                    // Toast
+                    toast: document.getElementById('toast')
                 };
+                
+                this.sliderInterval = null;
+                this.currentSlide = 0;
+                this.offers = [];
                 
                 this.initialize();
             }
@@ -905,31 +1202,29 @@
                 this.setupEventListeners();
                 this.initializeGoogleAuth();
                 this.checkSavedSession();
+                this.createAmountButtons();
             }
             
             setupEventListeners() {
-                this.elements.logoutBtn.addEventListener('click', () => this.logout());
+                this.elements.infoBtn.addEventListener('click', () => this.showModal('userInfo'));
                 this.elements.depositBtn.addEventListener('click', () => this.showModal('deposit'));
                 this.elements.withdrawBtn.addEventListener('click', () => this.showModal('withdraw'));
                 
                 this.elements.tabBtns.forEach(btn => {
                     btn.addEventListener('click', (e) => {
-                        const tab = e.target.dataset.tab;
+                        const tab = e.currentTarget.dataset.tab;
                         this.switchTab(tab);
                     });
                 });
                 
-                // Amount buttons listeners
-                document.querySelectorAll('.amount-btn').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const amount = e.target.dataset.amount;
-                        const modal = e.target.closest('.modal');
-                        if (modal.id.includes('deposit')) {
-                            this.elements.depositAmount.value = amount;
-                        } else {
-                            this.elements.withdrawAmount.value = amount;
-                        }
-                    });
+                // Close modals when clicking outside
+                document.addEventListener('click', (e) => {
+                    if (e.target.classList.contains('modal-overlay')) {
+                        const modalId = e.target.id;
+                        if (modalId === 'userInfoModal') this.closeModal('userInfo');
+                        else if (modalId === 'depositModal') this.closeModal('deposit');
+                        else if (modalId === 'withdrawModal') this.closeModal('withdraw');
+                    }
                 });
             }
             
@@ -957,7 +1252,7 @@
             
             async handleCredentialResponse(response) {
                 try {
-                    this.showToast('🔐 جاري تسجيل الدخول...', 'info');
+                    this.showToast('👑 جاري تسجيل الدخول...', 'info');
                     
                     const decodedToken = this.parseJwt(response.credential);
                     
@@ -969,22 +1264,21 @@
                     };
                     
                     // حفظ الجلسة
-                    localStorage.setItem('nsp_token', response.credential);
-                    localStorage.setItem('nsp_user', JSON.stringify(this.user));
+                    localStorage.setItem('nsp_gold_token', response.credential);
+                    localStorage.setItem('nsp_gold_user', JSON.stringify(this.user));
                     
                     // تسجيل المستخدم في قاعدة البيانات
-                    const userData = await this.registerUser();
+                    await this.registerUser();
                     
-                    // تحديث بيانات المستخدم
-                    this.balance = userData.balance || 0;
-                    this.userId = userData.userId;
+                    // تحميل بيانات المستخدم
+                    await this.loadUserData();
                     
                     // تحميل العروض والألعاب
                     await this.loadOffers();
                     await this.loadGames();
                     
                     this.showDashboard();
-                    this.showToast('✅ تم تسجيل الدخول بنجاح!', 'success');
+                    this.showToast('✨ تم تسجيل الدخول بنجاح!', 'success');
                     
                 } catch (error) {
                     console.error('Login error:', error);
@@ -996,7 +1290,7 @@
                 try {
                     const base64Url = token.split('.')[1];
                     const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-                    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+                    const jsonPayload = decodeURIComponent(atob(base64).split('').map(c => {
                         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
                     }).join(''));
                     
@@ -1007,8 +1301,8 @@
             }
             
             checkSavedSession() {
-                const savedToken = localStorage.getItem('nsp_token');
-                const savedUser = localStorage.getItem('nsp_user');
+                const savedToken = localStorage.getItem('nsp_gold_token');
+                const savedUser = localStorage.getItem('nsp_gold_user');
                 
                 if (savedToken && savedUser) {
                     try {
@@ -1017,6 +1311,8 @@
                             this.user = JSON.parse(savedUser);
                             this.loadUserData().then(() => {
                                 this.showDashboard();
+                                this.loadOffers();
+                                this.loadGames();
                             }).catch(() => {
                                 this.showLogin();
                             });
@@ -1051,6 +1347,8 @@
                     const data = await response.json();
                     
                     if (data.success) {
+                        this.userId = data.userId;
+                        this.balance = data.balance || 100;
                         return data;
                     } else {
                         throw new Error(data.message || 'Failed to register user');
@@ -1058,11 +1356,9 @@
                 } catch (error) {
                     console.error('Registration error:', error);
                     // استخدام بيانات افتراضية في حالة الخطأ
-                    return {
-                        success: true,
-                        userId: 'USER_' + Date.now(),
-                        balance: 100
-                    };
+                    this.userId = 'GOLD_' + Date.now().toString(36).toUpperCase();
+                    this.balance = 100;
+                    return { success: true };
                 }
             }
             
@@ -1086,6 +1382,12 @@
                     if (data.success) {
                         this.userId = data.userId;
                         this.balance = data.balance || 0;
+                        this.userStats = {
+                            totalGames: data.totalGames || 0,
+                            totalWins: data.totalWins || 0,
+                            totalDeposits: data.totalDeposits || 0,
+                            totalWithdrawals: data.totalWithdrawals || 0
+                        };
                         this.updateUI();
                         return data;
                     } else {
@@ -1098,8 +1400,10 @@
                 }
             }
             
-            async updateBalance(newBalance, type) {
+            async updateBalance(amount, type) {
                 try {
+                    const newBalance = type === 'deposit' ? this.balance + amount : this.balance - amount;
+                    
                     const response = await fetch(API_URL, {
                         method: 'POST',
                         headers: {
@@ -1108,7 +1412,9 @@
                         body: new URLSearchParams({
                             action: 'updateBalance',
                             userId: this.userId,
-                            balance: newBalance
+                            balance: newBalance,
+                            type: type,
+                            amount: amount
                         })
                     });
                     
@@ -1116,40 +1422,22 @@
                     
                     if (data.success) {
                         this.balance = newBalance;
+                        
+                        // تحديث الإحصائيات
+                        if (type === 'deposit') {
+                            this.userStats.totalDeposits += amount;
+                        } else if (type === 'withdrawal') {
+                            this.userStats.totalWithdrawals += amount;
+                        }
+                        
                         this.updateUI();
-                        
-                        // تسجيل المعاملة
-                        await this.createTransaction(type, Math.abs(newBalance - this.balance));
-                        
                         return data;
                     } else {
                         throw new Error(data.message);
                     }
                 } catch (error) {
                     console.error('Error updating balance:', error);
-                    this.showToast('❌ فشل تحديث الرصيد', 'error');
-                }
-            }
-            
-            async createTransaction(type, amount) {
-                try {
-                    const response = await fetch(API_URL, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
-                        },
-                        body: new URLSearchParams({
-                            action: 'createTransaction',
-                            userId: this.userId,
-                            type: type,
-                            amount: amount,
-                            paymentMethod: 'system'
-                        })
-                    });
-                    
-                    return await response.json();
-                } catch (error) {
-                    console.error('Error creating transaction:', error);
+                    throw error;
                 }
             }
             
@@ -1167,20 +1455,120 @@
                     
                     const data = await response.json();
                     
-                    if (data.success && data.offers) {
-                        this.displayOffers(data.offers);
+                    if (data.success && data.offers && data.offers.length > 0) {
+                        this.offers = data.offers;
+                        this.displayOffers();
                     } else {
-                        this.displayDefaultOffers();
+                        this.loadDefaultOffers();
                     }
                 } catch (error) {
                     console.error('Error loading offers:', error);
-                    this.displayDefaultOffers();
+                    this.loadDefaultOffers();
                 }
+            }
+            
+            loadDefaultOffers() {
+                this.offers = [
+                    {
+                        id: 1,
+                        title: "عرض الذهب الملكي!",
+                        description: "احصل على 100% إضافية عند أول إيداع",
+                        image: "https://images.unsplash.com/photo-1614732414444-096e5f1122d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+                    },
+                    {
+                        id: 2,
+                        title: "تحدي المليون",
+                        description: "اربح جوائز نقدية تصل إلى 1,000,000 NSP",
+                        image: "https://images.unsplash.com/photo-1629885238957-7e1734e0ee0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+                    },
+                    {
+                        id: 3,
+                        title: "عرض الضمان الذهبي",
+                        description: "استرداد 50% من خسائرك هذا الأسبوع",
+                        image: "https://images.unsplash.com/photo-1634643836965-c2dbfc6875c9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+                    },
+                    {
+                        id: 4,
+                        title: "مكافآت الولاء",
+                        description: "اكسب نقاطًا ذهبية مع كل لعبة",
+                        image: "https://images.unsplash.com/photo-1510511459019-5dda7724fd87?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80"
+                    }
+                ];
+                
+                this.displayOffers();
+            }
+            
+            displayOffers() {
+                this.elements.offersSlider.innerHTML = '';
+                this.elements.sliderControls.innerHTML = '';
+                
+                // إضافة الشرائح
+                this.offers.forEach((offer, index) => {
+                    const slide = document.createElement('div');
+                    slide.className = `offer-slide ${index === 0 ? 'active' : ''}`;
+                    slide.style.backgroundImage = `url('${offer.image}')`;
+                    slide.innerHTML = `
+                        <div class="offer-overlay">
+                            <div class="offer-title">${offer.title}</div>
+                            <div class="offer-desc">${offer.description}</div>
+                        </div>
+                    `;
+                    this.elements.offersSlider.appendChild(slide);
+                    
+                    // إضافة عناصر التحكم
+                    const control = document.createElement('button');
+                    control.className = `slider-btn ${index === 0 ? 'active' : ''}`;
+                    control.dataset.index = index;
+                    control.addEventListener('click', () => this.goToSlide(index));
+                    this.elements.sliderControls.appendChild(control);
+                });
+                
+                // بدء الشرائح التلقائية
+                this.startSlider();
+            }
+            
+            startSlider() {
+                if (this.sliderInterval) {
+                    clearInterval(this.sliderInterval);
+                }
+                
+                this.sliderInterval = setInterval(() => {
+                    this.nextSlide();
+                }, 3000);
+            }
+            
+            nextSlide() {
+                this.currentSlide = (this.currentSlide + 1) % this.offers.length;
+                this.updateSlider();
+            }
+            
+            goToSlide(index) {
+                this.currentSlide = index;
+                this.updateSlider();
+                
+                // إعادة تعيين المؤقت
+                if (this.sliderInterval) {
+                    clearInterval(this.sliderInterval);
+                }
+                this.startSlider();
+            }
+            
+            updateSlider() {
+                const slides = document.querySelectorAll('.offer-slide');
+                const controls = document.querySelectorAll('.slider-btn');
+                
+                slides.forEach((slide, index) => {
+                    slide.classList.toggle('active', index === this.currentSlide);
+                });
+                
+                controls.forEach((control, index) => {
+                    control.classList.toggle('active', index === this.currentSlide);
+                });
             }
             
             async loadGames() {
                 try {
-                    // تحميل ألعاب التحدي
+                    // ألعاب التحدي
                     const challengeResponse = await fetch(API_URL, {
                         method: 'POST',
                         headers: {
@@ -1200,7 +1588,7 @@
                         this.displayDefaultChallengeGames();
                     }
                     
-                    // تحميل ألعاب الحظ
+                    // ألعاب الحظ
                     const luckResponse = await fetch(API_URL, {
                         method: 'POST',
                         headers: {
@@ -1227,25 +1615,6 @@
                 }
             }
             
-            displayOffers(offers) {
-                this.elements.offersContainer.innerHTML = '';
-                
-                offers.forEach(offer => {
-                    const offerCard = document.createElement('div');
-                    offerCard.className = 'offer-card';
-                    offerCard.innerHTML = `
-                        <img src="${offer.imageUrl || 'https://images.unsplash.com/photo-1511895426328-dc8714191300?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'}" 
-                             alt="${offer.title}" 
-                             class="offer-image">
-                        <div class="offer-overlay">
-                            <div class="offer-title">${offer.title}</div>
-                            <div class="offer-desc">${offer.description}</div>
-                        </div>
-                    `;
-                    this.elements.offersContainer.appendChild(offerCard);
-                });
-            }
-            
             displayGames(games, type) {
                 const container = type === 'challenge' ? this.elements.challengeGames : this.elements.luckGames;
                 container.innerHTML = '';
@@ -1254,17 +1623,15 @@
                     const gameCard = document.createElement('div');
                     gameCard.className = 'game-card';
                     gameCard.innerHTML = `
-                        <div style="position: relative;">
-                            <img src="${game.imageUrl || 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'}" 
-                                 alt="${game.title}" 
-                                 class="game-image">
-                            <div class="game-badge">${game.type || type === 'challenge' ? 'تحدي' : 'حظ'}</div>
-                        </div>
+                        <img src="${game.imageUrl || 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'}" 
+                             alt="${game.title}" 
+                             class="game-image">
+                        <div class="game-badge">${game.badge || (type === 'challenge' ? 'تحدي' : 'حظ')}</div>
                         <div class="game-content">
                             <div class="game-title">${game.title}</div>
                             <div class="game-desc">${game.description}</div>
                             <div class="game-coming-soon">
-                                <i class="fas fa-clock"></i>
+                                <i class="fas fa-crown"></i>
                                 قريبًا بإذن الله
                             </div>
                         </div>
@@ -1273,80 +1640,103 @@
                 });
             }
             
-            displayDefaultOffers() {
-                const defaultOffers = [
-                    {
-                        id: 1,
-                        title: "ترحيب خاص!",
-                        description: "احصل على 50 NSP إضافية عند أول إيداع",
-                        imageUrl: "https://images.unsplash.com/photo-1511895426328-dc8714191300?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                    },
-                    {
-                        id: 2,
-                        title: "تحدي نهاية الأسبوع",
-                        description: "اربح جوائز تصل إلى 10,000 NSP",
-                        imageUrl: "https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                    },
-                    {
-                        id: 3,
-                        title: "عرض الضمان",
-                        description: "استرداد 30% من خسائرك هذا الشهر",
-                        imageUrl: "https://images.unsplash.com/photo-1531415074968-036ba1b575da?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
-                    }
-                ];
-                
-                this.displayOffers(defaultOffers);
-            }
-            
             displayDefaultChallengeGames() {
-                const defaultGames = [
+                const games = [
                     {
                         id: 1,
-                        title: "تحدي الشطرنج",
-                        description: "مواجهات شطرنج استراتيجية مع لاعبين من حول العالم",
-                        imageUrl: "https://images.unsplash.com/photo-1586165368502-1bad197a6461?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                        type: "استراتيجية"
+                        title: "تحدي الشطرنج الذهبي",
+                        description: "مواجهات شطرنج استراتيجية بجوائز ذهبية",
+                        badge: "👑 ذهبي"
                     },
                     {
                         id: 2,
                         title: "منافسة الألغاز",
                         description: "حل الألغاز المعقدة والفوز بجوائز نقدية",
-                        imageUrl: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                        type: "ذكاء"
-                    }
-                ];
-                
-                this.displayGames(defaultGames, 'challenge');
-            }
-            
-            displayDefaultLuckGames() {
-                const defaultGames = [
+                        badge: "🧠 ذكاء"
+                    },
                     {
                         id: 3,
-                        title: "سلوت الماس",
-                        description: "ماكينة السلوت الأكثر ربحًا مع جاكبوت متصاعد",
-                        imageUrl: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                        type: "شعبية"
+                        title: "تحدي الرياضيات السريع",
+                        description: "اختبار مهاراتك الحسابية بسرعة فائقة",
+                        badge: "⚡ سرعة"
                     },
                     {
                         id: 4,
-                        title: "روليت الثروة",
-                        description: "عجلة الحظ مع فرص فوز متعددة وجوائز كبيرة",
-                        imageUrl: "https://images.unsplash.com/photo-1631730486572-f1c5e8e0674a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                        type: "إثارة"
+                        title: "بطولة الذاكرة",
+                        description: "اختبر قوة ذاكرتك واربح الجوائز القيمة",
+                        badge: "💎 تركيز"
                     }
                 ];
                 
-                this.displayGames(defaultGames, 'luck');
+                this.displayGames(games, 'challenge');
+            }
+            
+            displayDefaultLuckGames() {
+                const games = [
+                    {
+                        id: 5,
+                        title: "سلوت الذهب",
+                        description: "ماكينة السلوت الأكثر ربحًا مع جاكبوت ذهبي",
+                        badge: "💰 ثراء"
+                    },
+                    {
+                        id: 6,
+                        title: "روليت الثروة",
+                        description: "عجلة الحظ مع فرص فوز متعددة وجوائز كبيرة",
+                        badge: "🎯 حظ"
+                    },
+                    {
+                        id: 7,
+                        title: "نرد الحظ السعيد",
+                        description: "ارمي النرد واربح جوائز مذهلة في كل مرة",
+                        badge: "🎲 إثارة"
+                    },
+                    {
+                        id: 8,
+                        title: "بطاقات الجائزة الكبرى",
+                        description: "اختر البطاقة الصحيحة واربح الجوائز الكبرى",
+                        badge: "🏆 مفاجآت"
+                    }
+                ];
+                
+                this.displayGames(games, 'luck');
+            }
+            
+            createAmountButtons() {
+                const amounts = [50, 100, 200, 500, 1000, 5000];
+                
+                // أزرار الإيداع
+                amounts.forEach(amount => {
+                    const btn = document.createElement('button');
+                    btn.className = 'amount-btn';
+                    btn.textContent = `${amount} NSP`;
+                    btn.dataset.amount = amount;
+                    btn.addEventListener('click', (e) => {
+                        this.elements.depositAmount.value = amount;
+                        document.querySelectorAll('#depositAmountButtons .amount-btn').forEach(b => b.classList.remove('active'));
+                        e.target.classList.add('active');
+                    });
+                    this.elements.depositAmountButtons.appendChild(btn);
+                });
+                
+                // أزرار السحب
+                amounts.forEach(amount => {
+                    const btn = document.createElement('button');
+                    btn.className = 'amount-btn';
+                    btn.textContent = `${amount} NSP`;
+                    btn.dataset.amount = amount;
+                    btn.addEventListener('click', (e) => {
+                        this.elements.withdrawAmount.value = amount;
+                        document.querySelectorAll('#withdrawAmountButtons .amount-btn').forEach(b => b.classList.remove('active'));
+                        e.target.classList.add('active');
+                    });
+                    this.elements.withdrawAmountButtons.appendChild(btn);
+                });
             }
             
             switchTab(tab) {
                 this.elements.tabBtns.forEach(btn => {
-                    if (btn.dataset.tab === tab) {
-                        btn.classList.add('active');
-                    } else {
-                        btn.classList.remove('active');
-                    }
+                    btn.classList.toggle('active', btn.dataset.tab === tab);
                 });
                 
                 if (tab === 'challenge') {
@@ -1359,24 +1749,59 @@
             }
             
             showModal(type) {
-                const modal = type === 'deposit' ? this.elements.depositModal : this.elements.withdrawModal;
-                modal.classList.add('show');
+                const modalMap = {
+                    'userInfo': this.elements.userInfoModal,
+                    'deposit': this.elements.depositModal,
+                    'withdraw': this.elements.withdrawModal
+                };
                 
-                if (type === 'withdraw') {
+                const modal = modalMap[type];
+                if (!modal) return;
+                
+                if (type === 'userInfo') {
+                    this.updateUserInfoModal();
+                } else if (type === 'withdraw') {
                     this.elements.withdrawAmount.max = this.balance;
                     this.elements.withdrawAmount.placeholder = `الحد الأقصى: ${this.balance} NSP`;
                 }
+                
+                modal.classList.add('show');
             }
             
             closeModal(type) {
-                const modal = type === 'deposit' ? this.elements.depositModal : this.elements.withdrawModal;
-                modal.classList.remove('show');
+                const modalMap = {
+                    'userInfo': this.elements.userInfoModal,
+                    'deposit': this.elements.depositModal,
+                    'withdraw': this.elements.withdrawModal
+                };
                 
-                if (type === 'deposit') {
-                    this.elements.depositAmount.value = '';
-                } else {
-                    this.elements.withdrawAmount.value = '';
+                const modal = modalMap[type];
+                if (modal) {
+                    modal.classList.remove('show');
+                    
+                    // تنظيف الحقول
+                    if (type === 'deposit') {
+                        this.elements.depositAmount.value = '';
+                        document.querySelectorAll('#depositAmountButtons .amount-btn').forEach(b => b.classList.remove('active'));
+                    } else if (type === 'withdraw') {
+                        this.elements.withdrawAmount.value = '';
+                        document.querySelectorAll('#withdrawAmountButtons .amount-btn').forEach(b => b.classList.remove('active'));
+                    }
                 }
+            }
+            
+            updateUserInfoModal() {
+                if (!this.user) return;
+                
+                this.elements.modalUserAvatar.textContent = this.user.name.charAt(0).toUpperCase();
+                this.elements.modalUserName.textContent = this.user.name;
+                this.elements.modalUserEmail.textContent = this.user.email;
+                this.elements.modalUserBalance.textContent = `${this.balance} NSP`;
+                this.elements.modalTotalDeposits.textContent = `${this.userStats.totalDeposits} NSP`;
+                this.elements.modalTotalWithdrawals.textContent = `${this.userStats.totalWithdrawals} NSP`;
+                this.elements.modalTotalGames.textContent = this.userStats.totalGames;
+                this.elements.modalTotalWins.textContent = `${this.userStats.totalWins} NSP`;
+                this.elements.modalUserId.textContent = this.userId || 'غير متوفر';
             }
             
             async processDeposit() {
@@ -1387,15 +1812,33 @@
                     return;
                 }
                 
-                this.showToast('⏳ جاري معالجة الإيداع...', 'info');
+                this.showToast('💰 جاري معالجة الإيداع...', 'info');
                 
-                // محاكاة عملية الإيداع
-                setTimeout(async () => {
-                    const newBalance = this.balance + amount;
-                    await this.updateBalance(newBalance, 'deposit');
+                try {
+                    await this.updateBalance(amount, 'deposit');
+                    
+                    // تسجيل المعاملة
+                    await fetch(API_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: new URLSearchParams({
+                            action: 'createTransaction',
+                            userId: this.userId,
+                            type: 'deposit',
+                            amount: amount,
+                            status: 'completed'
+                        })
+                    });
+                    
                     this.closeModal('deposit');
-                    this.showToast(`✅ تم إيداع ${amount} NSP بنجاح`, 'success');
-                }, 1000);
+                    this.showToast(`✨ تم إيداع ${amount.toLocaleString()} NSP بنجاح`, 'success');
+                    
+                } catch (error) {
+                    console.error('Deposit error:', error);
+                    this.showToast('❌ فشل عملية الإيداع', 'error');
+                }
             }
             
             async processWithdrawal() {
@@ -1411,50 +1854,76 @@
                     return;
                 }
                 
-                this.showToast('⏳ جاري معالجة السحب...', 'info');
+                this.showToast('💰 جاري معالجة السحب...', 'info');
                 
-                // محاكاة عملية السحب
-                setTimeout(async () => {
-                    const newBalance = this.balance - amount;
-                    await this.updateBalance(newBalance, 'withdrawal');
+                try {
+                    await this.updateBalance(amount, 'withdrawal');
+                    
+                    // تسجيل المعاملة
+                    await fetch(API_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/x-www-form-urlencoded',
+                        },
+                        body: new URLSearchParams({
+                            action: 'createTransaction',
+                            userId: this.userId,
+                            type: 'withdrawal',
+                            amount: amount,
+                            status: 'pending' // في انتظار المراجعة
+                        })
+                    });
+                    
                     this.closeModal('withdraw');
-                    this.showToast(`✅ تم سحب ${amount} NSP بنجاح`, 'success');
-                }, 1000);
+                    this.showToast(`✨ تم تقديم طلب سحب ${amount.toLocaleString()} NSP`, 'success');
+                    
+                } catch (error) {
+                    console.error('Withdrawal error:', error);
+                    this.showToast('❌ فشل عملية السحب', 'error');
+                }
             }
             
             showLogin() {
                 this.elements.loginScreen.style.display = 'flex';
                 this.elements.dashboard.style.display = 'none';
-                this.isAuthenticated = false;
+                
+                // إيقاف الشرائح
+                if (this.sliderInterval) {
+                    clearInterval(this.sliderInterval);
+                }
             }
             
             showDashboard() {
                 this.elements.loginScreen.style.display = 'none';
                 this.elements.dashboard.style.display = 'block';
-                this.isAuthenticated = true;
                 this.updateUI();
             }
             
             updateUI() {
                 if (this.user) {
-                    this.elements.userAvatar.textContent = this.user.name.charAt(0).toUpperCase();
-                    this.elements.userName.textContent = this.user.name;
-                    this.elements.balanceAmount.textContent = `${this.balance} NSP`;
-                    
-                    // تحديث الإحصائيات
-                    this.elements.totalGames.textContent = '0';
-                    this.elements.totalWins.textContent = '0';
-                    this.elements.totalCoins.textContent = this.balance;
+                    this.elements.balanceAmount.textContent = `${this.balance.toLocaleString()} NSP`;
                 }
             }
             
             logout() {
-                localStorage.removeItem('nsp_token');
-                localStorage.removeItem('nsp_user');
+                // إيقاف الشرائح
+                if (this.sliderInterval) {
+                    clearInterval(this.sliderInterval);
+                }
+                
+                localStorage.removeItem('nsp_gold_token');
+                localStorage.removeItem('nsp_gold_user');
+                
                 this.user = null;
-                this.balance = 0;
                 this.userId = null;
-                this.isAuthenticated = false;
+                this.balance = 0;
+                this.userStats = {
+                    totalGames: 0,
+                    totalWins: 0,
+                    totalDeposits: 0,
+                    totalWithdrawals: 0
+                };
+                
                 this.showLogin();
                 this.showToast('👋 تم تسجيل الخروج بنجاح', 'info');
             }
@@ -1469,7 +1938,7 @@
                 toast.className = 'toast';
                 if (type === 'success') {
                     toast.classList.add('success');
-                    icon.textContent = '✅';
+                    icon.textContent = '✨';
                 } else if (type === 'error') {
                     toast.classList.add('error');
                     icon.textContent = '❌';
