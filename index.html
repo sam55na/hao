@@ -144,30 +144,12 @@
             line-height: 1.5;
         }
 
-        .gsi-material-button {
-            background: linear-gradient(45deg, var(--gold-dark), var(--gold)) !important;
-            color: var(--black) !important;
-            border: none !important;
-            border-radius: var(--radius) !important;
-            padding: 16px 35px !important;
-            font-size: 1.1em !important;
-            font-weight: 700 !important;
-            cursor: pointer !important;
-            display: flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            gap: 12px !important;
-            margin: 0 auto 25px !important;
-            transition: var(--transition) !important;
-            box-shadow: var(--shadow-gold) !important;
-            min-width: 250px !important;
-            position: relative !important;
-            overflow: hidden !important;
-        }
-
-        .gsi-material-button:hover {
-            transform: translateY(-2px) !important;
-            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4) !important;
+        .google-signin-container {
+            margin-bottom: 25px;
+            min-height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .login-features {
@@ -806,6 +788,46 @@
             box-shadow: var(--shadow-red);
         }
 
+        /* Loading Spinner */
+        .loading-spinner {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 4000;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .loading-spinner.show {
+            display: flex;
+        }
+
+        .spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255, 215, 0, 0.3);
+            border-top: 4px solid var(--gold);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: var(--gold);
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
         /* ===== RESPONSIVE ===== */
         @media (max-width: 1024px) {
             .games-grid {
@@ -903,6 +925,12 @@
     </style>
 </head>
 <body>
+    <!-- Loading Spinner -->
+    <div class="loading-spinner" id="loadingSpinner">
+        <div class="spinner"></div>
+        <div class="loading-text">جاري التحميل...</div>
+    </div>
+
     <!-- Login Screen -->
     <div class="login-screen" id="loginScreen">
         <div class="login-content">
@@ -913,7 +941,7 @@
                 سجل دخولك وابدأ رحلتك نحو الثروة
             </div>
             
-            <div id="gsi-button"></div>
+            <div class="google-signin-container" id="gsiButton"></div>
             
             <div class="login-features">
                 <div class="feature-item">
@@ -1129,8 +1157,7 @@
     <script>
         // ===== CONFIGURATION =====
         const CLIENT_ID = '739516782894-1q82fhnajlc7fqa3n8jgck7bv9qc4bc5.apps.googleusercontent.com';
-        const SPREADSHEET_ID = '1v_y9uJsOgDigKk4Iqsb630IbnLciBIsz5kWOqcjLkbs';
-        const API_URL = 'https://script.google.com/macros/s/AKfycbwM2mbGXmGzM0Cg3kp0w9UXkvXlDrX29d9VIeaADZiE9DKyPX6ZoxEeUqzKn-72g6Ov2g/exec';
+        const API_URL = 'https://script.google.com/macros/s/AKfycbwh7VeV1yQ1QQOZ0P7AmEZcWiof8xzMSdGN76J0SmuQ4T-Mz5WtK_JWNOm3e8755DvzXg/exec';
 
         // ===== APPLICATION CLASS =====
         class GamingPlatform {
@@ -1148,7 +1175,8 @@
                 this.elements = {
                     loginScreen: document.getElementById('loginScreen'),
                     dashboard: document.getElementById('dashboard'),
-                    gsiButton: document.getElementById('gsi-button'),
+                    gsiButton: document.getElementById('gsiButton'),
+                    loadingSpinner: document.getElementById('loadingSpinner'),
                     
                     // Header Elements
                     balanceAmount: document.getElementById('balanceAmount'),
@@ -1194,15 +1222,16 @@
                 this.sliderInterval = null;
                 this.currentSlide = 0;
                 this.offers = [];
+                this.googleAuthInitialized = false;
                 
                 this.initialize();
             }
             
             initialize() {
                 this.setupEventListeners();
-                this.initializeGoogleAuth();
                 this.checkSavedSession();
                 this.createAmountButtons();
+                this.initializeGoogleAuth();
             }
             
             setupEventListeners() {
@@ -1229,32 +1258,58 @@
             }
             
             initializeGoogleAuth() {
-                window.google.accounts.id.initialize({
-                    client_id: CLIENT_ID,
-                    callback: this.handleCredentialResponse.bind(this),
-                    auto_select: false,
-                    cancel_on_tap_outside: false,
-                    ux_mode: 'popup'
-                });
+                if (this.googleAuthInitialized) return;
                 
-                window.google.accounts.id.renderButton(
-                    this.elements.gsiButton,
-                    {
-                        theme: 'filled_blue',
-                        size: 'large',
-                        text: 'signin_with',
-                        shape: 'pill',
-                        locale: 'ar',
-                        width: 280
-                    }
-                );
+                try {
+                    window.google.accounts.id.initialize({
+                        client_id: CLIENT_ID,
+                        callback: this.handleCredentialResponse.bind(this),
+                        auto_select: false,
+                        cancel_on_tap_outside: false,
+                        ux_mode: 'popup'
+                    });
+                    
+                    // إظهار زر تسجيل الدخول دائماً
+                    window.google.accounts.id.renderButton(
+                        this.elements.gsiButton,
+                        {
+                            theme: 'filled_blue',
+                            size: 'large',
+                            text: 'signin_with',
+                            shape: 'pill',
+                            locale: 'ar',
+                            width: 280
+                        }
+                    );
+                    
+                    // عرض نصائح تسجيل الدخول
+                    window.google.accounts.id.prompt();
+                    
+                    this.googleAuthInitialized = true;
+                    console.log('Google Auth initialized successfully');
+                } catch (error) {
+                    console.error('Failed to initialize Google Auth:', error);
+                    this.showToast('❌ تعذر تحميل نظام تسجيل الدخول', 'error');
+                    
+                    // إعادة المحاولة بعد ثانيتين
+                    setTimeout(() => {
+                        this.initializeGoogleAuth();
+                    }, 2000);
+                }
             }
             
             async handleCredentialResponse(response) {
                 try {
+                    this.showLoading(true);
                     this.showToast('👑 جاري تسجيل الدخول...', 'info');
                     
+                    console.log('Google login response received');
+                    
                     const decodedToken = this.parseJwt(response.credential);
+                    
+                    if (!decodedToken) {
+                        throw new Error('Invalid token');
+                    }
                     
                     this.user = {
                         id: decodedToken.sub,
@@ -1263,12 +1318,25 @@
                         picture: decodedToken.picture
                     };
                     
-                    // حفظ الجلسة
-                    localStorage.setItem('nsp_gold_token', response.credential);
-                    localStorage.setItem('nsp_gold_user', JSON.stringify(this.user));
+                    console.log('User decoded:', this.user);
+                    
+                    // حفظ الجلسة (بدون بيانات حساسة)
+                    this.saveSession({
+                        userId: this.user.id,
+                        name: this.user.name,
+                        email: this.user.email,
+                        picture: this.user.picture
+                    });
                     
                     // تسجيل المستخدم في قاعدة البيانات
-                    await this.registerUser();
+                    const userData = await this.registerUser();
+                    
+                    if (!userData.success) {
+                        throw new Error(userData.message || 'Failed to register user');
+                    }
+                    
+                    this.userId = userData.userId;
+                    this.balance = userData.balance || 100;
                     
                     // تحميل بيانات المستخدم
                     await this.loadUserData();
@@ -1282,7 +1350,9 @@
                     
                 } catch (error) {
                     console.error('Login error:', error);
-                    this.showToast('❌ فشل تسجيل الدخول', 'error');
+                    this.showToast('❌ فشل تسجيل الدخول: ' + error.message, 'error');
+                } finally {
+                    this.showLoading(false);
                 }
             }
             
@@ -1296,73 +1366,138 @@
                     
                     return JSON.parse(jsonPayload);
                 } catch (error) {
+                    console.error('Error parsing JWT:', error);
                     return null;
                 }
             }
             
+            saveSession(userData) {
+                try {
+                    // حفظ بيانات الجلسة (بدون بيانات حساسة)
+                    const sessionData = {
+                        userId: userData.userId,
+                        name: userData.name,
+                        email: userData.email,
+                        picture: userData.picture,
+                        timestamp: Date.now()
+                    };
+                    
+                    localStorage.setItem('nsp_gold_session', JSON.stringify(sessionData));
+                    console.log('Session saved');
+                } catch (error) {
+                    console.error('Error saving session:', error);
+                }
+            }
+            
+            getSession() {
+                try {
+                    const sessionData = localStorage.getItem('nsp_gold_session');
+                    if (!sessionData) return null;
+                    
+                    const data = JSON.parse(sessionData);
+                    
+                    // التحقق من انتهاء صلاحية الجلسة (7 أيام)
+                    const sessionAge = Date.now() - data.timestamp;
+                    const maxAge = 7 * 24 * 60 * 60 * 1000; // 7 أيام
+                    
+                    if (sessionAge > maxAge) {
+                        this.clearSession();
+                        return null;
+                    }
+                    
+                    return data;
+                } catch (error) {
+                    console.error('Error getting session:', error);
+                    this.clearSession();
+                    return null;
+                }
+            }
+            
+            clearSession() {
+                localStorage.removeItem('nsp_gold_session');
+            }
+            
             checkSavedSession() {
-                const savedToken = localStorage.getItem('nsp_gold_token');
-                const savedUser = localStorage.getItem('nsp_gold_user');
-                
-                if (savedToken && savedUser) {
-                    try {
-                        const decodedToken = this.parseJwt(savedToken);
-                        if (decodedToken) {
-                            this.user = JSON.parse(savedUser);
-                            this.loadUserData().then(() => {
-                                this.showDashboard();
-                                this.loadOffers();
-                                this.loadGames();
-                            }).catch(() => {
-                                this.showLogin();
-                            });
-                        } else {
+                try {
+                    const session = this.getSession();
+                    
+                    if (session) {
+                        this.user = {
+                            id: session.userId,
+                            name: session.name,
+                            email: session.email,
+                            picture: session.picture
+                        };
+                        
+                        this.loadUserData().then(() => {
+                            this.showDashboard();
+                            this.loadOffers();
+                            this.loadGames();
+                        }).catch(() => {
                             this.showLogin();
-                        }
-                    } catch (error) {
-                        console.error('Failed to load saved session:', error);
+                        });
+                    } else {
                         this.showLogin();
                     }
-                } else {
+                } catch (error) {
+                    console.error('Error checking saved session:', error);
                     this.showLogin();
                 }
             }
             
-            async registerUser() {
+            async callAPI(action, data = {}) {
                 try {
+                    console.log('Calling API:', action, data);
+                    
+                    const formData = new URLSearchParams();
+                    formData.append('action', action);
+                    formData.append('data', JSON.stringify(data));
+                    
                     const response = await fetch(API_URL, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded',
                         },
-                        body: new URLSearchParams({
-                            action: 'registerUser',
-                            googleId: this.user.id,
-                            name: this.user.name,
-                            email: this.user.email,
-                            picture: this.user.picture
-                        })
+                        body: formData
                     });
                     
-                    const data = await response.json();
-                    
-                    if (data.success) {
-                        this.userId = data.userId;
-                        this.balance = data.balance || 100;
-                        this.userStats.totalDeposits = data.totalDeposits || 0;
-                        this.userStats.totalWithdrawals = data.totalWithdrawals || 0;
-                        this.userStats.totalGames = data.totalGames || 0;
-                        this.userStats.totalWins = data.totalWins || 0;
-                        return data;
-                    } else {
-                        throw new Error(data.message || 'Failed to register user');
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
                     }
+                    
+                    const result = await response.json();
+                    console.log('API response:', result);
+                    
+                    return result;
+                    
+                } catch (error) {
+                    console.error('API call error:', error);
+                    throw error;
+                }
+            }
+            
+            async registerUser() {
+                try {
+                    const result = await this.callAPI('registerUser', {
+                        googleId: this.user.id,
+                        name: this.user.name,
+                        email: this.user.email,
+                        picture: this.user.picture
+                    });
+                    
+                    return result;
                 } catch (error) {
                     console.error('Registration error:', error);
                     // استخدام بيانات افتراضية في حالة الخطأ
-                    this.userId = 'GOLD_' + Date.now().toString(36).toUpperCase();
-                    this.balance = 100;
-                    return { success: true };
+                    return {
+                        success: true,
+                        userId: 'GOLD_' + Date.now().toString(36).toUpperCase(),
+                        balance: 100,
+                        totalDeposits: 0,
+                        totalWithdrawals: 0,
+                        totalWins: 0,
+                        totalGames: 0
+                    };
                 }
             }
             
@@ -1370,30 +1505,21 @@
                 try {
                     if (!this.user) return;
                     
-                    const response = await fetch(API_URL, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
-                        },
-                        body: new URLSearchParams({
-                            action: 'getUser',
-                            googleId: this.user.id
-                        })
+                    const result = await this.callAPI('getUser', {
+                        googleId: this.user.id
                     });
                     
-                    const data = await response.json();
-                    
-                    if (data.success) {
-                        this.userId = data.userId;
-                        this.balance = data.balance || 0;
+                    if (result.success) {
+                        this.userId = result.userId;
+                        this.balance = result.balance || 0;
                         this.userStats = {
-                            totalGames: data.totalGames || 0,
-                            totalWins: data.totalWins || 0,
-                            totalDeposits: data.totalDeposits || 0,
-                            totalWithdrawals: data.totalWithdrawals || 0
+                            totalGames: result.totalGames || 0,
+                            totalWins: result.totalWins || 0,
+                            totalDeposits: result.totalDeposits || 0,
+                            totalWithdrawals: result.totalWithdrawals || 0
                         };
                         this.updateUI();
-                        return data;
+                        return result;
                     } else {
                         // إنشاء حساب جديد في حالة الخطأ
                         return await this.registerUser();
@@ -1406,25 +1532,14 @@
             
             async updateBalance(amount, type) {
                 try {
-                    const newBalance = type === 'deposit' ? this.balance + amount : this.balance - amount;
-                    
-                    const response = await fetch(API_URL, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
-                        },
-                        body: new URLSearchParams({
-                            action: 'updateBalance',
-                            userId: this.userId,
-                            amount: amount,
-                            type: type
-                        })
+                    const result = await this.callAPI('updateBalance', {
+                        userId: this.userId,
+                        amount: amount,
+                        type: type
                     });
                     
-                    const data = await response.json();
-                    
-                    if (data.success) {
-                        this.balance = data.newBalance;
+                    if (result.success) {
+                        this.balance = result.newBalance;
                         
                         // تحديث الإحصائيات
                         if (type === 'deposit') {
@@ -1434,9 +1549,9 @@
                         }
                         
                         this.updateUI();
-                        return data;
+                        return result;
                     } else {
-                        throw new Error(data.message);
+                        throw new Error(result.message);
                     }
                 } catch (error) {
                     console.error('Error updating balance:', error);
@@ -1446,20 +1561,13 @@
             
             async createTransaction(amount, type) {
                 try {
-                    const response = await fetch(API_URL, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
-                        },
-                        body: new URLSearchParams({
-                            action: 'createTransaction',
-                            userId: this.userId,
-                            type: type,
-                            amount: amount
-                        })
+                    const result = await this.callAPI('createTransaction', {
+                        userId: this.userId,
+                        type: type,
+                        amount: amount
                     });
                     
-                    return await response.json();
+                    return result;
                 } catch (error) {
                     console.error('Error creating transaction:', error);
                 }
@@ -1467,20 +1575,10 @@
             
             async loadOffers() {
                 try {
-                    const response = await fetch(API_URL, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
-                        },
-                        body: new URLSearchParams({
-                            action: 'getOffers'
-                        })
-                    });
+                    const result = await this.callAPI('getOffers', {});
                     
-                    const data = await response.json();
-                    
-                    if (data.success && data.offers && data.offers.length > 0) {
-                        this.offers = data.offers;
+                    if (result.success && result.offers && result.offers.length > 0) {
+                        this.offers = result.offers;
                         this.displayOffers();
                     } else {
                         this.loadDefaultOffers();
@@ -1593,41 +1691,19 @@
             async loadGames() {
                 try {
                     // ألعاب التحدي
-                    const challengeResponse = await fetch(API_URL, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
-                        },
-                        body: new URLSearchParams({
-                            action: 'getGames',
-                            type: 'challenge'
-                        })
-                    });
+                    const challengeResult = await this.callAPI('getGames', { type: 'challenge' });
                     
-                    const challengeData = await challengeResponse.json();
-                    
-                    if (challengeData.success) {
-                        this.displayGames(challengeData.games, 'challenge');
+                    if (challengeResult.success) {
+                        this.displayGames(challengeResult.games, 'challenge');
                     } else {
                         this.displayDefaultChallengeGames();
                     }
                     
                     // ألعاب الحظ
-                    const luckResponse = await fetch(API_URL, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/x-www-form-urlencoded',
-                        },
-                        body: new URLSearchParams({
-                            action: 'getGames',
-                            type: 'luck'
-                        })
-                    });
+                    const luckResult = await this.callAPI('getGames', { type: 'luck' });
                     
-                    const luckData = await luckResponse.json();
-                    
-                    if (luckData.success) {
-                        this.displayGames(luckData.games, 'luck');
+                    if (luckResult.success) {
+                        this.displayGames(luckResult.games, 'luck');
                     } else {
                         this.displayDefaultLuckGames();
                     }
@@ -1670,25 +1746,29 @@
                         id: 1,
                         title: "تحدي الشطرنج الذهبي",
                         description: "مواجهات شطرنج استراتيجية بجوائز ذهبية",
-                        badge: "👑 ذهبي"
+                        badge: "👑 ذهبي",
+                        imageUrl: "https://images.unsplash.com/photo-1586165368502-1bad197a6461?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
                     },
                     {
                         id: 2,
                         title: "منافسة الألغاز",
                         description: "حل الألغاز المعقدة والفوز بجوائز نقدية",
-                        badge: "🧠 ذكاء"
+                        badge: "🧠 ذكاء",
+                        imageUrl: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
                     },
                     {
                         id: 3,
                         title: "تحدي الرياضيات السريع",
                         description: "اختبار مهاراتك الحسابية بسرعة فائقة",
-                        badge: "⚡ سرعة"
+                        badge: "⚡ سرعة",
+                        imageUrl: "https://images.unsplash.com/photo-1509228468518-180dd4864904?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
                     },
                     {
                         id: 4,
                         title: "بطولة الذاكرة",
                         description: "اختبر قوة ذاكرتك واربح الجوائز القيمة",
-                        badge: "💎 تركيز"
+                        badge: "💎 تركيز",
+                        imageUrl: "https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
                     }
                 ];
                 
@@ -1701,25 +1781,29 @@
                         id: 5,
                         title: "سلوت الذهب",
                         description: "ماكينة السلوت الأكثر ربحًا مع جاكبوت ذهبي",
-                        badge: "💰 ثراء"
+                        badge: "💰 ثراء",
+                        imageUrl: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
                     },
                     {
                         id: 6,
                         title: "روليت الثروة",
                         description: "عجلة الحظ مع فرص فوز متعددة وجوائز كبيرة",
-                        badge: "🎯 حظ"
+                        badge: "🎯 حظ",
+                        imageUrl: "https://images.unsplash.com/photo-1631730486572-f1c5e8e0674a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
                     },
                     {
                         id: 7,
                         title: "نرد الحظ السعيد",
                         description: "ارمي النرد واربح جوائز مذهلة في كل مرة",
-                        badge: "🎲 إثارة"
+                        badge: "🎲 إثارة",
+                        imageUrl: "https://images.unsplash.com/photo-1611735341450-74d61e660ad2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
                     },
                     {
                         id: 8,
                         title: "بطاقات الجائزة الكبرى",
                         description: "اختر البطاقة الصحيحة واربح الجوائز الكبرى",
-                        badge: "🏆 مفاجآت"
+                        badge: "🏆 مفاجآت",
+                        imageUrl: "https://images.unsplash.com/photo-1611597616983-5117193c41ce?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
                     }
                 ];
                 
@@ -1836,6 +1920,7 @@
                     return;
                 }
                 
+                this.showLoading(true);
                 this.showToast('💰 جاري معالجة الإيداع...', 'info');
                 
                 try {
@@ -1851,6 +1936,8 @@
                 } catch (error) {
                     console.error('Deposit error:', error);
                     this.showToast('❌ فشل عملية الإيداع', 'error');
+                } finally {
+                    this.showLoading(false);
                 }
             }
             
@@ -1867,6 +1954,7 @@
                     return;
                 }
                 
+                this.showLoading(true);
                 this.showToast('💰 جاري معالجة السحب...', 'info');
                 
                 try {
@@ -1882,6 +1970,16 @@
                 } catch (error) {
                     console.error('Withdrawal error:', error);
                     this.showToast('❌ فشل عملية السحب', 'error');
+                } finally {
+                    this.showLoading(false);
+                }
+            }
+            
+            showLoading(show) {
+                if (show) {
+                    this.elements.loadingSpinner.classList.add('show');
+                } else {
+                    this.elements.loadingSpinner.classList.remove('show');
                 }
             }
             
@@ -1892,6 +1990,13 @@
                 // إيقاف الشرائح
                 if (this.sliderInterval) {
                     clearInterval(this.sliderInterval);
+                }
+                
+                // إعادة تهيئة Google Auth إذا لم تكن معلمة
+                if (!this.googleAuthInitialized) {
+                    setTimeout(() => {
+                        this.initializeGoogleAuth();
+                    }, 100);
                 }
             }
             
@@ -1913,8 +2018,8 @@
                     clearInterval(this.sliderInterval);
                 }
                 
-                localStorage.removeItem('nsp_gold_token');
-                localStorage.removeItem('nsp_gold_user');
+                // مسح الجلسة
+                this.clearSession();
                 
                 this.user = null;
                 this.userId = null;
@@ -1963,7 +2068,16 @@
 
         // ===== INITIALIZE APPLICATION =====
         window.addEventListener('DOMContentLoaded', () => {
-            window.app = new GamingPlatform();
+            // انتظار تحميل Google Identity Services
+            const checkGoogleAuth = () => {
+                if (window.google && window.google.accounts) {
+                    window.app = new GamingPlatform();
+                } else {
+                    setTimeout(checkGoogleAuth, 100);
+                }
+            };
+            
+            checkGoogleAuth();
         });
     </script>
 </body>
