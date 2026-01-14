@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎮 منصة الألعاب الاحترافية</title>
+    <title>🎮 NSP GAMES - منصة الألعاب الاحترافية</title>
     
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;800&display=swap" rel="stylesheet">
@@ -15,7 +15,7 @@
     <script src="https://accounts.google.com/gsi/client" async defer></script>
     
     <!-- Swiper CSS -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css" />
     
     <style>
         /* ===== RESET & BASE STYLES ===== */
@@ -26,7 +26,6 @@
         }
 
         :root {
-            /* الألوان الرئيسية */
             --primary: #8B5CF6;
             --primary-dark: #7C3AED;
             --primary-light: #A78BFA;
@@ -38,30 +37,22 @@
             --danger-dark: #DC2626;
             --warning: #F59E0B;
             --warning-dark: #D97706;
-            --info: #3B82F6;
             --dark: #1F2937;
             --darker: #111827;
             --darkest: #0B1121;
             --light: #F3F4F6;
-            --lighter: #F9FAFB;
             --gray: #6B7280;
             --gray-light: #9CA3AF;
-            --gray-dark: #4B5563;
             
-            /* الظلال */
             --shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
             --shadow-light: 0 5px 15px rgba(0, 0, 0, 0.2);
             --shadow-dark: 0 15px 35px rgba(0, 0, 0, 0.4);
-            --shadow-inset: inset 0 2px 5px rgba(0, 0, 0, 0.2);
             
-            /* الزوايا */
             --radius: 20px;
             --radius-sm: 12px;
             --radius-lg: 28px;
             --radius-xl: 36px;
-            --radius-full: 9999px;
             
-            /* الانتقالات */
             --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
@@ -72,16 +63,10 @@
 
         body {
             font-family: 'Tajawal', sans-serif;
-            background: linear-gradient(135deg, var(--darker) 0%, var(--darkest) 100%);
+            background: linear-gradient(135deg, var(--darkest) 0%, var(--darker) 100%);
             color: var(--light);
             direction: rtl;
-        }
-
-        /* ===== LAYOUT ===== */
-        .container {
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
         }
 
         /* ===== LOGIN SCREEN ===== */
@@ -91,9 +76,13 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
-            background: linear-gradient(135deg, var(--darker) 0%, var(--darkest) 100%);
+            background: linear-gradient(135deg, 
+                rgba(17, 24, 39, 0.95) 0%, 
+                rgba(31, 41, 55, 0.95) 100%),
+                url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80');
+            background-size: cover;
+            background-position: center;
             position: relative;
-            overflow: hidden;
         }
 
         .login-screen::before {
@@ -104,17 +93,17 @@
             right: 0;
             bottom: 0;
             background: 
-                radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(236, 72, 153, 0.15) 0%, transparent 50%);
+                radial-gradient(circle at 20% 80%, rgba(139, 92, 246, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(236, 72, 153, 0.3) 0%, transparent 50%);
             z-index: 1;
         }
 
         .login-content {
-            background: rgba(31, 41, 55, 0.95);
-            backdrop-filter: blur(20px);
+            background: rgba(17, 24, 39, 0.95);
+            backdrop-filter: blur(30px);
             padding: 60px 50px;
             border-radius: var(--radius-xl);
-            border: 3px solid rgba(139, 92, 246, 0.4);
+            border: 2px solid rgba(139, 92, 246, 0.5);
             text-align: center;
             max-width: 500px;
             width: 100%;
@@ -140,11 +129,15 @@
             margin-bottom: 30px;
             animation: logoFloat 3s ease-in-out infinite;
             filter: drop-shadow(0 10px 20px rgba(139, 92, 246, 0.5));
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
         @keyframes logoFloat {
             0%, 100% { transform: translateY(0) rotate(0); }
-            50% { transform: translateY(-25px) rotate(8deg); }
+            50% { transform: translateY(-20px) rotate(5deg); }
         }
 
         .login-title {
@@ -161,38 +154,12 @@
         .login-subtitle {
             color: var(--gray-light);
             margin-bottom: 40px;
-            font-size: 1.3em;
+            font-size: 1.2em;
             line-height: 1.6;
         }
 
-        .login-features {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
-            margin-bottom: 40px;
-        }
-
-        .feature-item {
-            background: rgba(255, 255, 255, 0.05);
-            padding: 20px;
-            border-radius: var(--radius);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .feature-icon {
-            font-size: 2em;
-            margin-bottom: 10px;
-            color: var(--primary-light);
-        }
-
-        .feature-text {
-            font-size: 0.9em;
-            color: var(--gray-light);
-        }
-
-        /* ===== GOOGLE SIGNIN BUTTON ===== */
         .gsi-material-button {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            background: linear-gradient(135deg, var(--primary), var(--secondary)) !important;
             color: white !important;
             border: none !important;
             border-radius: var(--radius) !important;
@@ -229,29 +196,52 @@
         }
 
         .gsi-material-button:hover {
-            transform: translateY(-5px) !important;
+            transform: translateY(-3px) !important;
             box-shadow: 0 15px 40px rgba(139, 92, 246, 0.6) !important;
         }
 
-        .login-footer {
-            color: var(--gray);
-            font-size: 0.9em;
-            margin-top: 30px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        .login-features {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-top: 40px;
         }
 
-        /* ===== MAIN DASHBOARD ===== */
-        .main-dashboard {
+        .feature-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: var(--radius);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: var(--transition);
+        }
+
+        .feature-item:hover {
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .feature-icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+            color: var(--primary-light);
+        }
+
+        .feature-text {
+            font-size: 0.9em;
+            color: var(--gray-light);
+        }
+
+        /* ===== DASHBOARD ===== */
+        .dashboard {
             display: none;
             min-height: 100vh;
         }
 
-        /* ===== HEADER ===== */
+        /* Header */
         .header {
-            background: rgba(31, 41, 55, 0.95);
-            backdrop-filter: blur(20px);
-            padding: 20px 30px;
+            background: rgba(17, 24, 39, 0.95);
+            backdrop-filter: blur(30px);
+            padding: 20px 40px;
             border-bottom: 2px solid rgba(139, 92, 246, 0.3);
             box-shadow: var(--shadow);
             display: flex;
@@ -263,7 +253,10 @@
         }
 
         .logo {
-            font-size: 2em;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            font-size: 1.8em;
             font-weight: 800;
             background: linear-gradient(135deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
@@ -271,7 +264,7 @@
             color: transparent;
         }
 
-        .user-section {
+        .wallet-section {
             display: flex;
             align-items: center;
             gap: 25px;
@@ -286,140 +279,62 @@
             gap: 15px;
             box-shadow: var(--shadow);
             border: 2px solid rgba(255, 255, 255, 0.2);
-            min-width: 200px;
+            min-width: 250px;
+            transition: var(--transition);
+        }
+
+        .balance-container:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(139, 92, 246, 0.4);
         }
 
         .balance-icon {
             font-size: 1.8em;
+            filter: drop-shadow(0 2px 5px rgba(0,0,0,0.3));
         }
 
         .balance-amount {
-            font-size: 2em;
+            font-size: 2.2em;
             font-weight: 900;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
         }
 
-        .user-info {
+        .wallet-buttons {
             display: flex;
-            align-items: center;
             gap: 15px;
-            background: rgba(255, 255, 255, 0.08);
-            padding: 10px 20px;
-            border-radius: var(--radius);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .user-avatar {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.3em;
-            font-weight: bold;
-        }
-
-        .user-details {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        .user-name {
-            font-weight: 600;
-            font-size: 1.1em;
-        }
-
-        .user-id {
-            font-size: 0.8em;
-            color: var(--gray-light);
-            font-family: monospace;
-        }
-
-        .logout-btn {
-            background: rgba(239, 68, 68, 0.2);
-            color: var(--danger);
-            border: 1px solid rgba(239, 68, 68, 0.3);
-            padding: 10px 25px;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            transition: var(--transition);
-            font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logout-btn:hover {
-            background: rgba(239, 68, 68, 0.3);
-            transform: translateY(-2px);
-        }
-
-        /* ===== WALLET CONTROLS ===== */
-        .wallet-controls {
-            background: rgba(31, 41, 55, 0.8);
-            padding: 30px;
-            margin: 30px;
-            border-radius: var(--radius);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            box-shadow: var(--shadow);
-            display: flex;
-            justify-content: center;
-            gap: 30px;
         }
 
         .wallet-btn {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            border: none;
-            padding: 20px 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            color: var(--light);
+            padding: 15px 30px;
             border-radius: var(--radius);
-            font-size: 1.3em;
+            font-size: 1.1em;
             font-weight: 700;
             cursor: pointer;
             transition: var(--transition);
             display: flex;
             align-items: center;
-            gap: 15px;
-            min-width: 250px;
-            justify-content: center;
-            box-shadow: var(--shadow);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .wallet-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.15) 50%, transparent 70%);
-            transform: translateX(-100%);
-            transition: transform 0.6s;
-        }
-
-        .wallet-btn:hover::before {
-            transform: translateX(100%);
+            gap: 10px;
+            backdrop-filter: blur(10px);
         }
 
         .wallet-btn:hover {
-            transform: translateY(-5px);
-            box-shadow: var(--shadow-dark);
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+            border-color: var(--primary);
         }
 
-        /* ===== OFFERS SLIDER ===== */
+        /* Offers Section */
         .offers-section {
-            padding: 0 30px;
-            margin-bottom: 40px;
+            padding: 40px;
         }
 
         .section-title {
-            font-size: 2em;
+            font-size: 2.2em;
             font-weight: 800;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
             text-align: center;
             color: var(--light);
             position: relative;
@@ -439,7 +354,7 @@
 
         .swiper {
             width: 100%;
-            height: 300px;
+            height: 350px;
             border-radius: var(--radius);
             overflow: hidden;
             box-shadow: var(--shadow);
@@ -467,19 +382,20 @@
             bottom: 0;
             right: 0;
             left: 0;
-            background: linear-gradient(transparent, rgba(0,0,0,0.8));
-            padding: 20px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.9));
+            padding: 30px;
             color: white;
         }
 
         .offer-title {
-            font-size: 1.5em;
+            font-size: 1.8em;
             font-weight: 700;
-            margin-bottom: 5px;
+            margin-bottom: 10px;
+            color: var(--light);
         }
 
         .offer-desc {
-            font-size: 0.9em;
+            font-size: 1.1em;
             color: var(--gray-light);
         }
 
@@ -487,34 +403,35 @@
         .swiper-button-prev {
             color: white !important;
             background: rgba(0,0,0,0.5);
-            width: 50px !important;
-            height: 50px !important;
+            width: 60px !important;
+            height: 60px !important;
             border-radius: 50%;
             backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.2);
         }
 
         .swiper-button-next:after,
         .swiper-button-prev:after {
-            font-size: 20px !important;
+            font-size: 24px !important;
         }
 
-        /* ===== GAMES TABS ===== */
-        .games-tabs {
-            padding: 0 30px 40px;
+        /* Games Tabs */
+        .games-section {
+            padding: 0 40px 40px;
         }
 
         .tabs-header {
             display: flex;
             justify-content: center;
             gap: 20px;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
 
         .tab-btn {
             background: rgba(255, 255, 255, 0.05);
             border: 2px solid rgba(255, 255, 255, 0.1);
             color: var(--light);
-            padding: 18px 40px;
+            padding: 20px 50px;
             border-radius: var(--radius);
             font-size: 1.3em;
             font-weight: 700;
@@ -523,8 +440,9 @@
             display: flex;
             align-items: center;
             gap: 15px;
-            min-width: 200px;
+            min-width: 250px;
             justify-content: center;
+            backdrop-filter: blur(10px);
         }
 
         .tab-btn:hover {
@@ -539,39 +457,20 @@
             transform: translateY(-3px);
         }
 
-        .tab-content {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .tab-content.active {
-            display: block;
-        }
-
         .games-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
             gap: 30px;
         }
 
         .game-card {
-            background: rgba(31, 41, 55, 0.8);
+            background: rgba(17, 24, 39, 0.8);
             border-radius: var(--radius);
             overflow: hidden;
             border: 2px solid rgba(255, 255, 255, 0.1);
             transition: var(--transition);
             box-shadow: var(--shadow);
+            position: relative;
         }
 
         .game-card:hover {
@@ -584,6 +483,18 @@
             width: 100%;
             height: 200px;
             object-fit: cover;
+        }
+
+        .game-badge {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: var(--accent);
+            color: white;
+            padding: 8px 20px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 0.9em;
         }
 
         .game-content {
@@ -601,184 +512,89 @@
             color: var(--gray-light);
             margin-bottom: 20px;
             line-height: 1.6;
+            min-height: 60px;
         }
 
-        .game-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .game-players {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--gray-light);
-        }
-
-        .play-btn {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
-            border: none;
-            padding: 12px 30px;
-            border-radius: var(--radius-sm);
-            font-weight: 600;
-            cursor: pointer;
-            transition: var(--transition);
+        .game-coming-soon {
             display: flex;
             align-items: center;
             gap: 10px;
+            background: rgba(245, 158, 11, 0.1);
+            color: var(--warning);
+            padding: 12px;
+            border-radius: var(--radius-sm);
+            font-size: 0.9em;
+            margin-top: 15px;
         }
 
-        .play-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow-light);
-        }
-
-        /* ===== DEPOSIT/WITHDRAWAL MODALS ===== */
-        .modal {
+        /* User Info */
+        .user-info {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
-            backdrop-filter: blur(10px);
-            display: none;
+            top: 100px;
+            left: 40px;
+            background: rgba(17, 24, 39, 0.95);
+            backdrop-filter: blur(30px);
+            padding: 20px;
+            border-radius: var(--radius);
+            border: 2px solid rgba(139, 92, 246, 0.3);
+            box-shadow: var(--shadow);
+            z-index: 999;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            min-width: 200px;
+        }
+
+        .user-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 2000;
-            padding: 20px;
-            animation: fadeIn 0.3s ease;
+            font-size: 1.3em;
+            font-weight: bold;
         }
 
-        .modal-content {
-            background: rgba(31, 41, 55, 0.95);
-            backdrop-filter: blur(20px);
-            border-radius: var(--radius-xl);
-            padding: 40px;
-            max-width: 500px;
-            width: 100%;
-            border: 3px solid rgba(139, 92, 246, 0.4);
-            box-shadow: var(--shadow-dark);
-            animation: slideUp 0.5s ease;
-        }
-
-        .modal-header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        .modal-title {
-            font-size: 2em;
-            font-weight: 800;
-            margin-bottom: 10px;
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-
-        .modal-subtitle {
-            color: var(--gray-light);
-        }
-
-        .amount-input {
-            width: 100%;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: var(--radius);
-            color: var(--light);
-            font-size: 1.5em;
-            text-align: center;
-            margin-bottom: 20px;
-            font-family: 'Tajawal', sans-serif;
-        }
-
-        .amount-input:focus {
-            outline: none;
-            border-color: var(--primary);
-        }
-
-        .quick-amounts {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 15px;
-            margin-bottom: 30px;
-        }
-
-        .quick-amount {
-            background: rgba(255, 255, 255, 0.05);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            padding: 15px;
-            border-radius: var(--radius);
-            text-align: center;
-            cursor: pointer;
-            transition: var(--transition);
-            font-weight: 600;
-        }
-
-        .quick-amount:hover {
-            background: rgba(255, 255, 255, 0.1);
-            border-color: var(--primary);
-        }
-
-        .modal-actions {
+        .user-details {
             display: flex;
-            gap: 15px;
+            flex-direction: column;
+            gap: 5px;
         }
 
-        .modal-btn {
-            flex: 1;
-            padding: 18px;
-            border-radius: var(--radius);
-            font-size: 1.2em;
-            font-weight: 700;
+        .user-name {
+            font-weight: 600;
+            font-size: 1.1em;
+        }
+
+        .logout-btn {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+            border: 1px solid rgba(239, 68, 68, 0.2);
+            padding: 8px 15px;
+            border-radius: var(--radius-sm);
             cursor: pointer;
             transition: var(--transition);
-            border: none;
-            font-family: 'Tajawal', sans-serif;
+            font-size: 0.9em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 10px;
         }
 
-        .modal-btn.primary {
-            background: linear-gradient(135deg, var(--primary), var(--secondary));
-            color: white;
+        .logout-btn:hover {
+            background: rgba(239, 68, 68, 0.2);
+            transform: translateY(-2px);
         }
 
-        .modal-btn.secondary {
-            background: rgba(255, 255, 255, 0.1);
-            color: var(--light);
-        }
-
-        .modal-btn:hover {
-            transform: translateY(-3px);
-            box-shadow: var(--shadow);
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: none;
-            border: none;
-            color: var(--gray-light);
-            font-size: 1.5em;
-            cursor: pointer;
-            transition: var(--transition);
-        }
-
-        .close-modal:hover {
-            color: var(--light);
-        }
-
-        /* ===== TOAST ===== */
+        /* Toast */
         .toast {
             position: fixed;
             bottom: 30px;
             right: 30px;
-            background: rgba(31, 41, 55, 0.95);
-            backdrop-filter: blur(20px);
+            background: rgba(17, 24, 39, 0.95);
+            backdrop-filter: blur(30px);
             color: white;
             padding: 20px 30px;
             border-radius: var(--radius);
@@ -811,7 +627,7 @@
         }
 
         .toast.info {
-            border-right-color: var(--info);
+            border-right-color: var(--primary);
         }
 
         .toast-icon {
@@ -822,7 +638,7 @@
         /* ===== RESPONSIVE ===== */
         @media (max-width: 1200px) {
             .games-grid {
-                grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
             }
         }
 
@@ -831,14 +647,20 @@
                 grid-template-columns: 1fr;
             }
             
-            .wallet-controls {
+            .header {
                 flex-direction: column;
-                align-items: center;
+                gap: 20px;
+                padding: 20px;
             }
             
-            .wallet-btn {
+            .wallet-section {
                 width: 100%;
-                max-width: 300px;
+                justify-content: center;
+            }
+            
+            .balance-container {
+                width: 100%;
+                max-width: 400px;
             }
             
             .tabs-header {
@@ -861,43 +683,26 @@
                 font-size: 2.5em;
             }
             
-            .header {
-                flex-direction: column;
-                gap: 20px;
-                padding: 20px;
-            }
-            
-            .user-section {
-                flex-direction: column;
-                width: 100%;
-            }
-            
-            .balance-container {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .user-info {
-                width: 100%;
-                justify-content: center;
-            }
-            
-            .wallet-controls {
-                margin: 20px;
-                padding: 25px;
-            }
-            
             .offers-section,
-            .games-tabs {
-                padding: 0 20px 30px;
+            .games-section {
+                padding: 20px;
             }
             
             .swiper {
                 height: 250px;
             }
             
-            .quick-amounts {
-                grid-template-columns: repeat(2, 1fr);
+            .games-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .user-info {
+                position: relative;
+                top: auto;
+                left: auto;
+                margin: 20px auto;
+                width: calc(100% - 40px);
+                max-width: 400px;
             }
         }
 
@@ -907,19 +712,26 @@
             }
             
             .section-title {
-                font-size: 1.7em;
+                font-size: 1.8em;
             }
             
-            .games-grid {
-                grid-template-columns: 1fr;
+            .balance-container {
+                min-width: auto;
+                padding: 12px 20px;
             }
             
-            .modal-content {
-                padding: 30px 20px;
+            .balance-amount {
+                font-size: 1.8em;
             }
             
-            .modal-actions {
+            .wallet-buttons {
                 flex-direction: column;
+                width: 100%;
+            }
+            
+            .wallet-btn {
+                width: 100%;
+                justify-content: center;
             }
             
             .toast {
@@ -935,84 +747,80 @@
     <div class="login-screen" id="loginScreen">
         <div class="login-content">
             <div class="login-logo">🎮</div>
-            <div class="login-title">منصة الألعاب الاحترافية</div>
+            <div class="login-title">NSP GAMES</div>
             <div class="login-subtitle">
-                انضم إلى مجتمعنا واستمتع بتجربة ألعاب استثنائية<br>
-                مع نظام آمن ومدفوعات فورية
+                منصة الألعاب الاحترافية<br>
+                استمتع بتجربة ألعاب استثنائية مع نظام آمن ومميز
             </div>
             
+            <div id="gsi-button"></div>
+            
             <div class="login-features">
+                <div class="feature-item">
+                    <div class="feature-icon">🛡️</div>
+                    <div class="feature-text">حماية وأمان تام</div>
+                </div>
+                <div class="feature-item">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-text">سرعة فائقة في الأداء</div>
+                </div>
                 <div class="feature-item">
                     <div class="feature-icon">💰</div>
                     <div class="feature-text">مدفوعات آمنة وسريعة</div>
                 </div>
                 <div class="feature-item">
-                    <div class="feature-icon">🎮</div>
-                    <div class="feature-text">مجموعة متنوعة من الألعاب</div>
+                    <div class="feature-icon">🎯</div>
+                    <div class="feature-text">ألعاب متنوعة واحترافية</div>
                 </div>
-                <div class="feature-item">
-                    <div class="feature-icon">🏆</div>
-                    <div class="feature-text">جوائز وتحديات يومية</div>
-                </div>
-                <div class="feature-item">
-                    <div class="feature-icon">🛡️</div>
-                    <div class="feature-text">حماية وسرية تامة</div>
-                </div>
-            </div>
-            
-            <div id="gsi-button"></div>
-            
-            <div class="login-footer">
-                ⚠️ تسجيل الدخول بحساب Google مطلوب للمشاركة في الألعاب
             </div>
         </div>
     </div>
 
-    <!-- Main Dashboard -->
-    <div class="main-dashboard" id="mainDashboard">
-        <!-- Header -->
-        <header class="header">
-            <div class="logo">🎮 منصة الألعاب</div>
-            
-            <div class="user-section">
-                <div class="balance-container">
-                    <span class="balance-icon">💰</span>
-                    <span class="balance-amount" id="balanceAmount">0</span>
-                </div>
-                
-                <div class="user-info">
-                    <div class="user-avatar" id="userAvatar"></div>
-                    <div class="user-details">
-                        <div class="user-name" id="userName"></div>
-                        <div class="user-id" id="userId"></div>
-                    </div>
-                </div>
-                
+    <!-- Dashboard -->
+    <div class="dashboard" id="dashboard">
+        <!-- User Info -->
+        <div class="user-info" id="userInfo">
+            <div class="user-avatar" id="userAvatar"></div>
+            <div class="user-details">
+                <div class="user-name" id="userName"></div>
                 <button class="logout-btn" id="logoutBtn">
                     <i class="fas fa-sign-out-alt"></i> خروج
                 </button>
             </div>
-        </header>
-
-        <!-- Wallet Controls -->
-        <div class="wallet-controls">
-            <button class="wallet-btn" id="depositBtn">
-                <i class="fas fa-money-bill-wave"></i>
-                تعبئة حسابي
-            </button>
-            
-            <button class="wallet-btn" id="withdrawBtn">
-                <i class="fas fa-wallet"></i>
-                سحب من حسابي
-            </button>
         </div>
+
+        <!-- Header -->
+        <header class="header">
+            <div class="logo">
+                <span>🎮</span>
+                <span>NSP GAMES</span>
+            </div>
+            
+            <div class="wallet-section">
+                <div class="balance-container">
+                    <span class="balance-icon">💰</span>
+                    <span class="balance-amount" id="balanceAmount">0 NSP</span>
+                </div>
+                
+                <div class="wallet-buttons">
+                    <button class="wallet-btn" id="depositBtn">
+                        <i class="fas fa-money-bill-wave"></i>
+                        إيداع
+                    </button>
+                    <button class="wallet-btn" id="withdrawBtn">
+                        <i class="fas fa-wallet"></i>
+                        سحب
+                    </button>
+                </div>
+            </div>
+        </header>
 
         <!-- Offers Slider -->
         <div class="offers-section">
             <div class="section-title">🔥 العروض الحصرية</div>
             <div class="swiper">
-                <div class="swiper-wrapper">
-                    <!-- Slides will be added by JavaScript -->
+                <div class="swiper-wrapper" id="offersContainer">
+                    <!-- Offers will be loaded here -->
                 </div>
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
@@ -1020,7 +828,7 @@
         </div>
 
         <!-- Games Tabs -->
-        <div class="games-tabs">
+        <div class="games-section">
             <div class="tabs-header">
                 <button class="tab-btn active" data-tab="challenge">
                     <i class="fas fa-trophy"></i>
@@ -1033,77 +841,13 @@
             </div>
 
             <!-- Challenge Games Tab -->
-            <div class="tab-content active" id="challengeTab">
-                <div class="games-grid">
-                    <!-- Challenge games will be added by JavaScript -->
-                </div>
+            <div class="games-grid" id="challengeGames">
+                <!-- Challenge games will be loaded here -->
             </div>
 
             <!-- Luck Games Tab -->
-            <div class="tab-content" id="luckTab">
-                <div class="games-grid">
-                    <!-- Luck games will be added by JavaScript -->
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Deposit Modal -->
-    <div class="modal" id="depositModal">
-        <div class="modal-content">
-            <button class="close-modal" id="closeDepositModal">
-                <i class="fas fa-times"></i>
-            </button>
-            
-            <div class="modal-header">
-                <div class="modal-title">تعبئة الرصيد</div>
-                <div class="modal-subtitle">اختر المبلغ المطلوب للايداع</div>
-            </div>
-            
-            <input type="number" class="amount-input" id="depositAmount" placeholder="المبلغ" min="100" step="100">
-            
-            <div class="quick-amounts">
-                <div class="quick-amount" data-amount="500">500</div>
-                <div class="quick-amount" data-amount="1000">1,000</div>
-                <div class="quick-amount" data-amount="2500">2,500</div>
-                <div class="quick-amount" data-amount="5000">5,000</div>
-                <div class="quick-amount" data-amount="10000">10,000</div>
-                <div class="quick-amount" data-amount="25000">25,000</div>
-            </div>
-            
-            <div class="modal-actions">
-                <button class="modal-btn secondary" id="cancelDeposit">إلغاء</button>
-                <button class="modal-btn primary" id="confirmDeposit">تأكيد الإيداع</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Withdrawal Modal -->
-    <div class="modal" id="withdrawalModal">
-        <div class="modal-content">
-            <button class="close-modal" id="closeWithdrawalModal">
-                <i class="fas fa-times"></i>
-            </button>
-            
-            <div class="modal-header">
-                <div class="modal-title">سحب الرصيد</div>
-                <div class="modal-subtitle">اختر المبلغ المطلوب للسحب</div>
-            </div>
-            
-            <input type="number" class="amount-input" id="withdrawalAmount" placeholder="المبلغ" min="100" step="100">
-            
-            <div class="quick-amounts">
-                <div class="quick-amount" data-amount="500">500</div>
-                <div class="quick-amount" data-amount="1000">1,000</div>
-                <div class="quick-amount" data-amount="2500">2,500</div>
-                <div class="quick-amount" data-amount="5000">5,000</div>
-                <div class="quick-amount" data-amount="10000">10,000</div>
-                <div class="quick-amount" data-amount="25000">25,000</div>
-            </div>
-            
-            <div class="modal-actions">
-                <button class="modal-btn secondary" id="cancelWithdrawal">إلغاء</button>
-                <button class="modal-btn primary" id="confirmWithdrawal">تأكيد السحب</button>
+            <div class="games-grid" id="luckGames" style="display: none;">
+                <!-- Luck games will be loaded here -->
             </div>
         </div>
     </div>
@@ -1115,139 +859,40 @@
     </div>
 
     <!-- JavaScript Libraries -->
-    <script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
     
     <!-- JavaScript -->
     <script>
         // ===== CONFIGURATION =====
         const CLIENT_ID = '739516782894-1q82fhnajlc7fqa3n8jgck7bv9qc4bc5.apps.googleusercontent.com';
-        const API_URL = 'https://script.google.com/macros/s/AKfycbzbPs23RrG13l0OwQecFMlxhnqDRcaSWvd-lD-oF4S-Ee10wqD5T-N0XsWY0A-xunFKow/exec';
-        
-        // ===== GAME DATA =====
-        const OFFERS = [
-            {
-                id: 1,
-                title: "عرض ترحيبي",
-                description: "احصل على 100% إضافية عند أول إيداع",
-                image: "https://images.unsplash.com/photo-1614732414444-096e5f1122d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
-            },
-            {
-                id: 2,
-                title: "تحدي الأسبوع",
-                description: "اربح جوائز نقدية قيمتها 50,000",
-                image: "https://images.unsplash.com/photo-1629885238957-7e1734e0ee0d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
-            },
-            {
-                id: 3,
-                title: "عيد ميلاد المنصة",
-                description: "مضاعفات ربح خاصة لمدة 24 ساعة",
-                image: "https://images.unsplash.com/photo-1605600659908-59e27d4c4b74?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
-            },
-            {
-                id: 4,
-                title: "عرض الضمان",
-                description: "استرداد 50% من خسائرك",
-                image: "https://images.unsplash.com/photo-1614064641938-3bbee52942c7?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80"
-            }
-        ];
-        
-        const CHALLENGE_GAMES = [
-            {
-                id: 1,
-                title: "بطولة الشطرنج",
-                description: "تحدي الذكاء والاستراتيجية في مواجهات حقيقية",
-                image: "https://images.unsplash.com/photo-1586165368502-1bad197a6461?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                players: 2450
-            },
-            {
-                id: 2,
-                title: "تحدي الألغاز",
-                description: "حل الألغاز والفوز بجوائز نقدية",
-                image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                players: 1800
-            },
-            {
-                id: 3,
-                title: "منافسة الرياضيات",
-                description: "اختبار مهاراتك الحسابية بسرعة",
-                image: "https://images.unsplash.com/photo-1509228468518-180dd4864904?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                players: 3200
-            },
-            {
-                id: 4,
-                title: "تحدي الذاكرة",
-                description: "اختبر قوة ذاكرتك واربح الجوائز",
-                image: "https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                players: 1950
-            }
-        ];
-        
-        const LUCK_GAMES = [
-            {
-                id: 1,
-                title: "سلوت الماس",
-                description: "ماكينة السلوت الأكثر شعبية مع جوائز ضخمة",
-                image: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                players: 5500
-            },
-            {
-                id: 2,
-                title: "روليت الحظ",
-                description: "عجلة الحظ مع فرص فوز متعددة",
-                image: "https://images.unsplash.com/photo-1631730486572-f1c5e8e0674a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                players: 4200
-            },
-            {
-                id: 3,
-                title: "نرد الثروة",
-                description: "رمي النرد والفوز بجوائز مذهلة",
-                image: "https://images.unsplash.com/photo-1611735341450-74d61e660ad2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                players: 3800
-            },
-            {
-                id: 4,
-                title: "بطاقات الجائزة",
-                description: "اختر البطاقة الصحيحة واربح الجوائز",
-                image: "https://images.unsplash.com/photo-1611597616983-5117193c41ce?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
-                players: 2900
-            }
-        ];
-        
+        const SPREADSHEET_ID = '1PwlB966qLR7JvSDJygzuwcz3TMXScPsg_4NBw4zg5Sw';
+        const API_URL = 'https://script.google.com/macros/s/AKfycbyfxE-NycrXlY5L8Plpt_oBA7qedU5Vqt4Yf2IfD8wOaiKPVKyMoHmWhwg7d3qUDEY/exec';
+
         // ===== APPLICATION CLASS =====
         class GamingPlatform {
             constructor() {
                 this.user = null;
                 this.token = null;
-                this.balance = 0;
+                this.balance = 100;
                 this.userId = null;
                 this.isAuthenticated = false;
                 
-                // DOM Elements
                 this.elements = {
                     loginScreen: document.getElementById('loginScreen'),
-                    mainDashboard: document.getElementById('mainDashboard'),
+                    dashboard: document.getElementById('dashboard'),
                     gsiButton: document.getElementById('gsi-button'),
                     balanceAmount: document.getElementById('balanceAmount'),
+                    userInfo: document.getElementById('userInfo'),
                     userAvatar: document.getElementById('userAvatar'),
                     userName: document.getElementById('userName'),
-                    userId: document.getElementById('userId'),
                     logoutBtn: document.getElementById('logoutBtn'),
                     depositBtn: document.getElementById('depositBtn'),
                     withdrawBtn: document.getElementById('withdrawBtn'),
-                    depositModal: document.getElementById('depositModal'),
-                    withdrawalModal: document.getElementById('withdrawalModal'),
-                    closeDepositModal: document.getElementById('closeDepositModal'),
-                    closeWithdrawalModal: document.getElementById('closeWithdrawalModal'),
-                    cancelDeposit: document.getElementById('cancelDeposit'),
-                    cancelWithdrawal: document.getElementById('cancelWithdrawal'),
-                    confirmDeposit: document.getElementById('confirmDeposit'),
-                    confirmWithdrawal: document.getElementById('confirmWithdrawal'),
-                    depositAmount: document.getElementById('depositAmount'),
-                    withdrawalAmount: document.getElementById('withdrawalAmount'),
+                    offersContainer: document.getElementById('offersContainer'),
+                    challengeGames: document.getElementById('challengeGames'),
+                    luckGames: document.getElementById('luckGames'),
                     toast: document.getElementById('toast'),
-                    tabBtns: document.querySelectorAll('.tab-btn'),
-                    challengeTab: document.getElementById('challengeTab'),
-                    luckTab: document.getElementById('luckTab')
+                    tabBtns: document.querySelectorAll('.tab-btn')
                 };
                 
                 this.swiper = null;
@@ -1257,64 +902,20 @@
             initialize() {
                 this.setupEventListeners();
                 this.initializeGoogleAuth();
-                this.loadOffers();
-                this.loadGames();
                 this.checkSavedSession();
+                this.loadSampleData();
             }
             
             setupEventListeners() {
-                // Logout
                 this.elements.logoutBtn.addEventListener('click', () => this.logout());
+                this.elements.depositBtn.addEventListener('click', () => this.showToast('⏳ نظام الإيداع قيد التطوير', 'info'));
+                this.elements.withdrawBtn.addEventListener('click', () => this.showToast('⏳ نظام السحب قيد التطوير', 'info'));
                 
-                // Deposit/Withdrawal
-                this.elements.depositBtn.addEventListener('click', () => this.showModal('deposit'));
-                this.elements.withdrawBtn.addEventListener('click', () => this.showModal('withdrawal'));
-                
-                // Modal Controls
-                this.elements.closeDepositModal.addEventListener('click', () => this.hideModal('deposit'));
-                this.elements.closeWithdrawalModal.addEventListener('click', () => this.hideModal('withdrawal'));
-                this.elements.cancelDeposit.addEventListener('click', () => this.hideModal('deposit'));
-                this.elements.cancelWithdrawal.addEventListener('click', () => this.hideModal('withdrawal'));
-                
-                // Confirm Actions
-                this.elements.confirmDeposit.addEventListener('click', () => this.processDeposit());
-                this.elements.confirmWithdrawal.addEventListener('click', () => this.processWithdrawal());
-                
-                // Quick Amounts
-                document.querySelectorAll('.quick-amount').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        const amount = e.target.dataset.amount;
-                        const modal = e.target.closest('.modal');
-                        if (modal.id === 'depositModal') {
-                            this.elements.depositAmount.value = amount;
-                        } else {
-                            this.elements.withdrawalAmount.value = amount;
-                        }
-                    });
-                });
-                
-                // Tab Switching
                 this.elements.tabBtns.forEach(btn => {
                     btn.addEventListener('click', (e) => {
                         const tab = e.target.dataset.tab;
                         this.switchTab(tab);
                     });
-                });
-                
-                // Enter key for modals
-                document.addEventListener('keydown', (e) => {
-                    if (e.key === 'Enter') {
-                        if (this.elements.depositModal.style.display === 'flex') {
-                            this.processDeposit();
-                        } else if (this.elements.withdrawalModal.style.display === 'flex') {
-                            this.processWithdrawal();
-                        }
-                    }
-                    
-                    if (e.key === 'Escape') {
-                        this.hideModal('deposit');
-                        this.hideModal('withdrawal');
-                    }
                 });
             }
             
@@ -1356,8 +957,8 @@
                     this.token = response.credential;
                     
                     // حفظ الجلسة
-                    localStorage.setItem('gaming_token', this.token);
-                    localStorage.setItem('gaming_user', JSON.stringify(this.user));
+                    localStorage.setItem('nsp_token', this.token);
+                    localStorage.setItem('nsp_user', JSON.stringify(this.user));
                     
                     // تسجيل المستخدم في قاعدة البيانات
                     await this.registerUser();
@@ -1385,8 +986,8 @@
             }
             
             checkSavedSession() {
-                const savedToken = localStorage.getItem('gaming_token');
-                const savedUser = localStorage.getItem('gaming_user');
+                const savedToken = localStorage.getItem('nsp_token');
+                const savedUser = localStorage.getItem('nsp_user');
                 
                 if (savedToken && savedUser) {
                     try {
@@ -1394,6 +995,8 @@
                         this.user = JSON.parse(savedUser);
                         this.loadUserData().then(() => {
                             this.showDashboard();
+                        }).catch(() => {
+                            this.showLogin();
                         });
                     } catch (error) {
                         console.error('Failed to load saved session:', error);
@@ -1415,14 +1018,17 @@
                     
                     if (response.success) {
                         this.userId = response.userId;
-                        this.balance = response.balance || 0;
+                        this.balance = response.balance || 100;
                         return response;
                     } else {
                         throw new Error('Failed to register user');
                     }
                 } catch (error) {
                     console.error('Registration error:', error);
-                    throw error;
+                    // استخدام بيانات افتراضية في حالة الخطأ
+                    this.userId = 'USER_' + Date.now();
+                    this.balance = 100;
+                    return { success: true };
                 }
             }
             
@@ -1436,307 +1042,16 @@
                     
                     if (response.success) {
                         this.userId = response.userId;
-                        this.balance = response.balance || 0;
+                        this.balance = response.balance || 100;
                         this.updateUI();
+                    } else {
+                        // إنشاء حساب جديد في حالة الخطأ
+                        await this.registerUser();
                     }
                 } catch (error) {
                     console.error('Error loading user data:', error);
-                    // إنشاء حساب جديد في حالة الخطأ
                     await this.registerUser();
                 }
-            }
-            
-            async updateUserBalance(newBalance) {
-                try {
-                    const response = await this.apiRequest('updateBalance', {
-                        userId: this.userId,
-                        balance: newBalance
-                    });
-                    
-                    if (response.success) {
-                        this.balance = newBalance;
-                        this.updateUI();
-                        return true;
-                    }
-                    return false;
-                } catch (error) {
-                    console.error('Error updating balance:', error);
-                    return false;
-                }
-            }
-            
-            async processDeposit() {
-                const amount = parseInt(this.elements.depositAmount.value);
-                
-                if (!amount || amount < 100) {
-                    this.showToast('⚠️ المبلغ يجب أن يكون 100 أو أكثر', 'warning');
-                    return;
-                }
-                
-                try {
-                    // في الواقع، هنا ستقوم بربط مع بوابة الدفع
-                    // للتبسيط، سنزيد الرصيد مباشرة
-                    const newBalance = this.balance + amount;
-                    const success = await this.updateUserBalance(newBalance);
-                    
-                    if (success) {
-                        this.hideModal('deposit');
-                        this.showToast(`✅ تم إضافة ${amount.toLocaleString()} إلى رصيدك`, 'success');
-                        this.elements.depositAmount.value = '';
-                    } else {
-                        this.showToast('❌ فشل عملية الإيداع', 'error');
-                    }
-                } catch (error) {
-                    console.error('Deposit error:', error);
-                    this.showToast('❌ حدث خطأ أثناء عملية الإيداع', 'error');
-                }
-            }
-            
-            async processWithdrawal() {
-                const amount = parseInt(this.elements.withdrawalAmount.value);
-                
-                if (!amount || amount < 100) {
-                    this.showToast('⚠️ المبلغ يجب أن يكون 100 أو أكثر', 'warning');
-                    return;
-                }
-                
-                if (amount > this.balance) {
-                    this.showToast('❌ الرصيد غير كافي', 'error');
-                    return;
-                }
-                
-                try {
-                    // في الواقع، هنا ستقوم بإرسال طلب السحب إلى الإدارة
-                    // للتبسيط، سننقص الرصيد مباشرة
-                    const newBalance = this.balance - amount;
-                    const success = await this.updateUserBalance(newBalance);
-                    
-                    if (success) {
-                        this.hideModal('withdrawal');
-                        this.showToast(`✅ تم سحب ${amount.toLocaleString()} من رصيدك`, 'success');
-                        this.elements.withdrawalAmount.value = '';
-                    } else {
-                        this.showToast('❌ فشل عملية السحب', 'error');
-                    }
-                } catch (error) {
-                    console.error('Withdrawal error:', error);
-                    this.showToast('❌ حدث خطأ أثناء عملية السحب', 'error');
-                }
-            }
-            
-            showModal(type) {
-                if (!this.isAuthenticated) {
-                    this.showToast('⚠️ يرجى تسجيل الدخول أولاً', 'warning');
-                    return;
-                }
-                
-                const modal = type === 'deposit' ? this.elements.depositModal : this.elements.withdrawalModal;
-                modal.style.display = 'flex';
-                document.body.style.overflow = 'hidden';
-                
-                if (type === 'deposit') {
-                    this.elements.depositAmount.focus();
-                } else {
-                    this.elements.withdrawalAmount.focus();
-                }
-            }
-            
-            hideModal(type) {
-                const modal = type === 'deposit' ? this.elements.depositModal : this.elements.withdrawalModal;
-                modal.style.display = 'none';
-                document.body.style.overflow = 'auto';
-                
-                if (type === 'deposit') {
-                    this.elements.depositAmount.value = '';
-                } else {
-                    this.elements.withdrawalAmount.value = '';
-                }
-            }
-            
-            switchTab(tab) {
-                // تحديث الأزرار
-                this.elements.tabBtns.forEach(btn => {
-                    if (btn.dataset.tab === tab) {
-                        btn.classList.add('active');
-                    } else {
-                        btn.classList.remove('active');
-                    }
-                });
-                
-                // إظهار المحتوى المناسب
-                if (tab === 'challenge') {
-                    this.elements.challengeTab.classList.add('active');
-                    this.elements.luckTab.classList.remove('active');
-                } else {
-                    this.elements.challengeTab.classList.remove('active');
-                    this.elements.luckTab.classList.add('active');
-                }
-            }
-            
-            loadOffers() {
-                const swiperWrapper = document.querySelector('.swiper-wrapper');
-                swiperWrapper.innerHTML = '';
-                
-                OFFERS.forEach(offer => {
-                    const slide = document.createElement('div');
-                    slide.className = 'swiper-slide';
-                    slide.innerHTML = `
-                        <img src="${offer.image}" alt="${offer.title}" class="offer-image">
-                        <div class="offer-overlay">
-                            <div class="offer-title">${offer.title}</div>
-                            <div class="offer-desc">${offer.description}</div>
-                        </div>
-                    `;
-                    swiperWrapper.appendChild(slide);
-                });
-                
-                // تهيئة Swiper
-                this.swiper = new Swiper('.swiper', {
-                    direction: 'horizontal',
-                    loop: true,
-                    autoplay: {
-                        delay: 3000,
-                        disableOnInteraction: false,
-                    },
-                    navigation: {
-                        nextEl: '.swiper-button-next',
-                        prevEl: '.swiper-button-prev',
-                    },
-                    effect: 'slide',
-                    speed: 800,
-                });
-            }
-            
-            loadGames() {
-                const challengeGrid = document.querySelector('#challengeTab .games-grid');
-                const luckGrid = document.querySelector('#luckTab .games-grid');
-                
-                // تحميل ألعاب التحدي
-                CHALLENGE_GAMES.forEach(game => {
-                    const gameCard = this.createGameCard(game);
-                    challengeGrid.appendChild(gameCard);
-                });
-                
-                // تحميل ألعاب الحظ
-                LUCK_GAMES.forEach(game => {
-                    const gameCard = this.createGameCard(game);
-                    luckGrid.appendChild(gameCard);
-                });
-            }
-            
-            createGameCard(game) {
-                const card = document.createElement('div');
-                card.className = 'game-card';
-                card.innerHTML = `
-                    <img src="${game.image}" alt="${game.title}" class="game-image">
-                    <div class="game-content">
-                        <div class="game-title">${game.title}</div>
-                        <div class="game-desc">${game.description}</div>
-                        <div class="game-meta">
-                            <div class="game-players">
-                                <i class="fas fa-users"></i>
-                                ${game.players.toLocaleString()} لاعب
-                            </div>
-                            <button class="play-btn" data-game-id="${game.id}">
-                                <i class="fas fa-play"></i>
-                                بدء اللعب
-                            </button>
-                        </div>
-                    </div>
-                `;
-                
-                // إضافة مستمع حدث للزر
-                const playBtn = card.querySelector('.play-btn');
-                playBtn.addEventListener('click', () => {
-                    this.launchGame(game.id, game.title);
-                });
-                
-                return card;
-            }
-            
-            launchGame(gameId, gameName) {
-                if (!this.isAuthenticated) {
-                    this.showToast('⚠️ يرجى تسجيل الدخول أولاً', 'warning');
-                    return;
-                }
-                
-                if (this.balance < 100) {
-                    this.showToast('💰 يرجى تعبئة رصيدك أولاً', 'warning');
-                    return;
-                }
-                
-                this.showToast(`🎮 جاري تحميل ${gameName}...`, 'info');
-                
-                // هنا يمكنك توجيه المستخدم إلى صفحة اللعبة
-                // للتبسيط، سنعرض رسالة
-                setTimeout(() => {
-                    this.showToast(`✅ تم بدء اللعبة: ${gameName}`, 'success');
-                }, 1500);
-            }
-            
-            showLogin() {
-                this.elements.loginScreen.style.display = 'flex';
-                this.elements.mainDashboard.style.display = 'none';
-                this.isAuthenticated = false;
-            }
-            
-            showDashboard() {
-                this.elements.loginScreen.style.display = 'none';
-                this.elements.mainDashboard.style.display = 'block';
-                this.isAuthenticated = true;
-                this.updateUI();
-                
-                // تحديث Swiper عند عرض الداشبورد
-                if (this.swiper) {
-                    setTimeout(() => {
-                        this.swiper.update();
-                    }, 100);
-                }
-            }
-            
-            updateUI() {
-                if (this.user) {
-                    this.elements.userAvatar.textContent = this.user.name.charAt(0).toUpperCase();
-                    this.elements.userName.textContent = this.user.name;
-                    this.elements.userId.textContent = `ID: ${this.userId || 'جاري التحميل...'}`;
-                    this.elements.balanceAmount.textContent = this.balance.toLocaleString();
-                }
-            }
-            
-            logout() {
-                localStorage.removeItem('gaming_token');
-                localStorage.removeItem('gaming_user');
-                this.user = null;
-                this.token = null;
-                this.balance = 0;
-                this.userId = null;
-                this.isAuthenticated = false;
-                this.showLogin();
-                this.showToast('👋 تم تسجيل الخروج بنجاح', 'info');
-            }
-            
-            showToast(message, type = 'info', duration = 3000) {
-                const toast = this.elements.toast;
-                const icon = toast.querySelector('.toast-icon');
-                const messageEl = toast.querySelector('.toast-message');
-                
-                messageEl.textContent = message;
-                
-                toast.className = 'toast';
-                toast.classList.add(type);
-                
-                // تعيين الأيقونة المناسبة
-                if (type === 'success') icon.textContent = '✅';
-                else if (type === 'error') icon.textContent = '❌';
-                else if (type === 'warning') icon.textContent = '⚠️';
-                else icon.textContent = 'ℹ️';
-                
-                toast.classList.add('show');
-                
-                clearTimeout(this.toastTimeout);
-                this.toastTimeout = setTimeout(() => {
-                    toast.classList.remove('show');
-                }, duration);
             }
             
             async apiRequest(action, data = {}) {
@@ -1761,6 +1076,251 @@
                     console.error('API request failed:', error);
                     throw error;
                 }
+            }
+            
+            switchTab(tab) {
+                this.elements.tabBtns.forEach(btn => {
+                    if (btn.dataset.tab === tab) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                });
+                
+                if (tab === 'challenge') {
+                    this.elements.challengeGames.style.display = 'grid';
+                    this.elements.luckGames.style.display = 'none';
+                } else {
+                    this.elements.challengeGames.style.display = 'none';
+                    this.elements.luckGames.style.display = 'grid';
+                }
+            }
+            
+            loadSampleData() {
+                // عروض افتراضية
+                const offers = [
+                    {
+                        id: 1,
+                        title: "ترحيب خاص!",
+                        description: "احصل على 50 NSP إضافية عند أول إيداع",
+                        image: "https://images.unsplash.com/photo-1511895426328-dc8714191300?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80"
+                    },
+                    {
+                        id: 2,
+                        title: "تحدي نهاية الأسبوع",
+                        description: "اربح جوائز تصل إلى 10,000 NSP",
+                        image: "https://images.unsplash.com/photo-1542751371-adc38448a05e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80"
+                    },
+                    {
+                        id: 3,
+                        title: "عرض الضمان",
+                        description: "استرداد 30% من خسائرك هذا الشهر",
+                        image: "https://images.unsplash.com/photo-1531415074968-036ba1b575da?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80"
+                    },
+                    {
+                        id: 4,
+                        title: "مكافآت الولاء",
+                        description: "اكسب نقاطًا مع كل لعبة واستبدلها بجوائز",
+                        image: "https://images.unsplash.com/photo-1510511459019-5dda7724fd87?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80"
+                    }
+                ];
+                
+                // تحميل العروض
+                this.loadOffers(offers);
+                
+                // ألعاب التحدي
+                const challengeGames = [
+                    {
+                        id: 1,
+                        title: "تحدي الشطرنج",
+                        description: "مواجهات شطرنج استراتيجية مع لاعبين من حول العالم",
+                        image: "https://images.unsplash.com/photo-1586165368502-1bad197a6461?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        badge: "استراتيجية"
+                    },
+                    {
+                        id: 2,
+                        title: "منافسة الألغاز",
+                        description: "حل الألغاز المعقدة والفوز بجوائز نقدية",
+                        image: "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        badge: "ذكاء"
+                    },
+                    {
+                        id: 3,
+                        title: "تحدي الرياضيات",
+                        description: "اختبار مهاراتك الحسابية بسرعة ودقة",
+                        image: "https://images.unsplash.com/photo-1509228468518-180dd4864904?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        badge: "سرعة"
+                    },
+                    {
+                        id: 4,
+                        title: "بطولة الذاكرة",
+                        description: "اختبر قوة ذاكرتك واربح الجوائز القيمة",
+                        image: "https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        badge: "تركيز"
+                    }
+                ];
+                
+                // ألعاب الحظ
+                const luckGames = [
+                    {
+                        id: 5,
+                        title: "سلوت الماس",
+                        description: "ماكينة السلوت الأكثر ربحًا مع جاكبوت متصاعد",
+                        image: "https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        badge: "شعبية"
+                    },
+                    {
+                        id: 6,
+                        title: "روليت الثروة",
+                        description: "عجلة الحظ مع فرص فوز متعددة وجوائز كبيرة",
+                        image: "https://images.unsplash.com/photo-1631730486572-f1c5e8e0674a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        badge: "إثارة"
+                    },
+                    {
+                        id: 7,
+                        title: "نرد الحظ",
+                        description: "ارمي النرد واربح جوائز مذهلة في كل مرة",
+                        image: "https://images.unsplash.com/photo-1611735341450-74d61e660ad2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        badge: "سهولة"
+                    },
+                    {
+                        id: 8,
+                        title: "بطاقات الجائزة",
+                        description: "اختر البطاقة الصحيحة واربح الجوائز الكبرى",
+                        image: "https://images.unsplash.com/photo-1611597616983-5117193c41ce?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+                        badge: "مفاجآت"
+                    }
+                ];
+                
+                // تحميل الألعاب
+                this.loadGames(challengeGames, this.elements.challengeGames);
+                this.loadGames(luckGames, this.elements.luckGames);
+            }
+            
+            loadOffers(offers) {
+                this.elements.offersContainer.innerHTML = '';
+                
+                offers.forEach(offer => {
+                    const slide = document.createElement('div');
+                    slide.className = 'swiper-slide';
+                    slide.innerHTML = `
+                        <img src="${offer.image}" alt="${offer.title}" class="offer-image">
+                        <div class="offer-overlay">
+                            <div class="offer-title">${offer.title}</div>
+                            <div class="offer-desc">${offer.description}</div>
+                        </div>
+                    `;
+                    this.elements.offersContainer.appendChild(slide);
+                });
+                
+                // تهيئة Swiper
+                this.swiper = new Swiper('.swiper', {
+                    direction: 'horizontal',
+                    loop: true,
+                    autoplay: {
+                        delay: 3000,
+                        disableOnInteraction: false,
+                    },
+                    navigation: {
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                    },
+                    effect: 'slide',
+                    speed: 800,
+                });
+            }
+            
+            loadGames(games, container) {
+                container.innerHTML = '';
+                
+                games.forEach(game => {
+                    const gameCard = document.createElement('div');
+                    gameCard.className = 'game-card';
+                    gameCard.innerHTML = `
+                        <img src="${game.image}" alt="${game.title}" class="game-image">
+                        <div class="game-badge">${game.badge}</div>
+                        <div class="game-content">
+                            <div class="game-title">${game.title}</div>
+                            <div class="game-desc">${game.description}</div>
+                            <div class="game-coming-soon">
+                                <i class="fas fa-clock"></i>
+                                قريبًا بإذن الله
+                            </div>
+                        </div>
+                    `;
+                    
+                    container.appendChild(gameCard);
+                });
+            }
+            
+            showLogin() {
+                this.elements.loginScreen.style.display = 'flex';
+                this.elements.dashboard.style.display = 'none';
+                this.isAuthenticated = false;
+            }
+            
+            showDashboard() {
+                this.elements.loginScreen.style.display = 'none';
+                this.elements.dashboard.style.display = 'block';
+                this.isAuthenticated = true;
+                this.updateUI();
+                
+                // تحديث Swiper عند عرض الداشبورد
+                if (this.swiper) {
+                    setTimeout(() => {
+                        this.swiper.update();
+                    }, 100);
+                }
+            }
+            
+            updateUI() {
+                if (this.user) {
+                    this.elements.userAvatar.textContent = this.user.name.charAt(0).toUpperCase();
+                    this.elements.userName.textContent = this.user.name;
+                    this.elements.balanceAmount.textContent = `${this.balance} NSP`;
+                }
+            }
+            
+            logout() {
+                localStorage.removeItem('nsp_token');
+                localStorage.removeItem('nsp_user');
+                this.user = null;
+                this.token = null;
+                this.balance = 100;
+                this.userId = null;
+                this.isAuthenticated = false;
+                this.showLogin();
+                this.showToast('👋 تم تسجيل الخروج بنجاح', 'info');
+            }
+            
+            showToast(message, type = 'info', duration = 3000) {
+                const toast = this.elements.toast;
+                const icon = toast.querySelector('.toast-icon');
+                const messageEl = toast.querySelector('.toast-message');
+                
+                messageEl.textContent = message;
+                
+                toast.className = 'toast';
+                if (type === 'success') {
+                    toast.classList.add('success');
+                    icon.textContent = '✅';
+                } else if (type === 'error') {
+                    toast.classList.add('error');
+                    icon.textContent = '❌';
+                } else if (type === 'warning') {
+                    toast.classList.add('warning');
+                    icon.textContent = '⚠️';
+                } else {
+                    toast.classList.add('info');
+                    icon.textContent = 'ℹ️';
+                }
+                
+                toast.classList.add('show');
+                
+                clearTimeout(this.toastTimeout);
+                this.toastTimeout = setTimeout(() => {
+                    toast.classList.remove('show');
+                }, duration);
             }
         }
 
