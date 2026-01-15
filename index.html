@@ -933,6 +933,45 @@
                     <div class="feature-text">حماية وأمان تام</div>
                 </div>
             </div>
+            
+            <div style="margin-top: 20px; padding-top: 20px; border-top: 1px solid rgba(255,215,0,0.2);">
+                <button onclick="app.testConnection()" style="
+                    background: linear-gradient(45deg, #4CAF50, #45a049);
+                    color: white;
+                    border: none;
+                    padding: 10px 20px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    font-family: inherit;
+                    width: 100%;
+                    font-size: 0.9em;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 10px;
+                ">
+                    <i class="fas fa-wifi"></i> اختبار الاتصال بالسيرفر
+                </button>
+                
+                <button onclick="app.debugInfo()" style="
+                    background: rgba(255, 215, 0, 0.1);
+                    color: var(--gold);
+                    border: 1px solid rgba(255, 215, 0, 0.3);
+                    padding: 8px 15px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    font-family: inherit;
+                    width: 100%;
+                    margin-top: 10px;
+                    font-size: 0.8em;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 8px;
+                ">
+                    <i class="fas fa-bug"></i> معلومات التصحيح
+                </button>
+            </div>
         </div>
     </div>
 
@@ -1054,6 +1093,26 @@
                 <div class="user-id-label">معرف المستخدم:</div>
                 <div class="user-id-value" id="modalUserId"></div>
             </div>
+            
+            <div style="margin-top: 20px; text-align: center;">
+                <button onclick="app.logout()" style="
+                    background: linear-gradient(45deg, var(--red), var(--red-light));
+                    color: white;
+                    border: none;
+                    padding: 10px 20px;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    font-family: inherit;
+                    width: 100%;
+                    font-size: 0.9em;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    gap: 10px;
+                ">
+                    <i class="fas fa-sign-out-alt"></i> تسجيل الخروج
+                </button>
+            </div>
         </div>
     </div>
 
@@ -1129,7 +1188,8 @@
     <script>
         // ===== CONFIGURATION =====
         const CLIENT_ID = '739516782894-1q82fhnajlc7fqa3n8jgck7bv9qc4bc5.apps.googleusercontent.com';
-        const API_URL = 'https://script.google.com/macros/s/AKfycbw0D-bS_z5AckE3q0iUpYAxnqWVxrHeNNQ-R16GDIy1XU64lrrMpMIxxSD8kf4OJei0/exec';
+        // استبدل هذا الرابط برابط النشر الخاص بك من Google Apps Script
+        const API_URL = 'https://script.google.com/macros/s/AKfycbw6m4f_5PnDjmsU0zLNTQbY4geHot9KTxcrPcklW0PApWN97vGtI_PbKrmeGJxUOee-/exec';
 
         // ===== APPLICATION CLASS =====
         class GamingPlatform {
@@ -1193,6 +1253,7 @@
                 this.sliderInterval = null;
                 this.currentSlide = 0;
                 this.offers = [];
+                this.toastTimeout = null;
                 
                 this.initialize();
             }
@@ -1254,6 +1315,7 @@
                     this.showToast('👑 جاري تسجيل الدخول...', 'info');
                     
                     const decodedToken = this.parseJwt(response.credential);
+                    console.log('Decoded token:', decodedToken);
                     
                     this.user = {
                         id: decodedToken.sub,
@@ -1261,6 +1323,8 @@
                         email: decodedToken.email,
                         picture: decodedToken.picture
                     };
+                    
+                    console.log('User data:', this.user);
                     
                     // حفظ الجلسة
                     localStorage.setItem('nsp_gold_token', response.credential);
@@ -1281,7 +1345,7 @@
                     
                 } catch (error) {
                     console.error('Login error:', error);
-                    this.showToast('❌ فشل تسجيل الدخول', 'error');
+                    this.showToast('❌ فشل تسجيل الدخول: ' + error.message, 'error');
                 }
             }
             
@@ -1295,6 +1359,7 @@
                     
                     return JSON.parse(jsonPayload);
                 } catch (error) {
+                    console.error('Failed to parse JWT:', error);
                     return null;
                 }
             }
@@ -1329,6 +1394,8 @@
             
             async registerUser() {
                 try {
+                    console.log('Registering user with data:', this.user);
+                    
                     const response = await this.callAPI({
                         action: 'registerUser',
                         googleId: this.user.id,
@@ -1337,6 +1404,8 @@
                         picture: this.user.picture
                     });
                     
+                    console.log('Register user response:', response);
+                    
                     if (response.success) {
                         this.userId = response.userId;
                         this.balance = response.balance || 100;
@@ -1344,6 +1413,17 @@
                         this.userStats.totalWithdrawals = response.totalWithdrawals || 0;
                         this.userStats.totalGames = response.totalGames || 0;
                         this.userStats.totalWins = response.totalWins || 0;
+                        
+                        if (response.name) {
+                            this.user.name = response.name;
+                        }
+                        if (response.email) {
+                            this.user.email = response.email;
+                        }
+                        if (response.profilePicture) {
+                            this.user.picture = response.profilePicture;
+                        }
+                        
                         return response;
                     } else {
                         throw new Error(response.message || 'Failed to register user');
@@ -1353,18 +1433,27 @@
                     // استخدام بيانات افتراضية في حالة الخطأ
                     this.userId = 'GOLD_' + Date.now().toString(36).toUpperCase();
                     this.balance = 100;
+                    
+                    this.showToast('⚠️ تم إنشاء حساب مؤقت', 'warning');
+                    
                     return { success: true };
                 }
             }
             
             async loadUserData() {
                 try {
-                    if (!this.user) return;
+                    if (!this.user || !this.user.id) {
+                        throw new Error('No user data available');
+                    }
+                    
+                    console.log('Loading user data for googleId:', this.user.id);
                     
                     const response = await this.callAPI({
                         action: 'getUser',
                         googleId: this.user.id
                     });
+                    
+                    console.log('Load user data response:', response);
                     
                     if (response.success) {
                         this.userId = response.userId;
@@ -1375,26 +1464,40 @@
                             totalDeposits: response.totalDeposits || 0,
                             totalWithdrawals: response.totalWithdrawals || 0
                         };
+                        
+                        if (response.name) {
+                            this.user.name = response.name;
+                        }
+                        if (response.email) {
+                            this.user.email = response.email;
+                        }
+                        if (response.profilePicture) {
+                            this.user.picture = response.profilePicture;
+                        }
+                        
                         this.updateUI();
                         return response;
                     } else {
-                        // إنشاء حساب جديد في حالة الخطأ
-                        return await this.registerUser();
+                        throw new Error(response.message || 'Failed to load user data');
                     }
                 } catch (error) {
                     console.error('Error loading user data:', error);
-                    return await this.registerUser();
+                    throw error;
                 }
             }
             
             async updateBalance(amount, type) {
                 try {
+                    console.log(`Updating balance: ${amount} ${type} for user: ${this.userId}`);
+                    
                     const response = await this.callAPI({
                         action: 'updateBalance',
                         userId: this.userId,
                         amount: amount,
                         type: type
                     });
+                    
+                    console.log('Update balance response:', response);
                     
                     if (response.success) {
                         this.balance = response.newBalance;
@@ -1419,12 +1522,16 @@
             
             async createTransaction(amount, type) {
                 try {
+                    console.log(`Creating transaction: ${amount} ${type} for user: ${this.userId}`);
+                    
                     const response = await this.callAPI({
                         action: 'createTransaction',
                         userId: this.userId,
                         type: type,
                         amount: amount
                     });
+                    
+                    console.log('Create transaction response:', response);
                     
                     return response;
                 } catch (error) {
@@ -1434,9 +1541,13 @@
             
             async loadOffers() {
                 try {
+                    console.log('Loading offers...');
+                    
                     const response = await this.callAPI({
                         action: 'getOffers'
                     });
+                    
+                    console.log('Load offers response:', response);
                     
                     if (response.success && response.offers && response.offers.length > 0) {
                         this.offers = response.offers;
@@ -1760,9 +1871,9 @@
             updateUserInfoModal() {
                 if (!this.user) return;
                 
-                this.elements.modalUserAvatar.textContent = this.user.name.charAt(0).toUpperCase();
-                this.elements.modalUserName.textContent = this.user.name;
-                this.elements.modalUserEmail.textContent = this.user.email;
+                this.elements.modalUserAvatar.textContent = this.user.name ? this.user.name.charAt(0).toUpperCase() : '?';
+                this.elements.modalUserName.textContent = this.user.name || 'غير معروف';
+                this.elements.modalUserEmail.textContent = this.user.email || 'غير معروف';
                 this.elements.modalUserBalance.textContent = `${this.balance} NSP`;
                 this.elements.modalTotalDeposits.textContent = `${this.userStats.totalDeposits} NSP`;
                 this.elements.modalTotalWithdrawals.textContent = `${this.userStats.totalWithdrawals} NSP`;
@@ -1793,7 +1904,7 @@
                     
                 } catch (error) {
                     console.error('Deposit error:', error);
-                    this.showToast('❌ فشل عملية الإيداع', 'error');
+                    this.showToast('❌ فشل عملية الإيداع: ' + error.message, 'error');
                 }
             }
             
@@ -1824,21 +1935,33 @@
                     
                 } catch (error) {
                     console.error('Withdrawal error:', error);
-                    this.showToast('❌ فشل عملية السحب', 'error');
+                    this.showToast('❌ فشل عملية السحب: ' + error.message, 'error');
                 }
             }
             
             async callAPI(data) {
                 try {
+                    console.log('Sending API request:', data);
+                    
+                    // إنشاء URLSearchParams يدويًا
+                    const params = new URLSearchParams();
+                    params.append('action', data.action);
+                    
+                    // إضافة جميع الخصائص الأخرى كمعلمات منفصلة
+                    for (const key in data) {
+                        if (key !== 'action') {
+                            params.append(key, data[key]);
+                        }
+                    }
+                    
+                    console.log('Request params:', params.toString());
+                    
                     const response = await fetch(API_URL, {
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/x-www-form-urlencoded',
                         },
-                        body: new URLSearchParams({
-                            action: data.action,
-                            data: JSON.stringify(data)
-                        })
+                        body: params
                     });
                     
                     const result = await response.json();
@@ -1846,7 +1969,78 @@
                     return result;
                 } catch (error) {
                     console.error('API Error:', error);
+                    this.showToast('❌ خطأ في الاتصال بالسيرفر', 'error');
                     throw error;
+                }
+            }
+            
+            async testConnection() {
+                try {
+                    this.showToast('🔄 جاري اختبار الاتصال...', 'info');
+                    
+                    const response = await this.callAPI({
+                        action: 'ping'
+                    });
+                    
+                    if (response.success) {
+                        this.showToast('✅ الاتصال بالسيرفر يعمل بشكل صحيح', 'success');
+                        console.log('Server response:', response);
+                        
+                        // اختبار إضافي لجلب معلومات التصحيح
+                        const debugResponse = await this.callAPI({
+                            action: 'debug'
+                        });
+                        
+                        if (debugResponse.success) {
+                            console.log('Debug info:', debugResponse);
+                            alert(`✅ الاتصال يعمل!\n\nالمستخدمين المسجلين: ${debugResponse.totalUsers || 0}\nآخر تحديث: ${response.timestamp}`);
+                        }
+                    } else {
+                        this.showToast('❌ مشكلة في الاتصال بالسيرفر', 'error');
+                    }
+                } catch (error) {
+                    console.error('Connection test failed:', error);
+                    this.showToast('❌ فشل اختبار الاتصال', 'error');
+                    alert('❌ فشل الاتصال بالسيرفر. تأكد من:\n1. نشر السكربت كـ Web App\n2. تمكين CORS\n3. رابط النشر صحيح');
+                }
+            }
+            
+            async debugInfo() {
+                try {
+                    const response = await this.callAPI({
+                        action: 'debug'
+                    });
+                    
+                    if (response.success) {
+                        const info = `
+                            === معلومات التصحيح ===
+                            
+                            المستخدمين المسجلين: ${response.totalUsers}
+                            الصفوف في الجدول: ${response.sheetLastRow}
+                            اسم الورقة: ${response.sheetName}
+                            
+                            المستخدمين:
+                            ${response.users.map(user => `
+                            - ${user.name} (${user.email})
+                              UserID: ${user.userID}
+                              GoogleID: ${user.googleId}
+                              الرصيد: ${user.balance} NSP
+                            `).join('')}
+                            
+                            === معلومات المتصفح ===
+                            User Agent: ${navigator.userAgent}
+                            Online: ${navigator.onLine}
+                            LocalStorage: ${localStorage.getItem('nsp_gold_user') ? 'يوجد بيانات' : 'لا يوجد بيانات'}
+                        `;
+                        
+                        console.log(info);
+                        alert('تم حفظ معلومات التصحيح في console.log');
+                    } else {
+                        alert('❌ فشل جلب معلومات التصحيح');
+                    }
+                } catch (error) {
+                    console.error('Debug error:', error);
+                    alert('❌ خطأ في جلب معلومات التصحيح');
                 }
             }
             
