@@ -1,0 +1,865 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>نظام إدارة الحالات - تخزين سحابي</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 25px;
+            font-size: 14px;
+        }
+
+        .register-main-btn {
+            width: 100%;
+            padding: 18px;
+            font-size: 22px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-bottom: 25px;
+        }
+
+        .register-main-btn:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+        }
+
+        .register-main-btn:disabled {
+            opacity: 0.5;
+            cursor: wait;
+        }
+
+        .form-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 15px;
+            margin-top: 20px;
+            display: none;
+            animation: slideDown 0.3s ease;
+        }
+
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input, textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.2s;
+        }
+
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #764ba2;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .images-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .image-preview {
+            position: relative;
+            border: 2px solid #ddd;
+            border-radius: 10px;
+            overflow: hidden;
+            aspect-ratio: 1;
+        }
+
+        .image-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .remove-img {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: rgba(220, 53, 69, 0.9);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        .donate-section {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .donate-btn {
+            background: #28a745;
+            color: white;
+            padding: 12px 30px;
+            font-size: 18px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            width: 100%;
+        }
+
+        .donate-btn:hover {
+            transform: scale(1.02);
+        }
+
+        .qr-container {
+            display: none;
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .qr-container img {
+            max-width: 200px;
+            border: 3px solid #ddd;
+            border-radius: 15px;
+            padding: 10px;
+            background: white;
+        }
+
+        .admin-secret-btn {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            width: 45px;
+            height: 45px;
+            background: rgba(0,0,0,0.08);
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 1000;
+            transition: all 0.3s;
+        }
+
+        .admin-secret-btn:hover {
+            background: rgba(0,0,0,0.2);
+            transform: scale(1.05);
+        }
+
+        .admin-panel {
+            margin-top: 30px;
+            border-top: 3px solid #764ba2;
+            padding-top: 20px;
+            display: none;
+        }
+
+        .qr-setting {
+            background: #e9ecef;
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .request-item {
+            background: white;
+            border: 1px solid #e0e0e0;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .request-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .request-number {
+            background: #764ba2;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .request-status {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        .status-pending {
+            background: #ffc107;
+            color: #333;
+        }
+
+        .request-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .complete-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 6px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .remove-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 6px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+
+        .request-details p {
+            margin: 8px 0;
+            line-height: 1.5;
+        }
+
+        .request-images {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .request-images img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            z-index: 2000;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            width: 90%;
+            max-width: 500px;
+            display: none;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 1999;
+            display: none;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: #764ba2;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #999;
+        }
+
+        .success-msg {
+            background: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 15px;
+            display: none;
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 600px) {
+            .container { padding: 15px; }
+            .request-header { flex-direction: column; align-items: flex-start; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>🏥 نظام إدارة الحالات الخيرية</h1>
+    <div class="subtitle">تخزين سحابي آمن على GitHub</div>
+
+    <button class="register-main-btn" id="registerMainBtn" disabled>➕ تسجيل حالة جديدة</button>
+
+    <div class="form-section" id="caseForm">
+        <h3>📝 نموذج تسجيل الحالة</h3>
+        <div class="form-group">
+            <label>👤 اسم المريض:</label>
+            <input type="text" id="patientName" placeholder="أدخل اسم المريض الكامل">
+        </div>
+        <div class="form-group">
+            <label>👨‍⚕️ اسم المقدم:</label>
+            <input type="text" id="providerName" placeholder="أدخل اسم مقدم الطلب">
+        </div>
+        <div class="form-group">
+            <label>📞 رقم التواصل:</label>
+            <input type="tel" id="phone" placeholder="رقم الهاتف للتواصل">
+        </div>
+        <div class="form-group">
+            <label>📄 تفاصيل الحالة المطلوبة:</label>
+            <textarea id="details" placeholder="اكتب شرح الحالة، المبلغ المطلوب، العلاج المطلوب..."></textarea>
+        </div>
+        <div class="form-group">
+            <label>🖼️ الصور والتحاليل (1 - 20 صورة):</label>
+            <input type="file" id="imageInput" accept="image/*" multiple>
+            <div class="images-grid" id="imagesPreview"></div>
+        </div>
+        
+        <div class="donate-section">
+            <button class="donate-btn" id="showQRBtn">💰 التبرع الآن (شام كاش)</button>
+            <div class="qr-container" id="qrContainer">
+                <img id="qrImage" alt="QR Code">
+                <p style="margin-top: 10px;">🔹 امسح الكود عبر تطبيق شام كاش 🔹</p>
+            </div>
+        </div>
+
+        <div style="display: flex; gap: 10px; margin-top: 15px;">
+            <button id="submitCase" style="background: #28a745; flex:1; padding: 12px; border: none; border-radius: 10px; color: white; font-size: 16px; cursor: pointer;">✅ إرسال الحالة</button>
+            <button id="cancelForm" style="background: #6c757d; flex:1; padding: 12px; border: none; border-radius: 10px; color: white; font-size: 16px; cursor: pointer;">❌ إلغاء</button>
+        </div>
+    </div>
+
+    <div class="admin-panel" id="adminPanel">
+        <h2 style="margin-bottom: 15px;">🔐 لوحة التحكم</h2>
+        <div class="qr-setting">
+            <h3 style="margin-bottom: 10px;">⚙️ تعيين QR التبرع</h3>
+            <input type="text" id="qrUrlInput" placeholder="أدخل رابط صورة QR كود" style="width: 100%; padding: 10px; margin-bottom: 10px;">
+            <button id="setQRBtn" style="background: #28a745; color:white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer;">💾 حفظ QR</button>
+        </div>
+        <div id="pendingRequests"></div>
+    </div>
+</div>
+
+<button class="admin-secret-btn" id="adminSecretBtn" title=""></button>
+
+<div class="overlay" id="overlay"></div>
+
+<!-- مودال كلمة المرور للآدمن -->
+<div class="modal" id="passwordModal">
+    <h3>🔐 دخول لوحة الإدارة</h3>
+    <input type="password" id="adminPassword" placeholder="كلمة المرور" style="width: 100%; padding: 10px; margin: 15px 0; border: 2px solid #ddd; border-radius: 10px;">
+    <button id="confirmPasswordBtn" style="background: #764ba2; color:white; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer;">تأكيد</button>
+    <button id="closePasswordBtn" style="background: #dc3545; margin-right: 10px; padding: 10px 20px; border: none; border-radius: 10px; cursor: pointer;">إلغاء</button>
+</div>
+
+<!-- مودال إعداد التوكن لأول مرة -->
+<div class="modal" id="tokenSetupModal">
+    <h3>🔑 إعداد التخزين السحابي</h3>
+    <div id="setupSuccessMsg" style="background: #d4edda; color: #155724; padding: 10px; border-radius: 10px; margin-bottom: 15px; display: none;">
+        ✅ تم حفظ التوكن بنجاح!
+    </div>
+    <p style="margin: 15px 0; color: #666;">سيتم تخزين التوكن بشكل آمن في المستودع لاستخدامه في جميع العمليات.</p>
+    <p style="margin: 10px 0; font-size: 14px; color: #dc3545;">⚠️ يتم تعيين التوكن مرة واحدة فقط ولن تحتاج لإدخاله مجدداً</p>
+    <input type="text" id="repoOwner" placeholder="اسم مستخدم GitHub" style="width: 100%; padding: 10px; margin-bottom: 10px;">
+    <input type="text" id="repoName" placeholder="اسم المستودع" style="width: 100%; padding: 10px; margin-bottom: 10px;">
+    <input type="password" id="githubToken" placeholder="GitHub Personal Access Token" style="width: 100%; padding: 10px; margin-bottom: 15px;">
+    <button id="saveTokenBtn" style="background: #28a745; color:white; padding: 12px; border: none; border-radius: 10px; width: 100%; cursor: pointer;">💾 حفظ التوكن وإعداد النظام</button>
+</div>
+
+<script>
+    // ======================== المتغيرات العامة ========================
+    const ADMIN_PASSWORD = "admin123";
+    let currentImages = [];
+    let requests = [];
+    let qrCodeUrl = "";
+    let repoOwner = "";
+    let repoName = "";
+    let githubToken = "";
+
+    // ======================== دوال التخزين على GitHub ========================
+    
+    // قراءة البيانات من GitHub
+    async function loadFromGitHub() {
+        try {
+            const baseUrl = `https://raw.githubusercontent.com/${repoOwner}/${repoName}/main/`;
+            const response = await fetch(`${baseUrl}data.json?t=${Date.now()}`);
+            if (response.ok) {
+                const data = await response.json();
+                requests = data.requests || [];
+                qrCodeUrl = data.qrCodeUrl || "";
+                if (qrCodeUrl) document.getElementById("qrImage").src = qrCodeUrl;
+                return true;
+            }
+        } catch(e) {
+            console.log("ملف البيانات غير موجود بعد");
+        }
+        return false;
+    }
+
+    // حفظ البيانات إلى GitHub
+    async function saveToGitHub() {
+        const data = {
+            requests: requests,
+            qrCodeUrl: qrCodeUrl,
+            lastUpdated: new Date().toISOString()
+        };
+        
+        const content = btoa(unescape(encodeURIComponent(JSON.stringify(data, null, 2))));
+        const url = `https://api.github.com/repos/${repoOwner}/${repoName}/contents/data.json`;
+        
+        // الحصول على SHA إذا كان الملف موجوداً
+        let sha = null;
+        try {
+            const getResponse = await fetch(url, {
+                headers: { 'Authorization': `token ${githubToken}` }
+            });
+            if (getResponse.status === 200) {
+                const existing = await getResponse.json();
+                sha = existing.sha;
+            }
+        } catch(e) {}
+        
+        const response = await fetch(url, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `token ${githubToken}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                message: "تحديث البيانات",
+                content: content,
+                sha: sha,
+                branch: "main"
+            })
+        });
+        
+        return response.status === 200 || response.status === 201;
+    }
+
+    // حفظ التوكن في ملف config.json (مرة واحدة)
+    async function saveTokenToRepo(token, owner, repository) {
+        const configData = {
+            token: token,
+            owner: owner,
+            repo: repository,
+            createdAt: new Date().toISOString()
+        };
+        
+        const content = btoa(unescape(encodeURIComponent(JSON.stringify(configData, null, 2))));
+        const url = `https://api.github.com/repos/${owner}/${repository}/contents/config.json`;
+        
+        try {
+            const response = await fetch(url, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `token ${token}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    message: "إعداد نظام إدارة الحالات",
+                    content: content,
+                    branch: "main"
+                })
+            });
+            return response.status === 200 || response.status === 201;
+        } catch(e) {
+            return false;
+        }
+    }
+
+    // تحميل التوكن من config.json
+    async function loadConfig() {
+        try {
+            const baseUrl = window.location.href.substring(0, window.location.href.lastIndexOf('/') + 1);
+            const response = await fetch(`${baseUrl}config.json?t=${Date.now()}`);
+            if (response.ok) {
+                const config = await response.json();
+                githubToken = config.token;
+                repoOwner = config.owner;
+                repoName = config.repo;
+                return true;
+            }
+        } catch(e) {}
+        return false;
+    }
+
+    // ======================== إدارة الصور ========================
+    document.getElementById("imageInput").addEventListener("change", function(e) {
+        const files = Array.from(e.target.files);
+        if (currentImages.length + files.length > 20) {
+            alert("⚠️ لا يمكن إضافة أكثر من 20 صورة!");
+            return;
+        }
+        
+        files.forEach(file => {
+            if (file.type.startsWith("image/")) {
+                const reader = new FileReader();
+                reader.onload = function(ev) {
+                    currentImages.push(ev.target.result);
+                    updateImagePreview();
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+        e.target.value = "";
+    });
+
+    function updateImagePreview() {
+        const container = document.getElementById("imagesPreview");
+        container.innerHTML = "";
+        currentImages.forEach((imgSrc, idx) => {
+            const div = document.createElement("div");
+            div.className = "image-preview";
+            const img = document.createElement("img");
+            img.src = imgSrc;
+            const removeBtn = document.createElement("button");
+            removeBtn.textContent = "✖";
+            removeBtn.className = "remove-img";
+            removeBtn.onclick = () => {
+                currentImages.splice(idx, 1);
+                updateImagePreview();
+            };
+            div.appendChild(img);
+            div.appendChild(removeBtn);
+            container.appendChild(div);
+        });
+    }
+
+    function resetForm() {
+        document.getElementById("patientName").value = "";
+        document.getElementById("providerName").value = "";
+        document.getElementById("phone").value = "";
+        document.getElementById("details").value = "";
+        currentImages = [];
+        updateImagePreview();
+        document.getElementById("imageInput").value = "";
+        document.getElementById("caseForm").style.display = "none";
+    }
+
+    // ======================== واجهة المستخدم ========================
+    document.getElementById("registerMainBtn").addEventListener("click", () => {
+        document.getElementById("caseForm").style.display = "block";
+        document.getElementById("caseForm").scrollIntoView({ behavior: "smooth" });
+    });
+
+    document.getElementById("cancelForm").addEventListener("click", resetForm);
+
+    document.getElementById("submitCase").addEventListener("click", async () => {
+        const patientName = document.getElementById("patientName").value.trim();
+        const providerName = document.getElementById("providerName").value.trim();
+        const phone = document.getElementById("phone").value.trim();
+        const details = document.getElementById("details").value.trim();
+
+        if (!patientName || !providerName || !phone || !details) {
+            alert("⚠️ يرجى ملء جميع الحقول!");
+            return;
+        }
+        if (currentImages.length < 1) {
+            alert("⚠️ يرجى إرفاق صورة واحدة على الأقل!");
+            return;
+        }
+
+        const newRequest = {
+            id: Date.now(),
+            patientName: patientName,
+            providerName: providerName,
+            phone: phone,
+            details: details,
+            images: [...currentImages],
+            status: "pending",
+            timestamp: new Date().toLocaleString("ar-EG")
+        };
+
+        requests.unshift(newRequest);
+        const saved = await saveToGitHub();
+        
+        if (saved) {
+            resetForm();
+            alert("✅ تم إرسال الحالة بنجاح إلى السحاب!");
+            if (document.getElementById("adminPanel").style.display === "block") {
+                renderAdminPanel();
+            }
+        } else {
+            alert("❌ فشل الحفظ! تأكد من التوكن والمستودع.");
+            requests.shift();
+        }
+    });
+
+    // ======================== QR التبرع ========================
+    document.getElementById("showQRBtn").addEventListener("click", () => {
+        const qrDiv = document.getElementById("qrContainer");
+        if (qrDiv.style.display === "none" || qrDiv.style.display === "") {
+            if (qrCodeUrl) {
+                qrDiv.style.display = "block";
+            } else {
+                alert("⚠️ لم يتم تعيين QR التبرع بعد. يرجى التواصل مع الإدارة.");
+            }
+        } else {
+            qrDiv.style.display = "none";
+        }
+    });
+
+    // ======================== لوحة الآدمن ========================
+    const adminSecretBtn = document.getElementById("adminSecretBtn");
+    const passwordModal = document.getElementById("passwordModal");
+    const overlay = document.getElementById("overlay");
+    const adminPanel = document.getElementById("adminPanel");
+    const tokenSetupModal = document.getElementById("tokenSetupModal");
+
+    function showPasswordModal() {
+        passwordModal.style.display = "block";
+        overlay.style.display = "block";
+    }
+
+    function hidePasswordModal() {
+        passwordModal.style.display = "none";
+        overlay.style.display = "none";
+        document.getElementById("adminPassword").value = "";
+    }
+
+    adminSecretBtn.addEventListener("click", () => {
+        showPasswordModal();
+    });
+
+    document.getElementById("confirmPasswordBtn").addEventListener("click", async () => {
+        const entered = document.getElementById("adminPassword").value;
+        if (entered === ADMIN_PASSWORD) {
+            hidePasswordModal();
+            
+            // التحقق من وجود التوكن
+            const configLoaded = await loadConfig();
+            
+            if (!configLoaded || !githubToken) {
+                // أول مرة: نعرض نافذة إعداد التوكن
+                tokenSetupModal.style.display = "block";
+                overlay.style.display = "block";
+            } else {
+                // التوكن موجود، نعرض لوحة التحكم
+                adminPanel.style.display = "block";
+                adminSecretBtn.style.display = "none";
+                await loadFromGitHub();
+                renderAdminPanel();
+                alert("🔓 تم فتح لوحة التحكم!");
+            }
+        } else {
+            alert("❌ كلمة المرور غير صحيحة!");
+            hidePasswordModal();
+        }
+    });
+
+    document.getElementById("closePasswordBtn").addEventListener("click", hidePasswordModal);
+    overlay.addEventListener("click", () => {
+        hidePasswordModal();
+        tokenSetupModal.style.display = "none";
+    });
+
+    // حفظ التوكن لأول مرة
+    document.getElementById("saveTokenBtn").addEventListener("click", async () => {
+        const owner = document.getElementById("repoOwner").value.trim();
+        const repository = document.getElementById("repoName").value.trim();
+        const token = document.getElementById("githubToken").value.trim();
+
+        if (!owner || !repository || !token) {
+            alert("⚠️ يرجى ملء جميع الحقول!");
+            return;
+        }
+
+        document.getElementById("saveTokenBtn").disabled = true;
+        document.getElementById("saveTokenBtn").textContent = "جاري الإعداد...";
+
+        const saved = await saveTokenToRepo(token, owner, repository);
+
+        if (saved) {
+            githubToken = token;
+            repoOwner = owner;
+            repoName = repository;
+            
+            document.getElementById("setupSuccessMsg").style.display = "block";
+            
+            setTimeout(async () => {
+                tokenSetupModal.style.display = "none";
+                overlay.style.display = "none";
+                adminPanel.style.display = "block";
+                adminSecretBtn.style.display = "none";
+                await loadFromGitHub();
+                renderAdminPanel();
+                document.getElementById("registerMainBtn").disabled = false;
+                alert("✅ تم إعداد النظام بنجاح! يمكنك الآن استخدام الموقع.");
+            }, 1500);
+        } else {
+            alert("❌ فشل حفظ التوكن. تأكد من:\n1. صحة التوكن وصلاحياته (repo)\n2. اسم المستخدم والمستودع صحيحان");
+            document.getElementById("saveTokenBtn").disabled = false;
+            document.getElementById("saveTokenBtn").textContent = "💾 حفظ التوكن وإعداد النظام";
+        }
+    });
+
+    function renderAdminPanel() {
+        const container = document.getElementById("pendingRequests");
+        const pendingReqs = requests.filter(r => r.status === "pending");
+        
+        if (pendingReqs.length === 0) {
+            container.innerHTML = '<div class="empty-state">✨ لا توجد طلبات معلقة حالياً ✨</div>';
+            return;
+        }
+
+        container.innerHTML = "";
+        pendingReqs.forEach(req => {
+            const reqDiv = document.createElement("div");
+            reqDiv.className = "request-item";
+            reqDiv.innerHTML = `
+                <div class="request-header">
+                    <div>
+                        <span class="request-number">📋 طلب رقم: ${req.id}</span>
+                        <span class="request-status status-pending">⏳ معلق</span>
+                    </div>
+                    <div class="request-actions">
+                        <button class="complete-btn" data-id="${req.id}">✅ مكتمل</button>
+                        <button class="remove-btn" data-id="${req.id}">🗑️ إزالة</button>
+                    </div>
+                </div>
+                <div class="request-details">
+                    <p><strong>👤 المريض:</strong> ${escapeHtml(req.patientName)}</p>
+                    <p><strong>👨‍⚕️ المقدم:</strong> ${escapeHtml(req.providerName)}</p>
+                    <p><strong>📞 التواصل:</strong> ${escapeHtml(req.phone)}</p>
+                    <p><strong>📄 التفاصيل:</strong></p>
+                    <p style="background: #f8f9fa; padding: 10px; border-radius: 10px;">${escapeHtml(req.details)}</p>
+                    <p><strong>🕒 تاريخ الإرسال:</strong> ${req.timestamp}</p>
+                    <div class="request-images" id="images-${req.id}"></div>
+                </div>
+            `;
+            container.appendChild(reqDiv);
+
+            const imagesDiv = reqDiv.querySelector(`#images-${req.id}`);
+            req.images.forEach((imgSrc, idx) => {
+                const img = document.createElement("img");
+                img.src = imgSrc;
+                img.onclick = () => window.open(imgSrc);
+                imagesDiv.appendChild(img);
+            });
+        });
+
+        document.querySelectorAll(".complete-btn").forEach(btn => {
+            btn.onclick = async () => {
+                const id = parseInt(btn.dataset.id);
+                const request = requests.find(r => r.id === id);
+                if (request) {
+                    request.status = "completed";
+                    await saveToGitHub();
+                    renderAdminPanel();
+                    alert(`✅ تم تغيير حالة الطلب رقم ${id} إلى مكتمل!`);
+                }
+            };
+        });
+
+        document.querySelectorAll(".remove-btn").forEach(btn => {
+            btn.onclick = async () => {
+                const id = parseInt(btn.dataset.id);
+                if (confirm(`⚠️ هل أنت متأكد من حذف الطلب رقم ${id} نهائياً؟`)) {
+                    requests = requests.filter(r => r.id !== id);
+                    await saveToGitHub();
+                    renderAdminPanel();
+                    alert(`🗑️ تم حذف الطلب رقم ${id}!`);
+                }
+            };
+        });
+    }
+
+    document.getElementById("setQRBtn").addEventListener("click", async () => {
+        const newUrl = document.getElementById("qrUrlInput").value.trim();
+        if (newUrl) {
+            qrCodeUrl = newUrl;
+            await saveToGitHub();
+            document.getElementById("qrImage").src = qrCodeUrl;
+            document.getElementById("qrUrlInput").value = "";
+            alert("✅ تم تعيين QR التبرع بنجاح!");
+        } else {
+            alert("⚠️ الرجاء إدخال رابط صورة QR صحيح!");
+        }
+    });
+
+    function escapeHtml(str) {
+        const div = document.createElement('div');
+        div.textContent = str;
+        return div.innerHTML;
+    }
+
+    // التحقق من وجود إعدادات عند بدء التشغيل
+    async function init() {
+        const configLoaded = await loadConfig();
+        if (configLoaded && githubToken) {
+            await loadFromGitHub();
+            document.getElementById("registerMainBtn").disabled = false;
+        }
+    }
+    
+    init();
+</script>
+</body>
+</html>
