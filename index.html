@@ -367,15 +367,15 @@
         let ground = { x: 0, y: 0, w: 210, h: 26 };
         
         let swinging = {
-            x: 0, y: 0, w: 48, h: 28,
-            angle: 0, speed: 0.048, direction: 1, maxAngle: 0.85,
+            x: 0, y: 0, w: 48, h: 42,      // h تم مضاعفته من 28 إلى 42 (زيادة 50%)
+            angle: 0, speed: 0.024, direction: 1, maxAngle: 0.85,  // speed تم تخفيضه من 0.048 إلى 0.024 (بنسبة 50%)
             pivotX: 0, pivotY: -30, ropeLength: 210
         };
         
         let isFalling = false;
         let fallVelY = 0;
         let fallPosX = 0, fallPosY = 0;
-        let fallW = 48, fallH = 28;
+        let fallW = 48, fallH = 42;      // fallH تم مضاعفته من 28 إلى 42 (زيادة 50%)
         let fallFloorNum = 0;
         let waitingForLanding = false;
         
@@ -470,7 +470,7 @@
         
         function calcSwingSpeed(baseFloor) {
             let extra = Math.min(0.095, baseFloor * 0.008);
-            return 0.048 + extra;
+            return 0.024 + extra; // تم تغيير القاعدة من 0.048 إلى 0.024
         }
         
         function getMultiplier(floorNum) {
@@ -733,8 +733,8 @@
                     playImpactSound();
                     addShake(7, 160);
                     
-                    // تقليل ارتفاع الكاميرا
-                    cameraY -= 23;
+                    // تقليل ارتفاع الكاميرا (تم ضبط القيمة لتناسب الارتفاع الجديد)
+                    cameraY -= 34; // تم تعديل القيمة من 23 إلى 34 لتناسب زيادة الارتفاع 50%
                     
                     gameStatusSpan.innerText = `✅ الطابق ${currentFloor} ثبُت! مضاعف ${multiplier.toFixed(2)}x | الأرباح: ${Math.floor(pendingProfit)}`;
                     updateUI();
