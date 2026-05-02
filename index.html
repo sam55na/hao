@@ -46,17 +46,17 @@
             cursor: pointer;
         }
 
-        /* الشريط السفلي - أزرار مرتفعة قليلاً */
+        /* الشريط السفلي - مكبر بنسبة 50% */
         .bottom-bar {
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
             backdrop-filter: blur(20px);
-            border-top: 2px solid #FFD700;
-            padding: 16px 20px 18px 20px;
+            border-top: 3px solid #FFD700;
+            padding: 24px 30px 26px 30px;
             display: flex;
             flex-wrap: nowrap;
             justify-content: center;
             align-items: center;
-            gap: 14px;
+            gap: 20px;
             box-shadow: 0 -10px 30px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,215,0,0.3);
             z-index: 10;
             overflow-x: auto;
@@ -65,14 +65,14 @@
 
         .balance-card {
             background: linear-gradient(145deg, #000000, #1a1a1a);
-            padding: 8px 20px;
+            padding: 12px 28px;
             border-radius: 60px;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 14px;
             color: #FFD700;
             font-weight: bold;
-            font-size: 1rem;
+            font-size: 1.3rem;
             border: 1px solid #FFD70055;
             box-shadow: 0 0 12px rgba(255,215,0,0.3);
             flex-shrink: 0;
@@ -80,18 +80,18 @@
 
         .balance-card span {
             color: #FFD700;
-            font-size: 1.5rem;
+            font-size: 2rem;
             font-weight: 900;
             text-shadow: 0 0 8px rgba(255,215,0,0.5);
         }
 
         .bet-fixed {
             background: linear-gradient(145deg, #FFD700, #DAA520);
-            padding: 8px 22px;
+            padding: 12px 28px;
             border-radius: 60px;
             color: #000000;
             font-weight: bold;
-            font-size: 0.95rem;
+            font-size: 1.3rem;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             border: 1px solid #FFF0AA;
             flex-shrink: 0;
@@ -101,26 +101,26 @@
             background: linear-gradient(145deg, #000000, #1c1c1c);
             color: #FFD700;
             border-radius: 60px;
-            padding: 8px 18px;
+            padding: 12px 24px;
             font-weight: bold;
-            font-size: 0.9rem;
+            font-size: 1.2rem;
             border: 1px solid #FFD700;
             box-shadow: 0 0 12px rgba(255,215,0,0.4);
             flex-shrink: 0;
         }
 
-        /* مجموعة الأزرار */
+        /* مجموعة الأزرار مكبرة */
         .btn-group {
             display: flex;
-            gap: 12px;
+            gap: 16px;
             flex-shrink: 0;
         }
 
         button {
             border: none;
             font-weight: bold;
-            font-size: 0.95rem;
-            padding: 10px 24px;
+            font-size: 1.3rem;
+            padding: 12px 32px;
             border-radius: 60px;
             cursor: pointer;
             transition: all 0.12s ease;
@@ -131,7 +131,7 @@
             background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
             color: #FFD700;
             border: 1px solid #FFD70055;
-            box-shadow: 0 5px 0 #000000, 0 0 12px rgba(255,215,0,0.2);
+            box-shadow: 0 6px 0 #000000, 0 0 12px rgba(255,215,0,0.2);
             white-space: nowrap;
         }
 
@@ -151,7 +151,7 @@
         }
 
         button:active {
-            transform: translateY(2px);
+            transform: translateY(3px);
             box-shadow: 0 3px 0 #000000;
         }
 
@@ -160,39 +160,39 @@
             color: #000000;
             font-weight: 900;
             border: 1px solid #FFF8DC;
-            box-shadow: 0 5px 0 #8B6914, 0 0 15px rgba(255,215,0,0.6);
+            box-shadow: 0 6px 0 #8B6914, 0 0 15px rgba(255,215,0,0.6);
         }
 
         .cashout-btn {
             background: linear-gradient(135deg, #2ecc71, #27ae60);
             color: white;
             border: 1px solid #a8ffd0;
-            box-shadow: 0 5px 0 #1f8f4b;
+            box-shadow: 0 6px 0 #1f8f4b;
         }
 
         .reset-btn {
             background: linear-gradient(135deg, #e67e22, #b45f1b);
             color: white;
             border: 1px solid #ffcc88;
-            box-shadow: 0 5px 0 #8B4513;
+            box-shadow: 0 6px 0 #8B4513;
         }
 
         .status-bar {
             background: #000000dd;
             text-align: center;
-            padding: 6px;
-            font-size: 12px;
+            padding: 8px;
+            font-size: 14px;
             color: #FFD700;
             border-top: 1px solid #FFD70033;
         }
 
         @media (max-width: 850px) {
-            .bottom-bar { gap: 8px; padding: 12px 12px 14px 12px; }
-            button { padding: 7px 16px; font-size: 0.8rem; }
-            .balance-card span { font-size: 1.2rem; }
-            .balance-card { padding: 5px 12px; }
-            .multiplier-badge { padding: 5px 12px; font-size: 0.75rem; }
-            .bet-fixed { padding: 5px 14px; font-size: 0.8rem; }
+            .bottom-bar { gap: 10px; padding: 16px 16px 18px 16px; }
+            button { padding: 8px 20px; font-size: 1rem; }
+            .balance-card span { font-size: 1.4rem; }
+            .balance-card { padding: 8px 16px; font-size: 1rem; }
+            .multiplier-badge { padding: 8px 16px; font-size: 0.9rem; }
+            .bet-fixed { padding: 8px 18px; font-size: 1rem; }
         }
     </style>
 </head>
@@ -245,8 +245,8 @@
         const cashoutBtn = document.getElementById('cashoutBtn');
         const resetBtn = document.getElementById('resetBtn');
         
-        // ---------- الكاميرا: تنزل للأسفل (ناقص) بدل أن ترتفع ----------
-        let cameraY = 0;           // إزاحة الكاميرا (تتحرك للأسفل مع كل طابق)
+        // ---------- الكاميرا: حركة أخف (قللنا الارتفاع بنسبة 50%) ----------
+        let cameraY = 0;
         let shakeIntensity = 0;
         let shakeDuration = 0;
         
@@ -272,7 +272,7 @@
             };
         }
         
-        // ---------- غيوم جميلة (بدون طيور) ----------
+        // ---------- غيوم جميلة ----------
         let clouds = [];
         function initClouds() {
             clouds = [];
@@ -295,7 +295,6 @@
         }
         
         function drawSkyAndClouds(camY) {
-            // سماء متدرجة جميلة
             const grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
             grad.addColorStop(0, "#87CEEB");
             grad.addColorStop(0.5, "#B0E0FF");
@@ -303,7 +302,6 @@
             ctx.fillStyle = grad;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             
-            // غيوم بيضاء ناعمة (لا تتأثر بالكاميرا)
             for(let cloud of clouds) {
                 ctx.fillStyle = "rgba(255,255,250,0.9)";
                 ctx.shadowBlur = 12;
@@ -315,7 +313,6 @@
             }
             ctx.shadowBlur = 0;
             
-            // لمعات ذهبية خفيفة
             ctx.fillStyle = "#FFD700";
             for(let i = 0; i < 50; i++) {
                 ctx.globalAlpha = 0.12 + Math.sin(Date.now() * 0.002 + i) * 0.08;
@@ -328,7 +325,6 @@
         let builtFloors = [];
         let ground = { x: 0, y: 0, w: 210, h: 26 };
         
-        // الطابق المتأرجح (عرض أقل)
         let swinging = {
             x: 0, y: 0, w: 48, h: 28,
             angle: 0, speed: 0.048, direction: 1, maxAngle: 0.85,
@@ -342,7 +338,6 @@
         let fallFloorNum = 0;
         let waitingForLanding = false;
         
-        // ألوان الطوابق المتعددة
         const floorColors = ["#1a1a1a", "#2d2d2d", "#FFD700", "#B8860B", "#DAA520", "#1f1f1f", "#FFC125", "#F0E68C", "#8B6914", "#CDAD00", "#FFF8DC", "#D4AF37", "#FFD700"];
         
         function getFloorColor(floorNum) {
@@ -455,6 +450,162 @@
             }
         }
         
+        // ---------- نظام الصوت المتقدم ----------
+        let audioCtx = null;
+        let bgMusicGain = null;      // للموسيقى الخلفية
+        let sfxGain = null;          // للمؤثرات
+        let bgMusicOsc = null;
+        let bgMusicInterval = null;
+        let isMusicPlaying = false;
+        
+        function initAudio() {
+            if(audioCtx) return;
+            try {
+                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                bgMusicGain = audioCtx.createGain();
+                sfxGain = audioCtx.createGain();
+                bgMusicGain.gain.value = 0.12;  // موسيقى خافتة
+                sfxGain.gain.value = 0.35;
+                bgMusicGain.connect(audioCtx.destination);
+                sfxGain.connect(audioCtx.destination);
+            } catch(e){ console.log("audio not supported"); }
+        }
+        
+        // موسيقى خافتة مستمرة (تبدأ عند الإفلات)
+        function startBackgroundMusic() {
+            if(!audioCtx || !isGameActive) return;
+            if(isMusicPlaying) return;
+            try {
+                isMusicPlaying = true;
+                // نغمة خافتة مستمرة باستخدام setInterval لتوليد نغمات لطيفة ومتكررة
+                if(bgMusicInterval) clearInterval(bgMusicInterval);
+                const notes = [261.63, 293.66, 329.63, 261.63, 349.23, 293.66];
+                let noteIdx = 0;
+                bgMusicInterval = setInterval(() => {
+                    if(!isMusicPlaying || !audioCtx || audioCtx.state !== 'running' || !isGameActive) return;
+                    const osc = audioCtx.createOscillator();
+                    const gainNode = audioCtx.createGain();
+                    osc.connect(gainNode);
+                    gainNode.connect(bgMusicGain);
+                    osc.type = 'sine';
+                    osc.frequency.value = notes[noteIdx % notes.length];
+                    gainNode.gain.value = 0.08;
+                    osc.start();
+                    gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1.2);
+                    osc.stop(audioCtx.currentTime + 1.1);
+                    noteIdx++;
+                }, 1400);
+            } catch(e) { console.log("music error"); }
+        }
+        
+        function stopBackgroundMusic() {
+            if(bgMusicInterval) {
+                clearInterval(bgMusicInterval);
+                bgMusicInterval = null;
+            }
+            isMusicPlaying = false;
+        }
+        
+        // صوت الإفلات
+        function playDropSound() {
+            if(!audioCtx || audioCtx.state !== 'running') return;
+            try {
+                const osc = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                osc.connect(gainNode);
+                gainNode.connect(sfxGain);
+                osc.type = 'sine';
+                osc.frequency.value = 310;
+                gainNode.gain.value = 0.3;
+                osc.start();
+                gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.3);
+                osc.stop(audioCtx.currentTime + 0.28);
+                // إضافة صوت "هواء" بسيط
+                const osc2 = audioCtx.createOscillator();
+                const gain2 = audioCtx.createGain();
+                osc2.connect(gain2);
+                gain2.connect(sfxGain);
+                osc2.type = 'sine';
+                osc2.frequency.value = 180;
+                gain2.gain.value = 0.15;
+                osc2.start();
+                gain2.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.4);
+                osc2.stop(audioCtx.currentTime + 0.35);
+            } catch(e){}
+        }
+        
+        // صوت الارتطام (البناء الناجح)
+        function playImpactSound() {
+            if(!audioCtx || audioCtx.state !== 'running') return;
+            try {
+                const osc = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                osc.connect(gainNode);
+                gainNode.connect(sfxGain);
+                osc.type = 'triangle';
+                osc.frequency.value = 220;
+                gainNode.gain.value = 0.4;
+                osc.start();
+                gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.2);
+                osc.stop(audioCtx.currentTime + 0.18);
+                // نغمة ارتطام ثانية
+                const osc2 = audioCtx.createOscillator();
+                const gain2 = audioCtx.createGain();
+                osc2.connect(gain2);
+                gain2.connect(sfxGain);
+                osc2.type = 'square';
+                osc2.frequency.value = 440;
+                gain2.gain.value = 0.25;
+                osc2.start();
+                gain2.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.25);
+                osc2.stop(audioCtx.currentTime + 0.22);
+            } catch(e){}
+        }
+        
+        function playFailSound() {
+            if(!audioCtx || audioCtx.state !== 'running') return;
+            try {
+                const osc = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                osc.connect(gainNode);
+                gainNode.connect(sfxGain);
+                osc.type = 'sawtooth';
+                osc.frequency.value = 130;
+                gainNode.gain.value = 0.35;
+                osc.start();
+                gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.5);
+                osc.stop(audioCtx.currentTime + 0.48);
+            } catch(e){}
+        }
+        
+        function playWinSound() {
+            if(!audioCtx || audioCtx.state !== 'running') return;
+            try {
+                const osc = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                osc.connect(gainNode);
+                gainNode.connect(sfxGain);
+                osc.type = 'triangle';
+                osc.frequency.value = 659.25;
+                gainNode.gain.value = 0.35;
+                osc.start();
+                gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.4);
+                osc.stop(audioCtx.currentTime + 0.38);
+                setTimeout(()=>{
+                    const osc2 = audioCtx.createOscillator();
+                    const gain2 = audioCtx.createGain();
+                    osc2.connect(gain2);
+                    gain2.connect(sfxGain);
+                    osc2.frequency.value = 783.99;
+                    gain2.gain.value = 0.3;
+                    osc2.start();
+                    gain2.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.5);
+                    osc2.stop(audioCtx.currentTime + 0.48);
+                },100);
+            } catch(e){}
+        }
+        
+        // بدء الجولة
         function startNewGame() {
             if(isGameActive) {
                 gameStatusSpan.innerText = "⚠️ أنهِ الجولة أولاً!";
@@ -471,14 +622,12 @@
             isGameActive = true;
             waitingForLanding = false;
             isFalling = false;
-            cameraY = 0;      // إعادة الكاميرا إلى الصفر
+            cameraY = 0;
             addGround();
             swinging.speed = calcSwingSpeed(0);
             resetSwingingPosition();
             updateUI();
             gameStatusSpan.innerText = "🎉 جولة جديدة! اضغط 'إفلات' لوضع الطابق الأول 🎉";
-            playBuildSound();
-            initAudio();
             if(audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
         }
         
@@ -504,6 +653,11 @@
             waitingForLanding = true;
             fallVelY = 3.0;
             gameStatusSpan.innerText = `💨 الطابق ${fallFloorNum} يسقط... انتظر الارتطام 💨`;
+            
+            // تشغيل صوت الإفلات
+            playDropSound();
+            // بدء الموسيقى الخافتة (إذا لم تكن مشغلة)
+            startBackgroundMusic();
         }
         
         function updateFall() {
@@ -541,12 +695,12 @@
                     let multiplier = getMultiplier(currentFloor);
                     pendingProfit = currentBet * multiplier;
                     
-                    playBuildSound();
+                    // صوت الارتطام الناجح
+                    playImpactSound();
                     addShake(7, 160);
                     
-                    // الكاميرا تنزل للأسفل (ناقص) بدل أن ترتفع
-                    // بحيث تبقى القاعدة والأبراج في مكانها نسبياً ويظهر الطابق المتأرجح
-                    cameraY -= 46;
+                    // تقليل ارتفاع الكاميرا بنسبة 50% (23 بدل 46)
+                    cameraY -= 23;
                     
                     gameStatusSpan.innerText = `✅ الطابق ${currentFloor} ثبُت! مضاعف ${multiplier.toFixed(2)}x | الأرباح: ${Math.floor(pendingProfit)}`;
                     updateUI();
@@ -560,6 +714,7 @@
                     } else {
                         gameStatusSpan.innerText = "🏆 أكملت البرج! اضغط جمع لسحب أرباحك 🏆";
                         playWinSound();
+                        stopBackgroundMusic(); // إيقاف الموسيقى عند اكتمال البرج
                     }
                     return true;
                 } else {
@@ -578,6 +733,7 @@
         function loseGame() {
             if(!isGameActive) return;
             playFailSound();
+            stopBackgroundMusic();  // إيقاف الموسيقى عند الخسارة
             isGameActive = false;
             currentBet = 0;
             pendingProfit = 0;
@@ -604,6 +760,7 @@
             let profit = Math.floor(pendingProfit);
             balance += profit;
             playWinSound();
+            stopBackgroundMusic();  // إيقاف الموسيقى عند الجمع
             gameStatusSpan.innerText = `💰 تم جمع ${profit} ! رصيدك الآن ${Math.floor(balance)} 💰`;
             isGameActive = false;
             currentBet = 0;
@@ -617,6 +774,7 @@
         }
         
         function resetGame() {
+            stopBackgroundMusic();
             balance = 2000;
             isGameActive = false;
             currentBet = 0;
@@ -632,18 +790,15 @@
             if(audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
         }
         
-        // الرسم الرئيسي مع الكاميرا
+        // الرسم الرئيسي
         function drawWithCamera() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
-            // رسم السماء والغيوم (تتحرك قليلاً مع الكاميرا لجمال الحركة)
             drawSkyAndClouds(cameraY);
             
             let shake = getShakeOffset();
             ctx.save();
-            ctx.translate(shake.x, shake.y - cameraY);  // الكاميرا تنزل للأسفل كلما بنينا طابقاً
+            ctx.translate(shake.x, shake.y - cameraY);
             
-            // رسم الطوابق المبنية
             for(let i=0; i<builtFloors.length; i++) {
                 let f = builtFloors[i];
                 if(f.isGround) {
@@ -656,7 +811,6 @@
                 }
             }
             
-            // رسم الطابق المتأرجح أو الساقط
             if(isGameActive && !waitingForLanding && !isFalling && currentFloor < MAX_FLOOR) {
                 ctx.beginPath();
                 ctx.moveTo(swinging.pivotX, swinging.pivotY);
@@ -670,7 +824,6 @@
                 drawFancyFloor(fallPosX, fallPosY, fallW, fallH, fallFloorNum, false);
             }
             
-            // عرض الأرباح بلمعة ذهبية
             if(isGameActive && pendingProfit > 0) {
                 ctx.font = "bold 26px 'Poppins'";
                 ctx.fillStyle = "#FFD700";
@@ -680,109 +833,18 @@
             
             ctx.restore();
             
-            // إطار ذهبي
             ctx.strokeStyle = "#FFD700";
             ctx.lineWidth = 3;
             ctx.strokeRect(5, 5, canvas.width-10, canvas.height-10);
         }
         
-        // ---------- نظام الصوت ----------
-        let audioCtx = null;
-        let bgGain = null;
-        let melodyInterval = null;
-        let soundEnabled = true;
-        
-        function initAudio() {
-            if(audioCtx) return;
-            try {
-                audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                bgGain = audioCtx.createGain();
-                bgGain.gain.value = 0.18;
-                bgGain.connect(audioCtx.destination);
-                playAmbientMelody();
-            } catch(e){ console.log("audio not supported"); }
-        }
-        
-        function playAmbientMelody() {
-            if(melodyInterval) clearInterval(melodyInterval);
-            melodyInterval = setInterval(() => {
-                if(!soundEnabled || !audioCtx || audioCtx.state !== 'running') return;
-                const notes = [262, 294, 330, 349, 392];
-                const idx = Math.floor(Math.random() * notes.length);
-                const osc = audioCtx.createOscillator();
-                const gainNode = audioCtx.createGain();
-                osc.connect(gainNode);
-                gainNode.connect(bgGain);
-                osc.type = 'sine';
-                osc.frequency.value = notes[idx];
-                gainNode.gain.value = 0.065;
-                osc.start();
-                gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1.8);
-                osc.stop(audioCtx.currentTime + 1.7);
-            }, 3800);
-        }
-        
-        function playBuildSound() {
-            if(!soundEnabled || !audioCtx || audioCtx.state !== 'running') return;
-            const osc = audioCtx.createOscillator();
-            const gainNode = audioCtx.createGain();
-            osc.connect(gainNode);
-            gainNode.connect(bgGain);
-            osc.type = 'sine';
-            osc.frequency.value = 587.33;
-            gainNode.gain.value = 0.2;
-            osc.start();
-            gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.2);
-            osc.stop(audioCtx.currentTime + 0.18);
-        }
-        
-        function playWinSound() {
-            if(!soundEnabled || !audioCtx || audioCtx.state !== 'running') return;
-            const osc = audioCtx.createOscillator();
-            const gainNode = audioCtx.createGain();
-            osc.connect(gainNode);
-            gainNode.connect(bgGain);
-            osc.type = 'triangle';
-            osc.frequency.value = 659.25;
-            gainNode.gain.value = 0.2;
-            osc.start();
-            gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.4);
-            osc.stop(audioCtx.currentTime + 0.38);
-            setTimeout(()=>{
-                const osc2 = audioCtx.createOscillator();
-                const gain2 = audioCtx.createGain();
-                osc2.connect(gain2);
-                gain2.connect(bgGain);
-                osc2.frequency.value = 783.99;
-                gain2.gain.value = 0.18;
-                osc2.start();
-                gain2.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.5);
-                osc2.stop(audioCtx.currentTime + 0.48);
-            },100);
-        }
-        
-        function playFailSound() {
-            if(!soundEnabled || !audioCtx || audioCtx.state !== 'running') return;
-            const osc = audioCtx.createOscillator();
-            const gainNode = audioCtx.createGain();
-            osc.connect(gainNode);
-            gainNode.connect(bgGain);
-            osc.type = 'sawtooth';
-            osc.frequency.value = 150;
-            gainNode.gain.value = 0.2;
-            osc.start();
-            gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.45);
-            osc.stop(audioCtx.currentTime + 0.43);
-        }
-        
-        // resize والأحداث
         function resizeCanvas() {
             const rect = canvas.parentElement.getBoundingClientRect();
             canvas.width = rect.width;
             canvas.height = rect.height;
             addGround();
             resetSwingingPosition();
-            initClouds();  // إعادة توزيع الغيوم
+            initClouds();
         }
         
         function gameLoop() {
