@@ -46,7 +46,7 @@
             cursor: pointer;
         }
 
-        /* الشريط السفلي - مكبر بنسبة 50% */
+        /* الشريط السفلي */
         .bottom-bar {
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
             backdrop-filter: blur(20px);
@@ -109,7 +109,6 @@
             flex-shrink: 0;
         }
 
-        /* مجموعة الأزرار مكبرة */
         .btn-group {
             display: flex;
             gap: 16px;
@@ -245,7 +244,49 @@
         const cashoutBtn = document.getElementById('cashoutBtn');
         const resetBtn = document.getElementById('resetBtn');
         
-        // ---------- الكاميرا: حركة أخف (قللنا الارتفاع بنسبة 50%) ----------
+        // ---------- تأثيرات المضاعف المتلاشي ----------
+        let floatingMultipliers = []; // { x, y, text, alpha, life }
+        
+        function addFloatingMultiplier(x, y, multiplier) {
+            floatingMultipliers.push({
+                x: x,
+                y: y - 25, // يظهر فوق الطابق
+                text: `${multiplier.toFixed(2)}x`,
+                alpha: 1.0,
+                life: 1.0,    // يبدأ بـ 1 ثم يتلاشى
+                yOffset: 0
+            });
+        }
+        
+        function updateFloatingMultipliers() {
+            for(let i = 0; i < floatingMultipliers.length; i++) {
+                floatingMultipliers[i].life -= 0.025;
+                floatingMultipliers[i].alpha = floatingMultipliers[i].life;
+                floatingMultipliers[i].yOffset -= 1.2; // يتحرك للأعلى قليلاً
+                if(floatingMultipliers[i].life <= 0) {
+                    floatingMultipliers.splice(i, 1);
+                    i--;
+                }
+            }
+        }
+        
+        function drawFloatingMultipliers(camY) {
+            for(let fm of floatingMultipliers) {
+                ctx.save();
+                ctx.globalAlpha = fm.alpha * 0.9;
+                ctx.font = `bold ${22 + (1 - fm.life) * 8}px 'Poppins'`;
+                ctx.fillStyle = "#FFD700";
+                ctx.shadowBlur = 8;
+                ctx.shadowColor = "black";
+                ctx.fillText(fm.text, fm.x - 30, fm.y + fm.yOffset - camY);
+                ctx.font = `bold ${18 + (1 - fm.life) * 6}px 'Poppins'`;
+                ctx.fillStyle = "#FFF8DC";
+                ctx.fillText(fm.text, fm.x - 30, fm.y + fm.yOffset - camY + 2);
+                ctx.restore();
+            }
+        }
+        
+        // ---------- الكاميرا ----------
         let cameraY = 0;
         let shakeIntensity = 0;
         let shakeDuration = 0;
@@ -272,7 +313,7 @@
             };
         }
         
-        // ---------- غيوم جميلة ----------
+        // ---------- غيوم ----------
         let clouds = [];
         function initClouds() {
             clouds = [];
@@ -450,11 +491,10 @@
             }
         }
         
-        // ---------- نظام الصوت المتقدم ----------
+        // ---------- نظام الصوت ----------
         let audioCtx = null;
-        let bgMusicGain = null;      // للموسيقى الخلفية
-        let sfxGain = null;          // للمؤثرات
-        let bgMusicOsc = null;
+        let bgMusicGain = null;
+        let sfxGain = null;
         let bgMusicInterval = null;
         let isMusicPlaying = false;
         
@@ -464,20 +504,18 @@
                 audioCtx = new (window.AudioContext || window.webkitAudioContext)();
                 bgMusicGain = audioCtx.createGain();
                 sfxGain = audioCtx.createGain();
-                bgMusicGain.gain.value = 0.12;  // موسيقى خافتة
+                bgMusicGain.gain.value = 0.12;
                 sfxGain.gain.value = 0.35;
                 bgMusicGain.connect(audioCtx.destination);
                 sfxGain.connect(audioCtx.destination);
             } catch(e){ console.log("audio not supported"); }
         }
         
-        // موسيقى خافتة مستمرة (تبدأ عند الإفلات)
         function startBackgroundMusic() {
             if(!audioCtx || !isGameActive) return;
             if(isMusicPlaying) return;
             try {
                 isMusicPlaying = true;
-                // نغمة خافتة مستمرة باستخدام setInterval لتوليد نغمات لطيفة ومتكررة
                 if(bgMusicInterval) clearInterval(bgMusicInterval);
                 const notes = [261.63, 293.66, 329.63, 261.63, 349.23, 293.66];
                 let noteIdx = 0;
@@ -506,7 +544,6 @@
             isMusicPlaying = false;
         }
         
-        // صوت الإفلات
         function playDropSound() {
             if(!audioCtx || audioCtx.state !== 'running') return;
             try {
@@ -520,7 +557,6 @@
                 osc.start();
                 gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.3);
                 osc.stop(audioCtx.currentTime + 0.28);
-                // إضافة صوت "هواء" بسيط
                 const osc2 = audioCtx.createOscillator();
                 const gain2 = audioCtx.createGain();
                 osc2.connect(gain2);
@@ -534,7 +570,6 @@
             } catch(e){}
         }
         
-        // صوت الارتطام (البناء الناجح)
         function playImpactSound() {
             if(!audioCtx || audioCtx.state !== 'running') return;
             try {
@@ -548,7 +583,6 @@
                 osc.start();
                 gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.2);
                 osc.stop(audioCtx.currentTime + 0.18);
-                // نغمة ارتطام ثانية
                 const osc2 = audioCtx.createOscillator();
                 const gain2 = audioCtx.createGain();
                 osc2.connect(gain2);
@@ -623,6 +657,7 @@
             waitingForLanding = false;
             isFalling = false;
             cameraY = 0;
+            floatingMultipliers = []; // مسح التأثيرات السابقة
             addGround();
             swinging.speed = calcSwingSpeed(0);
             resetSwingingPosition();
@@ -653,10 +688,7 @@
             waitingForLanding = true;
             fallVelY = 3.0;
             gameStatusSpan.innerText = `💨 الطابق ${fallFloorNum} يسقط... انتظر الارتطام 💨`;
-            
-            // تشغيل صوت الإفلات
             playDropSound();
-            // بدء الموسيقى الخافتة (إذا لم تكن مشغلة)
             startBackgroundMusic();
         }
         
@@ -695,11 +727,13 @@
                     let multiplier = getMultiplier(currentFloor);
                     pendingProfit = currentBet * multiplier;
                     
-                    // صوت الارتطام الناجح
+                    // إضافة تأثير المضاعف المتلاشي بجانب الطابق
+                    addFloatingMultiplier(fallPosX, newYpos - fallH/2, multiplier);
+                    
                     playImpactSound();
                     addShake(7, 160);
                     
-                    // تقليل ارتفاع الكاميرا بنسبة 50% (23 بدل 46)
+                    // تقليل ارتفاع الكاميرا
                     cameraY -= 23;
                     
                     gameStatusSpan.innerText = `✅ الطابق ${currentFloor} ثبُت! مضاعف ${multiplier.toFixed(2)}x | الأرباح: ${Math.floor(pendingProfit)}`;
@@ -714,7 +748,7 @@
                     } else {
                         gameStatusSpan.innerText = "🏆 أكملت البرج! اضغط جمع لسحب أرباحك 🏆";
                         playWinSound();
-                        stopBackgroundMusic(); // إيقاف الموسيقى عند اكتمال البرج
+                        stopBackgroundMusic();
                     }
                     return true;
                 } else {
@@ -733,7 +767,7 @@
         function loseGame() {
             if(!isGameActive) return;
             playFailSound();
-            stopBackgroundMusic();  // إيقاف الموسيقى عند الخسارة
+            stopBackgroundMusic();
             isGameActive = false;
             currentBet = 0;
             pendingProfit = 0;
@@ -742,6 +776,7 @@
             isFalling = false;
             waitingForLanding = false;
             cameraY = 0;
+            floatingMultipliers = [];
             addGround();
             updateUI();
             gameStatusSpan.innerText = "😭 خسارة! ابدأ جولة جديدة (إفلات) 😭";
@@ -760,7 +795,7 @@
             let profit = Math.floor(pendingProfit);
             balance += profit;
             playWinSound();
-            stopBackgroundMusic();  // إيقاف الموسيقى عند الجمع
+            stopBackgroundMusic();
             gameStatusSpan.innerText = `💰 تم جمع ${profit} ! رصيدك الآن ${Math.floor(balance)} 💰`;
             isGameActive = false;
             currentBet = 0;
@@ -768,6 +803,7 @@
             currentFloor = 0;
             builtFloors = [];
             cameraY = 0;
+            floatingMultipliers = [];
             addGround();
             updateUI();
             addShake(3, 100);
@@ -784,6 +820,7 @@
             isFalling = false;
             waitingForLanding = false;
             cameraY = 0;
+            floatingMultipliers = [];
             addGround();
             updateUI();
             gameStatusSpan.innerText = "🔄 إعادة تعيين. الرصيد 2000. ابدأ بالرهان";
@@ -833,6 +870,9 @@
             
             ctx.restore();
             
+            // رسم تأثيرات المضاعف المتلاشية (بعد استعادة الكاميرا)
+            drawFloatingMultipliers(cameraY);
+            
             ctx.strokeStyle = "#FFD700";
             ctx.lineWidth = 3;
             ctx.strokeRect(5, 5, canvas.width-10, canvas.height-10);
@@ -852,6 +892,7 @@
             if(isFalling) updateFall();
             updateSwing();
             updateClouds();
+            updateFloatingMultipliers();
             drawWithCamera();
             requestAnimationFrame(gameLoop);
         }
