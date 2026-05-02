@@ -608,7 +608,7 @@
                 gainNode.gain.value = 0.35;
                 osc.start();
                 gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.5);
-                osc.stop(audioCtx.currentTime + 0.48);
+                osc.stop(audioCtx.currentTime + 0.24);
             } catch(e){}
         }
         
@@ -634,7 +634,7 @@
                     gain2.gain.value = 0.3;
                     osc2.start();
                     gain2.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.5);
-                    osc2.stop(audioCtx.currentTime + 0.48);
+                    osc2.stop(audioCtx.currentTime + 0.24);
                 },100);
             } catch(e){}
         }
