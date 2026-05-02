@@ -17,7 +17,7 @@
             width: 100vw;
             height: 100vh;
             overflow: hidden;
-            background: #0a0a0a;
+            background: #0a0f1a;
             font-family: 'Segoe UI', 'Poppins', 'Cairo', system-ui, sans-serif;
         }
 
@@ -27,7 +27,7 @@
             display: flex;
             flex-direction: column;
             position: relative;
-            background: #000000;
+            background: #0a2f2a;
         }
 
         .canvas-area {
@@ -35,7 +35,7 @@
             min-height: 0;
             position: relative;
             overflow: hidden;
-            background: #0a0a2a;
+            background: #87CEEB;
         }
 
         canvas {
@@ -46,78 +46,93 @@
             cursor: pointer;
         }
 
-        /* الشريط السفلي - تصميم فاخر بألوان أسود/ذهبي */
+        /* الشريط السفلي - جميع الأزرار في صف واحد */
         .bottom-bar {
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
             backdrop-filter: blur(20px);
             border-top: 2px solid #FFD700;
-            padding: 14px 20px;
+            padding: 12px 20px;
             display: flex;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
             justify-content: center;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
             box-shadow: 0 -10px 30px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,215,0,0.3);
             z-index: 10;
+            overflow-x: auto;
+            white-space: nowrap;
         }
 
         .balance-card {
             background: linear-gradient(145deg, #000000, #1a1a1a);
-            padding: 8px 22px;
+            padding: 6px 18px;
             border-radius: 60px;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
             color: #FFD700;
             font-weight: bold;
-            font-size: 1.1rem;
+            font-size: 0.95rem;
             border: 1px solid #FFD70055;
             box-shadow: 0 0 12px rgba(255,215,0,0.3);
+            flex-shrink: 0;
         }
 
         .balance-card span {
             color: #FFD700;
-            font-size: 1.6rem;
+            font-size: 1.4rem;
             font-weight: 900;
             text-shadow: 0 0 8px rgba(255,215,0,0.5);
         }
 
         .bet-fixed {
             background: linear-gradient(145deg, #FFD700, #DAA520);
-            padding: 8px 24px;
+            padding: 6px 20px;
             border-radius: 60px;
             color: #000000;
             font-weight: bold;
-            font-size: 1rem;
+            font-size: 0.9rem;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             border: 1px solid #FFF0AA;
+            flex-shrink: 0;
         }
 
+        .multiplier-badge {
+            background: linear-gradient(145deg, #000000, #1c1c1c);
+            color: #FFD700;
+            border-radius: 60px;
+            padding: 6px 16px;
+            font-weight: bold;
+            font-size: 0.85rem;
+            border: 1px solid #FFD700;
+            box-shadow: 0 0 12px rgba(255,215,0,0.4);
+            flex-shrink: 0;
+        }
+
+        /* أزرار متدرجة لامعة - كلها في صف واحد */
         .btn-group {
             display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-            justify-content: center;
+            gap: 10px;
+            flex-shrink: 0;
         }
 
-        /* أزرار بمظهر لامع وتدرج لوني ذهبي وأسود */
         button {
             border: none;
             font-weight: bold;
-            font-size: 1rem;
-            padding: 10px 28px;
+            font-size: 0.9rem;
+            padding: 8px 20px;
             border-radius: 60px;
             cursor: pointer;
-            transition: all 0.15s ease;
+            transition: all 0.12s ease;
             font-family: inherit;
-            min-width: 110px;
             letter-spacing: 0.5px;
             position: relative;
             overflow: hidden;
             background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
             color: #FFD700;
             border: 1px solid #FFD70055;
-            box-shadow: 0 6px 0 #000000, 0 0 12px rgba(255,215,0,0.2);
+            box-shadow: 0 5px 0 #000000, 0 0 12px rgba(255,215,0,0.2);
+            white-space: nowrap;
         }
 
         button::before {
@@ -127,8 +142,8 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,215,0,0.3), transparent);
-            transition: left 0.5s;
+            background: linear-gradient(90deg, transparent, rgba(255,215,0,0.35), transparent);
+            transition: left 0.4s;
         }
 
         button:hover::before {
@@ -136,7 +151,7 @@
         }
 
         button:active {
-            transform: translateY(3px);
+            transform: translateY(2px);
             box-shadow: 0 3px 0 #000000;
         }
 
@@ -145,49 +160,39 @@
             color: #000000;
             font-weight: 900;
             border: 1px solid #FFF8DC;
-            box-shadow: 0 6px 0 #8B6914, 0 0 15px rgba(255,215,0,0.6);
+            box-shadow: 0 5px 0 #8B6914, 0 0 15px rgba(255,215,0,0.6);
         }
 
         .cashout-btn {
             background: linear-gradient(135deg, #2ecc71, #27ae60);
             color: white;
             border: 1px solid #a8ffd0;
-            box-shadow: 0 6px 0 #1f8f4b;
+            box-shadow: 0 5px 0 #1f8f4b;
         }
 
         .reset-btn {
             background: linear-gradient(135deg, #e67e22, #b45f1b);
             color: white;
             border: 1px solid #ffcc88;
-            box-shadow: 0 6px 0 #8B4513;
+            box-shadow: 0 5px 0 #8B4513;
         }
 
-        .multiplier-badge {
-            background: linear-gradient(145deg, #000000, #1c1c1c);
+        .status-bar {
+            background: #000000dd;
+            text-align: center;
+            padding: 5px;
+            font-size: 12px;
             color: #FFD700;
-            border-radius: 60px;
-            padding: 8px 20px;
-            font-weight: bold;
-            font-size: 0.9rem;
-            border: 1px solid #FFD700;
-            box-shadow: 0 0 12px rgba(255,215,0,0.4);
+            border-top: 1px solid #FFD70033;
         }
 
-        .status-text {
-            background: #000000cc;
-            padding: 6px 18px;
-            border-radius: 60px;
-            font-size: 0.85rem;
-            color: #FFD700;
-            backdrop-filter: blur(4px);
-        }
-
-        @media (max-width: 750px) {
-            .bottom-bar { gap: 8px; padding: 10px 12px; }
-            button { padding: 7px 16px; font-size: 0.8rem; min-width: 75px; }
-            .balance-card span { font-size: 1.2rem; }
-            .balance-card { padding: 5px 12px; }
-            .multiplier-badge { padding: 5px 12px; font-size: 0.7rem; }
+        @media (max-width: 850px) {
+            .bottom-bar { gap: 8px; padding: 8px 12px; }
+            button { padding: 6px 14px; font-size: 0.75rem; }
+            .balance-card span { font-size: 1.1rem; }
+            .balance-card { padding: 4px 12px; }
+            .multiplier-badge { padding: 4px 12px; font-size: 0.7rem; }
+            .bet-fixed { padding: 4px 14px; font-size: 0.75rem; }
         }
     </style>
 </head>
@@ -197,27 +202,26 @@
         <canvas id="gameCanvas"></canvas>
     </div>
     <div class="bottom-bar">
-        <div class="balance-card">💰 الرصيد: <span id="balanceDisplay">2000</span></div>
-        <div class="bet-fixed">🎲 الرهان: 2000</div>
-        <div class="multiplier-badge" id="multiplierBadge">🏆 مضاعف: 0.00x</div>
+        <div class="balance-card">💰 <span id="balanceDisplay">2000</span></div>
+        <div class="bet-fixed">🎲 ثابت 2000</div>
+        <div class="multiplier-badge" id="multiplierBadge">🏆 0.00x</div>
         <div class="btn-group">
             <button id="dropBtn" class="drop-btn">⬇️ إفلات</button>
             <button id="cashoutBtn" class="cashout-btn">💰 جمع</button>
             <button id="resetBtn" class="reset-btn">🔄 إعادة</button>
         </div>
     </div>
-    <div style="background: #000000dd; text-align: center; padding: 6px; font-size: 12px; color: #FFD700; border-top: 1px solid #FFD70033;">
+    <div class="status-bar">
         <span id="gameStatusMsg">✨ اضغط "إفلات" لوضع الطابق (يلزم تداخل 50%) ✨</span>
     </div>
 </div>
 
 <script>
     (function(){
-        // ------------------- آليات اللعبة الرئيسية -------------------
         const canvas = document.getElementById('gameCanvas');
         let ctx = canvas.getContext('2d');
         
-        // المضاعفات الثابتة
+        // المضاعفات
         const MULTIPLIERS = {
             1: 0.5, 2: 0.7, 3: 0.9, 4: 1.1, 5: 1.3,
             6: 1.5, 7: 1.7, 8: 3.0, 9: 5.0, 10: 7.0,
@@ -226,14 +230,14 @@
         const MAX_FLOOR = 13;
         const FIXED_BET = 2000;
         
-        // حالة اللعبة الأساسية
+        // حالة اللعبة
         let balance = 2000;
         let currentBet = 0;
         let currentFloor = 0;
         let isGameActive = false;
         let pendingProfit = 0;
         
-        // عناصر واجهة
+        // عناصر UI
         const balanceSpan = document.getElementById('balanceDisplay');
         const multiplierBadge = document.getElementById('multiplierBadge');
         const gameStatusSpan = document.getElementById('gameStatusMsg');
@@ -241,18 +245,16 @@
         const cashoutBtn = document.getElementById('cashoutBtn');
         const resetBtn = document.getElementById('resetBtn');
         
-        // ---------- كاميرا مستقرة (بدون اهتزاز دائم) ----------
-        let cameraY = 0;           // إزاحة الكاميرا (ترتفع مع البناء فقط)
-        let shakeIntensity = 0;    // شدة الاهتزاز
-        let shakeDuration = 0;     // مدة الاهتزاز
+        // ---------- الكاميرا: ترتفع مع البناء لنظل نرى الطابق المتأرجح ----------
+        let cameraY = 0;           // مقدار إزاحة الكاميرا لأعلى (كلما بنينا طابق نرفع الكاميرا)
+        let shakeIntensity = 0;
+        let shakeDuration = 0;
         
-        // إضافة اهتزاز لحظي عند بناء طابق
-        function addShake(intensity = 8, duration = 180) {
+        function addShake(intensity = 6, duration = 150) {
             shakeIntensity = intensity;
             shakeDuration = duration;
         }
         
-        // تحديث الاهتزاز (يقل تدريجياً)
         function updateShake() {
             if(shakeDuration > 0) {
                 shakeDuration -= 16;
@@ -266,48 +268,82 @@
             if(shakeIntensity <= 0) return { x: 0, y: 0 };
             return {
                 x: (Math.random() - 0.5) * shakeIntensity,
-                y: (Math.random() - 0.5) * shakeIntensity * 0.6
+                y: (Math.random() - 0.5) * shakeIntensity * 0.5
             };
         }
         
-        // ---------- الطيور (للتشتيت) ----------
+        // ---------- الطيور والغيوم (خلفية جميلة) ----------
         let birds = [];
-        for(let i = 0; i < 6; i++) {
+        for(let i = 0; i < 7; i++) {
             birds.push({
-                x: Math.random() * 2000 - 500,
-                y: 80 + Math.random() * 180,
-                size: 14 + Math.random() * 12,
-                speed: 0.6 + Math.random() * 1.2,
-                wing: 0
+                x: Math.random() * 2000 - 400,
+                y: 60 + Math.random() * 150,
+                size: 12 + Math.random() * 10,
+                speed: 0.5 + Math.random() * 1.0,
+                wing: Math.random() * Math.PI * 2
             });
         }
         
-        function updateBirds() {
+        let clouds = [];
+        for(let i = 0; i < 5; i++) {
+            clouds.push({
+                x: Math.random() * canvas.width,
+                y: 40 + Math.random() * 120,
+                w: 70 + Math.random() * 60,
+                h: 35 + Math.random() * 20,
+                speed: 0.1 + Math.random() * 0.25
+            });
+        }
+        
+        function updateBirdsAndClouds() {
             for(let bird of birds) {
                 bird.x += bird.speed;
-                bird.wing = (bird.wing + 0.12) % (Math.PI * 2);
-                if(bird.x > canvas.width + 300) bird.x = -250;
+                bird.wing = (bird.wing + 0.1) % (Math.PI * 2);
+                if(bird.x > canvas.width + 300) bird.x = -200;
+            }
+            for(let cloud of clouds) {
+                cloud.x += cloud.speed;
+                if(cloud.x > canvas.width + 200) cloud.x = -250;
             }
         }
         
-        // رسم الطيور
+        function drawSkyAndClouds(camY) {
+            // سماء متدرجة
+            const grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+            grad.addColorStop(0, "#87CEEB");
+            grad.addColorStop(0.6, "#B0E0FF");
+            grad.addColorStop(1, "#E0F0FF");
+            ctx.fillStyle = grad;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // غيوم بيضاء ناعمة
+            for(let cloud of clouds) {
+                ctx.fillStyle = "rgba(255,255,245,0.85)";
+                ctx.shadowBlur = 12;
+                ctx.beginPath();
+                ctx.ellipse(cloud.x, cloud.y + camY * 0.08, cloud.w/2, cloud.h/2, 0, 0, Math.PI*2);
+                ctx.ellipse(cloud.x + cloud.w*0.4, cloud.y - cloud.h*0.2, cloud.w*0.5, cloud.h*0.6, 0, 0, Math.PI*2);
+                ctx.ellipse(cloud.x - cloud.w*0.3, cloud.y - cloud.h*0.15, cloud.w*0.45, cloud.h*0.55, 0, 0, Math.PI*2);
+                ctx.fill();
+            }
+            ctx.shadowBlur = 0;
+        }
+        
         function drawBirds(camY) {
             for(let bird of birds) {
                 ctx.save();
-                ctx.translate(bird.x, bird.y + camY * 0.1);
+                ctx.translate(bird.x, bird.y + camY * 0.05);
                 ctx.fillStyle = "#2c2c2c";
+                let wingSin = Math.sin(bird.wing);
                 ctx.beginPath();
-                let wingAngle = Math.sin(bird.wing) * 0.7;
-                // جناح أول
                 ctx.moveTo(0, 0);
-                ctx.quadraticCurveTo(-bird.size * 0.6, -bird.size * 0.4 + wingAngle * 5, -bird.size, -bird.size * 0.3);
-                ctx.quadraticCurveTo(-bird.size * 0.5, 0, 0, 0);
-                ctx.fillStyle = "#1a1a1a";
+                ctx.quadraticCurveTo(-bird.size * 0.55, -bird.size * 0.4 + wingSin * 4, -bird.size, -bird.size * 0.3);
+                ctx.quadraticCurveTo(-bird.size * 0.45, 0, 0, 0);
                 ctx.fill();
                 ctx.beginPath();
                 ctx.moveTo(0, 0);
-                ctx.quadraticCurveTo(bird.size * 0.6, -bird.size * 0.4 - wingAngle * 3, bird.size, -bird.size * 0.3);
-                ctx.quadraticCurveTo(bird.size * 0.5, 0, 0, 0);
+                ctx.quadraticCurveTo(bird.size * 0.55, -bird.size * 0.4 - wingSin * 3, bird.size, -bird.size * 0.3);
+                ctx.quadraticCurveTo(bird.size * 0.45, 0, 0, 0);
                 ctx.fill();
                 ctx.beginPath();
                 ctx.arc(0, 2, bird.size * 0.2, 0, Math.PI*2);
@@ -318,17 +354,16 @@
         }
         
         // ---------- عناصر البناء ----------
-        let builtFloors = [];     // الطوابق الثابتة
+        let builtFloors = [];
         let ground = { x: 0, y: 0, w: 210, h: 26 };
         
-        // الطابق المتأرجح (عرض أقل: 48px)
+        // الطابق المتأرجح (عرض أقل)
         let swinging = {
             x: 0, y: 0, w: 48, h: 28,
             angle: 0, speed: 0.048, direction: 1, maxAngle: 0.85,
             pivotX: 0, pivotY: -30, ropeLength: 210
         };
         
-        // حالة السقوط
         let isFalling = false;
         let fallVelY = 0;
         let fallPosX = 0, fallPosY = 0;
@@ -336,34 +371,26 @@
         let fallFloorNum = 0;
         let waitingForLanding = false;
         
-        // ألوان الطوابق المتعددة (ذهبي، أسود، رمادي ذهبي)
-        const floorColors = [
-            "#1a1a1a", "#2d2d2d", "#FFD700", "#B8860B", "#DAA520", 
-            "#1f1f1f", "#FFC125", "#F0E68C", "#8B6914", "#FFD700",
-            "#CDAD00", "#FFF8DC", "#D4AF37"
-        ];
+        // ألوان الطوابق المتعددة
+        const floorColors = ["#1a1a1a", "#2d2d2d", "#FFD700", "#B8860B", "#DAA520", "#1f1f1f", "#FFC125", "#F0E68C", "#8B6914", "#CDAD00", "#FFF8DC", "#D4AF37", "#FFD700"];
         
         function getFloorColor(floorNum) {
             if(floorNum === 0) return "#4a3b1a";
             return floorColors[(floorNum - 1) % floorColors.length];
         }
         
-        // رسم طابق بتفاصيل (شباكين وباب)
         function drawFancyFloor(x, y, w, h, floorNum, isGround = false) {
             const mainColor = isGround ? "#3a2a1a" : getFloorColor(floorNum);
-            const darkEdge = isGround ? "#2a1a0a" : "#000000aa";
             ctx.fillStyle = mainColor;
             ctx.shadowBlur = 4;
             ctx.shadowColor = "rgba(0,0,0,0.5)";
             ctx.fillRect(x - w/2, y - h/2, w, h);
-            // حافة ذهبية عليا
             ctx.fillStyle = "#FFD700";
             ctx.fillRect(x - w/2 + 4, y - h/2, w - 8, 4);
-            ctx.fillStyle = darkEdge;
+            ctx.fillStyle = isGround ? "#2a1a0a" : "#000000aa";
             ctx.fillRect(x - w/2 + 2, y - h/2 + 4, w - 4, 3);
             
             if(!isGround) {
-                // شباكان صغيران بلمعة ذهبية
                 ctx.fillStyle = "#FFF8DC";
                 ctx.fillRect(x - w/3 - 5, y - 3, 12, 12);
                 ctx.fillRect(x + w/3 - 7, y - 3, 12, 12);
@@ -373,17 +400,14 @@
                 ctx.fillStyle = "#FFD700";
                 ctx.fillRect(x - w/3 - 4, y - 2, 3, 10);
                 ctx.fillRect(x + w/3 - 6, y - 2, 3, 10);
-                // باب ذهبي
                 ctx.fillStyle = "#B8860B";
                 ctx.fillRect(x - 9, y + h/2 - 16, 18, 16);
                 ctx.fillStyle = "#FFD700";
                 ctx.beginPath();
                 ctx.arc(x - 5, y + h/2 - 9, 2.5, 0, 2*Math.PI);
                 ctx.fill();
-                // رقم الطابق بالذهب
                 ctx.font = "bold 12px 'Segoe UI'";
                 ctx.fillStyle = "#FFD700";
-                ctx.shadowBlur = 3;
                 ctx.fillText(`${floorNum}`, x - 6, y + 5);
             } else {
                 ctx.fillStyle = "#FFD700";
@@ -391,7 +415,6 @@
             }
         }
         
-        // إضافة القاعدة
         function addGround() {
             let groundY = canvas.height - 48;
             let groundX = canvas.width/2 - 105;
@@ -407,7 +430,6 @@
             });
         }
         
-        // تحديث موقع البندول
         function updateSwingPosition() {
             let offsetX = Math.sin(swinging.angle) * swinging.ropeLength;
             let centerX = swinging.pivotX + offsetX;
@@ -454,15 +476,14 @@
             balanceSpan.innerText = Math.floor(balance);
             if(isGameActive && currentFloor < MAX_FLOOR) {
                 let nextMulti = getMultiplier(currentFloor+1);
-                multiplierBadge.innerText = `🎯 مضاعف طابق ${currentFloor+1}: ${nextMulti.toFixed(2)}x`;
+                multiplierBadge.innerText = `🎯 طابق ${currentFloor+1}: ${nextMulti.toFixed(2)}x`;
             } else if(isGameActive && currentFloor >= MAX_FLOOR) {
-                multiplierBadge.innerText = `🏆 اكتمل البرج!`;
+                multiplierBadge.innerText = `🏆 اكتمل!`;
             } else {
                 multiplierBadge.innerText = `🏆 مضاعف: ---`;
             }
         }
         
-        // بدء الجولة (رهان ثابت 2000)
         function startNewGame() {
             if(isGameActive) {
                 gameStatusSpan.innerText = "⚠️ أنهِ الجولة أولاً!";
@@ -479,7 +500,7 @@
             isGameActive = true;
             waitingForLanding = false;
             isFalling = false;
-            cameraY = 0;
+            cameraY = 0;      // إعادة الكاميرا لأعلى الشاشة (نبدأ من القاعدة)
             addGround();
             swinging.speed = calcSwingSpeed(0);
             resetSwingingPosition();
@@ -550,10 +571,9 @@
                     pendingProfit = currentBet * multiplier;
                     
                     playBuildSound();
-                    // إضافة اهتزاز لحظي عند البناء (لا اهتزاز دائم)
                     addShake(7, 160);
                     
-                    // رفع الكاميرا بمقدار ثابت (لا تقترب)
+                    // رفع الكاميرا للأعلى بدلاً من النزول (نرفع الرؤية ليبقى الطابق المتأرجح ظاهراً)
                     cameraY += 46;
                     
                     gameStatusSpan.innerText = `✅ الطابق ${currentFloor} ثبُت! مضاعف ${multiplier.toFixed(2)}x | الأرباح: ${Math.floor(pendingProfit)}`;
@@ -571,7 +591,7 @@
                     }
                     return true;
                 } else {
-                    gameStatusSpan.innerText = `💥 فشل! تداخل ${Math.floor(overlapWidth)}px من أصل ${Math.floor(required)}px مطلوب. خسارة!`;
+                    gameStatusSpan.innerText = `💥 فشل! تداخل ${Math.floor(overlapWidth)}px من ${Math.floor(required)}px مطلوب. خسارة!`;
                     loseGame();
                     return false;
                 }
@@ -640,32 +660,26 @@
             if(audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
         }
         
-        // ---------- الرسم الرئيسي مع الكاميرا والاهتزاز ----------
+        // الرسم الرئيسي مع الكاميرا الصاعدة
         function drawWithCamera() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
-            // خلفية سوداء/ذهبية ثابتة
-            const grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
-            grad.addColorStop(0, "#0a0a1a");
-            grad.addColorStop(1, "#000000");
-            ctx.fillStyle = grad;
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            // رسم السماء والغيوم (ثابتة جميلة)
+            drawSkyAndClouds(cameraY);
             
-            // نجوم لامعة (ذهبية)
+            // نجوم ذهبية خفيفة
             ctx.fillStyle = "#FFD700";
-            for(let i = 0; i < 120; i++) {
-                if(i%2 === 0) continue;
-                ctx.globalAlpha = 0.3 + Math.sin(Date.now() * 0.001 + i) * 0.2;
-                ctx.fillRect( (i * 131) % canvas.width, (i * 57) % canvas.height, 2, 2);
+            for(let i = 0; i < 60; i++) {
+                ctx.globalAlpha = 0.15 + Math.sin(Date.now() * 0.002 + i) * 0.1;
+                ctx.fillRect((i * 83) % canvas.width, (i * 49) % canvas.height, 2, 2);
             }
             ctx.globalAlpha = 1;
             
-            // تطبيق اهتزاز و إزاحة الكاميرا
             let shake = getShakeOffset();
             ctx.save();
-            ctx.translate(shake.x, shake.y - cameraY);
+            ctx.translate(shake.x, shake.y - cameraY);  // الكاميرا ترتفع للأعلى بمقدار cameraY
             
-            // رسم الطوابق المبنية (بألوان متعددة)
+            // رسم الطوابق المبنية
             for(let i=0; i<builtFloors.length; i++) {
                 let f = builtFloors[i];
                 if(f.isGround) {
@@ -692,27 +706,26 @@
                 drawFancyFloor(fallPosX, fallPosY, fallW, fallH, fallFloorNum, false);
             }
             
-            // عرض الأرباح الحالية بلمعة ذهبية
+            // عرض الأرباح بلمعة ذهبية (مرتبطة بالكاميرا)
             if(isGameActive && pendingProfit > 0) {
-                ctx.font = "bold 28px 'Poppins'";
+                ctx.font = "bold 26px 'Poppins'";
                 ctx.fillStyle = "#FFD700";
                 ctx.shadowBlur = 8;
-                ctx.shadowColor = "black";
-                ctx.fillText(`💰 ${Math.floor(pendingProfit)}`, canvas.width-130, 55 + cameraY);
+                ctx.fillText(`💰 ${Math.floor(pendingProfit)}`, canvas.width-120, 55 + cameraY);
             }
             
-            ctx.restore(); // نهاية الكاميرا والاهتزاز
+            ctx.restore();
             
-            // رسم الطيور (خارج الكاميرا لتشتيت الانتباه)
+            // رسم الطيور فوق كل شيء (تشتيت)
             drawBirds(cameraY * 0.05);
             
-            // إطار ذهبي حول الشاشة
+            // إطار ذهبي
             ctx.strokeStyle = "#FFD700";
             ctx.lineWidth = 3;
             ctx.strokeRect(5, 5, canvas.width-10, canvas.height-10);
         }
         
-        // ---------- الصوتيات ----------
+        // ---------- نظام الصوت ----------
         let audioCtx = null;
         let bgGain = null;
         let melodyInterval = null;
@@ -741,10 +754,10 @@
                 gainNode.connect(bgGain);
                 osc.type = 'sine';
                 osc.frequency.value = notes[idx];
-                gainNode.gain.value = 0.07;
+                gainNode.gain.value = 0.065;
                 osc.start();
-                gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1.7);
-                osc.stop(audioCtx.currentTime + 1.6);
+                gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1.8);
+                osc.stop(audioCtx.currentTime + 1.7);
             }, 3800);
         }
         
@@ -801,25 +814,28 @@
             osc.stop(audioCtx.currentTime + 0.43);
         }
         
-        // resize والحدث
+        // resize والأحداث
         function resizeCanvas() {
             const rect = canvas.parentElement.getBoundingClientRect();
             canvas.width = rect.width;
             canvas.height = rect.height;
             addGround();
             resetSwingingPosition();
+            // إعادة توزيع الغيوم والطيور حسب الحجم الجديد
+            for(let i=0; i<clouds.length; i++) {
+                if(clouds[i].x > canvas.width) clouds[i].x = Math.random() * canvas.width;
+            }
         }
         
         function gameLoop() {
             updateShake();
             if(isFalling) updateFall();
             updateSwing();
-            updateBirds();
+            updateBirdsAndClouds();
             drawWithCamera();
             requestAnimationFrame(gameLoop);
         }
         
-        // ربط الأزرار
         window.addEventListener('resize', resizeCanvas);
         dropBtn.addEventListener('click', () => {
             if(audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
