@@ -279,18 +279,18 @@
     
     // ------------------- عناصر البناء -------------------
     let builtFloors = [];
-    let ground = { x: 0, y: 0, w: 210, h: 48 };
+    let ground = { x: 0, y: 0, w: 210, h: 48 };  // تم تغيير الارتفاع من 26 إلى 48
     
     let swinging = {
-        x: 0, y: 0, w: 48, h: 48,
-        angle: 0, speed: 0.024, direction: 1, maxAngle: 0.85,
+        x: 0, y: 0, w: 48, h: 48,  // تم تغيير الارتفاع من 28 إلى 48
+        angle: 0, speed: 0.024, direction: 1, maxAngle: 0.85,  // تم تغيير السرعة من 0.048 إلى 0.024
         pivotX: 0, pivotY: -30, ropeLength: 210
     };
     
     let isFalling = false;
     let fallVelY = 0;
     let fallPosX = 0, fallPosY = 0;
-    let fallW = 48, fallH = 48;
+    let fallW = 48, fallH = 48;  // تم تغيير الارتفاع من 28 إلى 48
     let fallFloorNum = 0;
     let waitingForLanding = false;
     
@@ -371,8 +371,8 @@
     }
     
     function calcSwingSpeed(baseFloor) {
-        let extra = Math.min(0.047, baseFloor * 0.004);
-        return 0.024 + extra;
+        let extra = Math.min(0.095, baseFloor * 0.008);
+        return 0.024 + extra;  // تم تغيير السرعة الأساسية من 0.048 إلى 0.024
     }
     
     function updateSwing() {
@@ -443,7 +443,7 @@
             addShake(4, 120);
             playImpactSound();
             
-            let newCameraY = Math.min(0, -(currentFloor * 40) + canvas.height/2);
+            let newCameraY = Math.min(0, -(currentFloor * (swinging.h - 8)) + canvas.height/2);
             cameraY = newCameraY;
             
             isFalling = false;
