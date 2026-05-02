@@ -1,195 +1,195 @@
 <!DOCTYPE html>
 <html lang="ar">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>البرج الذهبي - لعبة البناء المتأرجح</title>
-<style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    user-select: none;
-    -webkit-tap-highlight-color: transparent;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>البرج الذهبي - لعبة البناء المتأرجح</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-body {
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
-    background: #0a0f1a;
-    font-family: 'Segoe UI', 'Poppins', 'Cairo', system-ui, sans-serif;
-}
+        body {
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background: #0a0f1a;
+            font-family: 'Segoe UI', 'Poppins', 'Cairo', system-ui, sans-serif;
+        }
 
-.game-fullscreen {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    background: #0a2f2a;
-}
+        .game-fullscreen {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background: #0a2f2a;
+        }
 
-.canvas-area {
-    flex: 1;
-    min-height: 0;
-    position: relative;
-    overflow: hidden;
-    background: #87CEEB;
-}
+        .canvas-area {
+            flex: 1;
+            min-height: 0;
+            position: relative;
+            overflow: hidden;
+            background: #87CEEB;
+        }
 
-canvas {
-    display: block;
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    cursor: pointer;
-}
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            cursor: pointer;
+        }
 
-.bottom-bar {
-    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
-    backdrop-filter: blur(20px);
-    border-top: 3px solid #FFD700;
-    padding: 24px 30px 26px 30px;
-    display: flex;
-    flex-wrap: nowrap;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    box-shadow: 0 -10px 30px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,215,0,0.3);
-    z-index: 10;
-    overflow-x: auto;
-    white-space: nowrap;
-}
+        .bottom-bar {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+            backdrop-filter: blur(20px);
+            border-top: 3px solid #FFD700;
+            padding: 24px 30px 26px 30px;
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            box-shadow: 0 -10px 30px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,215,0,0.3);
+            z-index: 10;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
 
-.balance-card {
-    background: linear-gradient(145deg, #000000, #1a1a1a);
-    padding: 12px 28px;
-    border-radius: 60px;
-    display: flex;
-    align-items: center;
-    gap: 14px;
-    color: #FFD700;
-    font-weight: bold;
-    font-size: 1.3rem;
-    border: 1px solid #FFD70055;
-    box-shadow: 0 0 12px rgba(255,215,0,0.3);
-    flex-shrink: 0;
-}
+        .balance-card {
+            background: linear-gradient(145deg, #000000, #1a1a1a);
+            padding: 12px 28px;
+            border-radius: 60px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            color: #FFD700;
+            font-weight: bold;
+            font-size: 1.3rem;
+            border: 1px solid #FFD70055;
+            box-shadow: 0 0 12px rgba(255,215,0,0.3);
+            flex-shrink: 0;
+        }
 
-.balance-card span {
-    color: #FFD700;
-    font-size: 2rem;
-    font-weight: 900;
-    text-shadow: 0 0 8px rgba(255,215,0,0.5);
-}
+        .balance-card span {
+            color: #FFD700;
+            font-size: 2rem;
+            font-weight: 900;
+            text-shadow: 0 0 8px rgba(255,215,0,0.5);
+        }
 
-.bet-fixed {
-    background: linear-gradient(145deg, #FFD700, #DAA520);
-    padding: 12px 28px;
-    border-radius: 60px;
-    color: #000000;
-    font-weight: bold;
-    font-size: 1.3rem;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    border: 1px solid #FFF0AA;
-    flex-shrink: 0;
-}
+        .bet-fixed {
+            background: linear-gradient(145deg, #FFD700, #DAA520);
+            padding: 12px 28px;
+            border-radius: 60px;
+            color: #000000;
+            font-weight: bold;
+            font-size: 1.3rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            border: 1px solid #FFF0AA;
+            flex-shrink: 0;
+        }
 
-.multiplier-badge {
-    background: linear-gradient(145deg, #000000, #1c1c1c);
-    color: #FFD700;
-    border-radius: 60px;
-    padding: 12px 24px;
-    font-weight: bold;
-    font-size: 1.2rem;
-    border: 1px solid #FFD700;
-    box-shadow: 0 0 12px rgba(255,215,0,0.4);
-    flex-shrink: 0;
-}
+        .multiplier-badge {
+            background: linear-gradient(145deg, #000000, #1c1c1c);
+            color: #FFD700;
+            border-radius: 60px;
+            padding: 12px 24px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            border: 1px solid #FFD700;
+            box-shadow: 0 0 12px rgba(255,215,0,0.4);
+            flex-shrink: 0;
+        }
 
-.btn-group {
-    display: flex;
-    gap: 16px;
-    flex-shrink: 0;
-}
+        .btn-group {
+            display: flex;
+            gap: 16px;
+            flex-shrink: 0;
+        }
 
-button {
-    border: none;
-    font-weight: bold;
-    font-size: 1.3rem;
-    padding: 12px 32px;
-    border-radius: 60px;
-    cursor: pointer;
-    transition: all 0.12s ease;
-    font-family: inherit;
-    letter-spacing: 0.5px;
-    position: relative;
-    overflow: hidden;
-    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-    color: #FFD700;
-    border: 1px solid #FFD70055;
-    box-shadow: 0 6px 0 #000000, 0 0 12px rgba(255,215,0,0.2);
-    white-space: nowrap;
-}
+        button {
+            border: none;
+            font-weight: bold;
+            font-size: 1.3rem;
+            padding: 12px 32px;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.12s ease;
+            font-family: inherit;
+            letter-spacing: 0.5px;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+            color: #FFD700;
+            border: 1px solid #FFD70055;
+            box-shadow: 0 6px 0 #000000, 0 0 12px rgba(255,215,0,0.2);
+            white-space: nowrap;
+        }
 
-button::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(255,215,0,0.35), transparent);
-    transition: left 0.4s;
-}
+        button::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,215,0,0.35), transparent);
+            transition: left 0.4s;
+        }
 
-button:hover::before {
-    left: 100%;
-}
+        button:hover::before {
+            left: 100%;
+        }
 
-button:active {
-    transform: translateY(3px);
-    box-shadow: 0 3px 0 #000000;
-}
+        button:active {
+            transform: translateY(3px);
+            box-shadow: 0 3px 0 #000000;
+        }
 
-.drop-btn {
-    background: linear-gradient(135deg, #FFD700, #B8860B);
-    color: #000000;
-    font-weight: 900;
-    border: 1px solid #FFF8DC;
-    box-shadow: 0 6px 0 #8B6914, 0 0 15px rgba(255,215,0,0.6);
-}
+        .drop-btn {
+            background: linear-gradient(135deg, #FFD700, #B8860B);
+            color: #000000;
+            font-weight: 900;
+            border: 1px solid #FFF8DC;
+            box-shadow: 0 6px 0 #8B6914, 0 0 15px rgba(255,215,0,0.6);
+        }
 
-.cashout-btn {
-    background: linear-gradient(135deg, #2ecc71, #27ae60);
-    color: white;
-    border: 1px solid #a8ffd0;
-    box-shadow: 0 6px 0 #1f8f4b;
-}
+        .cashout-btn {
+            background: linear-gradient(135deg, #2ecc71, #27ae60);
+            color: white;
+            border: 1px solid #a8ffd0;
+            box-shadow: 0 6px 0 #1f8f4b;
+        }
 
-.reset-btn {
-    background: linear-gradient(135deg, #e67e22, #b45f1b);
-    color: white;
-    border: 1px solid #ffcc88;
-    box-shadow: 0 6px 0 #8B4513;
-}
+        .reset-btn {
+            background: linear-gradient(135deg, #e67e22, #b45f1b);
+            color: white;
+            border: 1px solid #ffcc88;
+            box-shadow: 0 6px 0 #8B4513;
+        }
 
-.status-bar {
-    background: #000000dd;
-    text-align: center;
-    padding: 8px;
-    font-size: 14px;
-    color: #FFD700;
-    border-top: 1px solid #FFD70033;
-}
+        .status-bar {
+            background: #000000dd;
+            text-align: center;
+            padding: 8px;
+            font-size: 14px;
+            color: #FFD700;
+            border-top: 1px solid #FFD70033;
+        }
 
-@media (max-width: 850px) {
-    .bottom-bar { gap: 10px; padding: 16px 16px 18px 16px; }
-    button { padding: 8px 20px; font-size: 1rem; }
-    .balance-card span { font-size: 1.4rem; }
-}
-</style>
+        @media (max-width: 850px) {
+            .bottom-bar { gap: 10px; padding: 16px 16px 18px 16px; }
+            button { padding: 8px 20px; font-size: 1rem; }
+            .balance-card span { font-size: 1.4rem; }
+        }
+    </style>
 </head>
 <body>
 <div class="game-fullscreen">
@@ -198,156 +198,188 @@ button:active {
     </div>
     <div class="bottom-bar">
         <div class="balance-card">💰 الرصيد: <span id="balance">1000</span></div>
-        <div class="bet-fixed">✨ الرهان: 10</div>
-        <div class="multiplier-badge" id="multiplierBadge">🎯 انتظر...</div>
+        <div class="bet-fixed">⚡ الرهان: 50</div>
+        <div class="multiplier-badge" id="multiplierBadge">🎯 الطابق 1: 1.00x</div>
         <div class="btn-group">
-            <button class="drop-btn" id="dropBtn">⚡ إسقاط</button>
-            <button class="cashout-btn" id="cashoutBtn">🏆 سحب</button>
+            <button class="drop-btn" id="dropBtn">🏗️ إسقاط</button>
+            <button class="cashout-btn" id="cashoutBtn">💵 سحب</button>
             <button class="reset-btn" id="resetBtn">🔄 إعادة</button>
         </div>
     </div>
-    <div class="status-bar" id="statusBar">📍 اضغط إسقاط لبدء البناء</div>
+    <div class="status-bar" id="statusBar">✨ اضغط إسقاط لبدء البناء ✨</div>
 </div>
 
 <script>
-// ========== إعدادات اللعبة ==========
-const canvas = document.getElementById('gameCanvas');
-const ctx = canvas.getContext('2d');
-
-const balanceSpan = document.getElementById('balance');
-const multiplierBadge = document.getElementById('multiplierBadge');
-const statusBar = document.getElementById('statusBar');
-
-let balance = 1000;
-const BET_AMOUNT = 10;
-const MAX_FLOOR = 154;
-
-// مضاعفات المكافآت حسب رقم الطابق
-const MULTIPLIERS = [
-    0, 1.00, 1.05, 1.10, 1.15, 1.20, 1.25, 1.30, 1.36, 1.42, 1.48,
-    1.54, 1.60, 1.67, 1.74, 1.81, 1.88, 1.96, 2.04, 2.12, 2.20,
-    2.29, 2.38, 2.47, 2.56, 2.66, 2.76, 2.86, 2.96, 3.07, 3.18,
-    3.29, 3.41, 3.53, 3.65, 3.78, 3.91, 4.04, 4.18, 4.32, 4.46,
-    4.61, 4.76, 4.92, 5.08, 5.24, 5.41, 5.58, 5.76, 5.94, 6.13
-];
-
-for(let i = 51; i <= MAX_FLOOR; i++) {
-    MULTIPLIERS[i] = MULTIPLIERS[i-1] + 0.22;
-}
-
-let isGameActive = true;
-let currentFloor = 0;
-let pendingProfit = 0;
-
-// ========== عناصر البناء ==========
-let builtFloors = [];
-let ground = { x: 0, y: 0, w: 210, h: 26 };
-
-// *** تعديل ارتفاع الطابق: زيادة 50% (من 28 إلى 42) ***
-let swinging = {
-    x: 0, y: 0, w: 48, h: 42,
-    angle: 0, speed: 0.048, direction: 1, maxAngle: 0.85,
-    pivotX: 0, pivotY: -30, ropeLength: 210
-};
-
-let isFalling = false;
-let fallVelY = 0;
-let fallPosX = 0, fallPosY = 0;
-let fallW = 48, fallH = 42;
-let fallFloorNum = 0;
-let waitingForLanding = false;
-
-const floorColors = ["#1a1a1a", "#2d2d2d", "#FFD700", "#B8860B", "#DAA520",
-    "#1f1f1f", "#FFC125", "#F0E68C", "#8B6914", "#CDAD00", "#FFF8DC", "#D4AF37", "#FFD700"];
-
-function getFloorColor(floorNum) {
-    if(floorNum === 0) return "#4a3b1a";
-    return floorColors[(floorNum - 1) % floorColors.length];
-}
-
-function drawFancyFloor(x, y, w, h, floorNum, isGround = false) {
-    const mainColor = isGround ? "#3a2a1a" : getFloorColor(floorNum);
-    ctx.fillStyle = mainColor;
-    ctx.shadowBlur = 4;
-    ctx.shadowColor = "rgba(0,0,0,0.5)";
-    ctx.fillRect(x - w/2, y - h/2, w, h);
+    // ------------------- إعدادات اللعبة -------------------
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
     
-    ctx.fillStyle = "#FFD700";
-    ctx.fillRect(x - w/2 + 4, y - h/2, w - 8, 4);
-    ctx.fillStyle = isGround ? "#2a1a0a" : "#000000aa";
-    ctx.fillRect(x - w/2 + 2, y - h/2 + 4, w - 4, 3);
+    let balance = 1000;
+    const BET_AMOUNT = 50;
+    let currentFloor = 0;
+    let isGameActive = true;
+    let pendingProfit = 0;
+    let winAmount = 0;
     
-    if(!isGround) {
-        // نوافذ متناسبة مع الارتفاع الجديد
-        ctx.fillStyle = "#FFF8DC";
-        ctx.fillRect(x - w/3 - 5, y - 12, 12, 20);
-        ctx.fillRect(x + w/3 - 7, y - 12, 12, 20);
-        ctx.fillStyle = "#000000";
-        ctx.fillRect(x - w/3 - 4, y - 11, 10, 17);
-        ctx.fillRect(x + w/3 - 6, y - 11, 10, 17);
-        ctx.fillStyle = "#FFD700";
-        ctx.fillRect(x - w/3 - 4, y - 11, 3, 17);
-        ctx.fillRect(x + w/3 - 6, y - 11, 3, 17);
-        
-        // باب
-        ctx.fillStyle = "#B8860B";
-        ctx.fillRect(x - 9, y + h/2 - 18, 18, 18);
-        ctx.fillStyle = "#FFD700";
-        ctx.beginPath();
-        ctx.arc(x - 5, y + h/2 - 9, 2.5, 0, 2*Math.PI);
-        ctx.fill();
-        
-        // رقم الطابق
-        ctx.font = "bold 12px 'Segoe UI'";
-        ctx.fillStyle = "#FFD700";
-        ctx.fillText(`${floorNum}`, x - 6, y + 7);
-    } else {
-        ctx.fillStyle = "#FFD700";
-        ctx.fillRect(x - w/2 + 8, y - h/2, w-16, 4);
+    const MAX_FLOOR = 100;
+    const MULTIPLIERS = [];
+    for(let i = 1; i <= MAX_FLOOR; i++) {
+        MULTIPLIERS[i] = 1 + (i * 0.25);
     }
-}
-
-function addGround() {
-    let groundY = canvas.height - 48;
-    let groundX = canvas.width/2 - 105;
-    ground = {x: groundX, y: groundY, w: 210, h: 26};
-    builtFloors.push({
-        x: groundX + ground.w/2,
-        y: groundY + ground.h/2,
-        w: ground.w,
-        h: ground.h,
-        floorNumber: 0,
-        isGround: true
-    });
-}
-
-function updateSwingPosition() {
-    let offsetX = Math.sin(swinging.angle) * swinging.ropeLength;
-    let centerX = swinging.pivotX + offsetX;
-    let verticalOffset = (1 - Math.cos(swinging.angle * 0.65)) * 22;
-    let centerY = swinging.pivotY + swinging.ropeLength * 0.75 + verticalOffset;
-    swinging.x = centerX;
-    swinging.y = centerY;
-}
-
-function resetSwingingPosition() {
-    swinging.pivotX = canvas.width/2;
-    swinging.pivotY = -30;
-    swinging.angle = 0;
-    swinging.direction = 1;
-    updateSwingPosition();
-}
-
-// *** تعديل سرعة التأرجح: تقليل بنسبة 50% ***
-function calcSwingSpeed(baseFloor) {
-    let extra = Math.min(0.095, baseFloor * 0.008);
-    return (0.048 + extra) * 0.5;
-}
-
-function updateSwing() {
-    if(isGameActive && !waitingForLanding && !isFalling && currentFloor < MAX_FLOOR) {
-        swinging.speed = calcSwingSpeed(currentFloor);
-        swinging.angle += swinging.direction * swinging.speed;
+    
+    // ------------------- الكاميرا والاهتزاز -------------------
+    let cameraY = 0;
+    let shakeIntensity = 0;
+    let shakeDuration = 0;
+    
+    function addShake(intensity = 6, duration = 150) {
+        shakeIntensity = intensity;
+        shakeDuration = duration;
+    }
+    
+    function updateShake() {
+        if(shakeDuration > 0) {
+            shakeDuration -= 16;
+            if(shakeDuration <= 0) shakeIntensity = 0;
+        } else {
+            shakeIntensity = 0;
+        }
+    }
+    
+    function getShakeOffset() {
+        if(shakeIntensity <= 0) return { x: 0, y: 0 };
+        return {
+            x: (Math.random() - 0.5) * shakeIntensity,
+            y: (Math.random() - 0.5) * shakeIntensity * 0.5
+        };
+    }
+    
+    // ------------------- الغيوم -------------------
+    let clouds = [];
+    
+    function initClouds() {
+        clouds = [];
+        for(let i = 0; i < 6; i++) {
+            clouds.push({
+                x: Math.random() * canvas.width,
+                y: 40 + Math.random() * 130,
+                w: 70 + Math.random() * 70,
+                h: 35 + Math.random() * 25,
+                speed: 0.08 + Math.random() * 0.2
+            });
+        }
+    }
+    
+    function updateClouds() {
+        for(let cloud of clouds) {
+            cloud.x += cloud.speed;
+            if(cloud.x > canvas.width + 200) cloud.x = -250;
+        }
+    }
+    
+    // ------------------- عناصر البناء -------------------
+    let builtFloors = [];
+    let ground = { x: 0, y: 0, w: 210, h: 48 };
+    
+    let swinging = {
+        x: 0, y: 0, w: 48, h: 48,
+        angle: 0, speed: 0.024, direction: 1, maxAngle: 0.85,
+        pivotX: 0, pivotY: -30, ropeLength: 210
+    };
+    
+    let isFalling = false;
+    let fallVelY = 0;
+    let fallPosX = 0, fallPosY = 0;
+    let fallW = 48, fallH = 48;
+    let fallFloorNum = 0;
+    let waitingForLanding = false;
+    
+    const floorColors = ["#1a1a1a", "#2d2d2d", "#FFD700", "#B8860B", "#DAA520",
+        "#1f1f1f", "#FFC125", "#F0E68C", "#8B6914", "#CDAD00", "#FFF8DC", "#D4AF37", "#FFD700"];
+    
+    function getFloorColor(floorNum) {
+        if(floorNum === 0) return "#4a3b1a";
+        return floorColors[(floorNum - 1) % floorColors.length];
+    }
+    
+    function drawFancyFloor(x, y, w, h, floorNum, isGround = false) {
+        const mainColor = isGround ? "#3a2a1a" : getFloorColor(floorNum);
+        ctx.fillStyle = mainColor;
+        ctx.shadowBlur = 4;
+        ctx.shadowColor = "rgba(0,0,0,0.5)";
+        ctx.fillRect(x - w/2, y - h/2, w, h);
+        ctx.fillStyle = "#FFD700";
+        ctx.fillRect(x - w/2 + 4, y - h/2, w - 8, 4);
+        ctx.fillStyle = isGround ? "#2a1a0a" : "#000000aa";
+        ctx.fillRect(x - w/2 + 2, y - h/2 + 4, w - 4, 3);
+        
+        if(!isGround) {
+            ctx.fillStyle = "#FFF8DC";
+            ctx.fillRect(x - w/3 - 5, y - 3, 12, 12);
+            ctx.fillRect(x + w/3 - 7, y - 3, 12, 12);
+            ctx.fillStyle = "#000000";
+            ctx.fillRect(x - w/3 - 4, y - 2, 10, 10);
+            ctx.fillRect(x + w/3 - 6, y - 2, 10, 10);
+            ctx.fillStyle = "#FFD700";
+            ctx.fillRect(x - w/3 - 4, y - 2, 3, 10);
+            ctx.fillRect(x + w/3 - 6, y - 2, 3, 10);
+            ctx.fillStyle = "#B8860B";
+            ctx.fillRect(x - 9, y + h/2 - 16, 18, 16);
+            ctx.fillStyle = "#FFD700";
+            ctx.beginPath();
+            ctx.arc(x - 5, y + h/2 - 9, 2.5, 0, 2*Math.PI);
+            ctx.fill();
+            ctx.font = "bold 12px 'Segoe UI'";
+            ctx.fillStyle = "#FFD700";
+            ctx.fillText(`${floorNum}`, x - 6, y + 5);
+        } else {
+            ctx.fillStyle = "#FFD700";
+            ctx.fillRect(x - w/2 + 8, y - h/2, w-16, 4);
+        }
+    }
+    
+    function addGround() {
+        let groundY = canvas.height - 48;
+        let groundX = canvas.width/2 - 105;
+        ground = {x: groundX, y: groundY, w: 210, h: 48};
+        builtFloors = [];
+        builtFloors.push({
+            x: groundX + ground.w/2,
+            y: groundY + ground.h/2,
+            w: ground.w,
+            h: ground.h,
+            floorNumber: 0,
+            isGround: true
+        });
+    }
+    
+    function updateSwingPosition() {
+        let offsetX = Math.sin(swinging.angle) * swinging.ropeLength;
+        let centerX = swinging.pivotX + offsetX;
+        let verticalOffset = (1 - Math.cos(swinging.angle * 0.65)) * 22;
+        let centerY = swinging.pivotY + swinging.ropeLength * 0.75 + verticalOffset;
+        swinging.x = centerX;
+        swinging.y = centerY;
+    }
+    
+    function resetSwingingPosition() {
+        swinging.pivotX = canvas.width/2;
+        swinging.pivotY = -30;
+        swinging.angle = 0;
+        swinging.direction = 1;
+        updateSwingPosition();
+    }
+    
+    function calcSwingSpeed(baseFloor) {
+        let extra = Math.min(0.047, baseFloor * 0.004);
+        return 0.024 + extra;
+    }
+    
+    function updateSwing() {
+        if(isGameActive && !waitingForLanding && !isFalling && currentFloor < MAX_FLOOR) {
+            swinging.speed = calcSwingSpeed(currentFloor);
+            swinging.angle += swinging.direction * swinging.speed;
+        }
         if(swinging.angle > swinging.maxAngle) {
             swinging.angle = swinging.maxAngle;
             swinging.direction = -1;
@@ -357,534 +389,534 @@ function updateSwing() {
         }
         updateSwingPosition();
     }
-}
-
-function getMultiplier(floorNum) {
-    if(floorNum <= 0) return 0;
-    if(floorNum > MAX_FLOOR) return MULTIPLIERS[MAX_FLOOR];
-    return MULTIPLIERS[floorNum];
-}
-
-function updateUI() {
-    balanceSpan.innerText = Math.floor(balance);
-    if(isGameActive && currentFloor < MAX_FLOOR) {
-        let nextMulti = getMultiplier(currentFloor+1);
-        multiplierBadge.innerText = `🎯 طابق ${currentFloor+1}: ${nextMulti.toFixed(2)}x`;
-        statusBar.innerText = `📍 الطابق الحالي: ${currentFloor} | المضاعف القادم: ${nextMulti.toFixed(2)}x`;
-    } else if(isGameActive && currentFloor >= MAX_FLOOR) {
-        multiplierBadge.innerText = `🏆 أقصى طابق!`;
-        statusBar.innerText = `🏆 تهانينا! وصلت للقمة! 🏆`;
-    } else {
-        multiplierBadge.innerText = `🏆 انتهت`;
-    }
-}
-
-// ========== نظام السقوط ==========
-function startFall(targetFloorNum) {
-    isFalling = true;
-    waitingForLanding = false;
-    fallVelY = 0;
-    fallPosX = swinging.x;
-    fallPosY = swinging.y;
-    fallW = swinging.w;
-    fallH = swinging.h;
-    fallFloorNum = targetFloorNum;
-}
-
-function updateFall() {
-    if(!isFalling) return;
     
-    fallVelY += 0.8;
-    fallPosY += fallVelY;
-    
-    // التحقق من الاصطدام بالأرض أو أي طابق
-    let hit = false;
-    let hitY = 0;
-    
-    // التحقق من الأرض أولاً
-    if(fallPosY + fallH/2 >= ground.y + ground.h/2) {
-        hit = true;
-        hitY = ground.y + ground.h/2 - fallH/2;
+    function getMultiplier(floorNum) {
+        if(floorNum <= 0) return 0;
+        if(floorNum > MAX_FLOOR) return MULTIPLIERS[MAX_FLOOR];
+        return MULTIPLIERS[floorNum];
     }
     
-    // التحقق من الطوابق المبنية
-    for(let i = builtFloors.length-1; i >= 0; i--) {
-        let floor = builtFloors[i];
-        let distX = Math.abs(fallPosX - floor.x);
-        let distY = Math.abs(fallPosY - floor.y);
+    function addFloorAt(x, y, floorNumber) {
+        builtFloors.push({
+            x: x, y: y, w: swinging.w, h: swinging.h,
+            floorNumber: floorNumber,
+            isGround: false
+        });
+    }
+    
+    function checkLanding() {
+        let blockX = swinging.x;
+        let blockY = swinging.y + swinging.h/2;
+        let blockLeft = blockX - swinging.w/2;
+        let blockRight = blockX + swinging.w/2;
         
-        if(distX < (fallW/2 + floor.w/2) && 
-           fallPosY + fallH/2 > floor.y - floor.h/2 && 
-           fallPosY - fallH/2 < floor.y + floor.h/2) {
-            hit = true;
-            hitY = floor.y - floor.h/2 - fallH/2;
-            break;
+        let topFloor = null;
+        for(let floor of builtFloors) {
+            let floorLeft = floor.x - floor.w/2;
+            let floorRight = floor.x + floor.w/2;
+            let floorTop = floor.y - floor.h/2;
+            
+            if(blockY + 5 >= floorTop && blockY - 10 <= floorTop + floor.h) {
+                let overlapLeft = Math.max(blockLeft, floorLeft);
+                let overlapRight = Math.min(blockRight, floorRight);
+                let overlapWidth = overlapRight - overlapLeft;
+                
+                if(overlapWidth >= swinging.w * 0.4) {
+                    topFloor = floor;
+                    break;
+                }
+            }
         }
-    }
-    
-    if(hit) {
-        isFalling = false;
-        // فشل البناء: الطابق سقط ولم يثبت
-        playFailSound();
-        isGameActive = false;
-        pendingProfit = 0;
-        statusBar.innerText = `💔 فشلت في بناء الطابق ${fallFloorNum}! اضغط إعادة للمحاولة`;
-        updateUI();
-        stopBackgroundMusic();
-        return;
-    }
-    
-    // الخروج من الشاشة
-    if(fallPosY - fallH/2 > canvas.height + 200) {
-        isFalling = false;
-        isGameActive = false;
-        pendingProfit = 0;
-        statusBar.innerText = `💔 سقط الطابق بعيداً! اضغط إعادة`;
-        updateUI();
-        stopBackgroundMusic();
-    }
-}
-
-// ========== نظام الصوت ==========
-let audioCtx = null;
-let bgMusicGain = null;
-let sfxGain = null;
-let bgMusicInterval = null;
-let isMusicPlaying = false;
-
-function initAudio() {
-    if(audioCtx) return;
-    try {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        bgMusicGain = audioCtx.createGain();
-        sfxGain = audioCtx.createGain();
-        bgMusicGain.gain.value = 0.12;
-        sfxGain.gain.value = 0.35;
-        bgMusicGain.connect(audioCtx.destination);
-        sfxGain.connect(audioCtx.destination);
-    } catch(e){ console.log("audio not supported"); }
-}
-
-function startBackgroundMusic() {
-    if(!audioCtx || !isGameActive) return;
-    if(isMusicPlaying) return;
-    try {
-        isMusicPlaying = true;
-        if(bgMusicInterval) clearInterval(bgMusicInterval);
-        const notes = [261.63, 293.66, 329.63, 261.63, 349.23, 293.66];
-        let noteIdx = 0;
-        bgMusicInterval = setInterval(() => {
-            if(!isMusicPlaying || !audioCtx || audioCtx.state != 'running' || !isGameActive) return;
-            const osc = audioCtx.createOscillator();
-            const gainNode = audioCtx.createGain();
-            osc.connect(gainNode);
-            gainNode.connect(bgMusicGain);
-            osc.type = 'sine';
-            osc.frequency.value = notes[noteIdx % notes.length];
-            gainNode.gain.value = 0.08;
-            osc.start();
-            gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1.2);
-            osc.stop(audioCtx.currentTime + 1.1);
-            noteIdx++;
-        }, 1400);
-    } catch(e) { console.log("music error"); }
-}
-
-function stopBackgroundMusic() {
-    if(bgMusicInterval) {
-        clearInterval(bgMusicInterval);
-        bgMusicInterval = null;
-    }
-    isMusicPlaying = false;
-}
-
-function playDropSound() {
-    if(!audioCtx || audioCtx.state !== 'running') return;
-    try {
-        const osc = audioCtx.createOscillator();
-        const gainNode = audioCtx.createGain();
-        osc.connect(gainNode);
-        gainNode.connect(sfxGain);
-        osc.type = 'sine';
-        osc.frequency.value = 310;
-        gainNode.gain.value = 0.3;
-        osc.start();
-        gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.3);
-        osc.stop(audioCtx.currentTime + 0.28);
         
-        const osc2 = audioCtx.createOscillator();
-        const gain2 = audioCtx.createGain();
-        osc2.connect(gain2);
-        gain2.connect(sfxGain);
-        osc2.type = 'sine';
-        osc2.frequency.value = 180;
-        gain2.gain.value = 0.15;
-        osc2.start();
-        gain2.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.4);
-        osc2.stop(audioCtx.currentTime + 0.35);
-    } catch(e){}
-}
-
-function playImpactSound() {
-    if(!audioCtx || audioCtx.state !== 'running') return;
-    try {
-        const osc = audioCtx.createOscillator();
-        const gainNode = audioCtx.createGain();
-        osc.connect(gainNode);
-        gainNode.connect(sfxGain);
-        osc.type = 'triangle';
-        osc.frequency.value = 220;
-        gainNode.gain.value = 0.4;
-        osc.start();
-        gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.2);
-        osc.stop(audioCtx.currentTime + 0.18);
-        
-        const osc2 = audioCtx.createOscillator();
-        const gain2 = audioCtx.createGain();
-        osc2.connect(gain2);
-        gain2.connect(sfxGain);
-        osc2.type = 'square';
-        osc2.frequency.value = 440;
-        gain2.gain.value = 0.25;
-        osc2.start();
-        gain2.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.25);
-        osc2.stop(audioCtx.currentTime + 0.22);
-    } catch(e){}
-}
-
-function playFailSound() {
-    if(!audioCtx || audioCtx.state !== 'running') return;
-    try {
-        const osc = audioCtx.createOscillator();
-        const gainNode = audioCtx.createGain();
-        osc.connect(gainNode);
-        gainNode.connect(sfxGain);
-        osc.type = 'sawtooth';
-        osc.frequency.value = 130;
-        gainNode.gain.value = 0.35;
-        osc.start();
-        gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.5);
-        osc.stop(audioCtx.currentTime + 0.48);
-    } catch(e){}
-}
-
-// ========== آليات اللعبة ==========
-function dropFloor() {
-    if(!isGameActive || waitingForLanding || isFalling) return;
-    if(currentFloor >= MAX_FLOOR) {
-        statusBar.innerText = "🏆 لقد وصلت للقمة بالفعل! 🏆";
-        return;
-    }
-    
-    if(currentFloor === 0 && balance < BET_AMOUNT) {
-        statusBar.innerText = "❌ رصيد غير كافٍ!";
-        return;
-    }
-    
-    if(currentFloor === 0) {
-        balance -= BET_AMOUNT;
-        pendingProfit = BET_AMOUNT;
-        updateUI();
-        startBackgroundMusic();
-    }
-    
-    playDropSound();
-    waitingForLanding = true;
-    
-    setTimeout(() => {
-        if(!isGameActive) return;
-        
-        let targetFloorNum = currentFloor + 1;
-        let dropX = swinging.x;
-        let dropY = swinging.y;
-        
-        // التحقق من وجود طابق تحته
-        let lastFloor = builtFloors[builtFloors.length - 1];
-        let isAligned = Math.abs(dropX - lastFloor.x) < (swinging.w/2 + lastFloor.w/2) - 5;
-        
-        if(isAligned) {
-            // نجاح: إضافة الطابق
-            let newFloor = {
-                x: dropX,
-                y: dropY,
-                w: swinging.w,
-                h: swinging.h,
-                floorNumber: targetFloorNum
-            };
-            builtFloors.push(newFloor);
+        if(topFloor) {
+            let landingX = (blockLeft + blockRight) / 2;
+            let landingY = topFloor.y - topFloor.h/2 - swinging.h/2;
             
-            let multiplier = getMultiplier(targetFloorNum);
-            let newProfit = BET_AMOUNT * multiplier;
-            pendingProfit = newProfit;
-            currentFloor = targetFloorNum;
+            addFloorAt(landingX, landingY, currentFloor + 1);
+            currentFloor++;
             
-            playImpactSound();
-            addShake(4, 120);
-            statusBar.innerText = `✓ بنيت الطابق ${currentFloor}! المضاعف الحالي: ${multiplier.toFixed(2)}x`;
+            let winMulti = getMultiplier(currentFloor);
+            pendingProfit = BET_AMOUNT * winMulti;
+            winAmount = pendingProfit;
+            
             updateUI();
+            addShake(4, 120);
+            playImpactSound();
             
+            let newCameraY = Math.min(0, -(currentFloor * 40) + canvas.height/2);
+            cameraY = newCameraY;
+            
+            isFalling = false;
             waitingForLanding = false;
             
             if(currentFloor >= MAX_FLOOR) {
-                // فوز تام
-                balance += pendingProfit;
-                pendingProfit = 0;
-                statusBar.innerText = `🏆 فوز عظيم! ربحت ${Math.floor(balance)} عملة! 🏆`;
                 isGameActive = false;
+                statusBar.innerText = `🏆 مبروك! وصلت للقمة 🏆`;
+                pendingProfit = 0;
                 updateUI();
                 stopBackgroundMusic();
+                playCashoutSound();
+            } else {
+                swinging.pivotY = -30;
+                resetSwingingPosition();
             }
         } else {
-            // فشل
-            startFall(targetFloorNum);
-            waitingForLanding = false;
+            failGame();
         }
-    }, 50);
-}
-
-function cashout() {
-    if(!isGameActive) return;
-    if(pendingProfit > 0) {
-        balance += pendingProfit;
-        let earned = pendingProfit;
-        pendingProfit = 0;
-        statusBar.innerText = `🎉 سحبت ${Math.floor(earned)} عملة! ربحك النهائي: ${Math.floor(balance)} 🎉`;
-        isGameActive = false;
-        updateUI();
-        stopBackgroundMusic();
-    } else if(currentFloor > 0) {
-        statusBar.innerText = "⚠️ لا يوجد أرباح معلقة للسحب!";
-    } else {
-        statusBar.innerText = "⚠️ ابدأ البناء أولاً!";
     }
-}
-
-function resetGame() {
-    isGameActive = true;
-    isFalling = false;
-    waitingForLanding = false;
-    currentFloor = 0;
-    pendingProfit = 0;
-    balance = 1000;
-    builtFloors = [];
     
+    function updateFall() {
+        fallVelY += 0.8;
+        fallPosY += fallVelY;
+        
+        if(fallPosY + fallH/2 > canvas.height + 100) {
+            isFalling = false;
+            waitingForLanding = false;
+            statusBar.innerText = `💥 لقد سقط البرج! اضغط إعادة 💥`;
+            isGameActive = false;
+            pendingProfit = 0;
+            updateUI();
+            stopBackgroundMusic();
+        } else {
+            let landed = false;
+            for(let floor of builtFloors) {
+                let floorTop = floor.y - floor.h/2;
+                if(fallPosY + fallH/2 >= floorTop && fallPosY + fallH/2 <= floorTop + 15) {
+                    let blockLeft = fallPosX - fallW/2;
+                    let blockRight = fallPosX + fallW/2;
+                    let floorLeft = floor.x - floor.w/2;
+                    let floorRight = floor.x + floor.w/2;
+                    
+                    if(blockRight > floorLeft && blockLeft < floorRight) {
+                        landed = true;
+                        break;
+                    }
+                }
+            }
+            
+            if(landed) {
+                isFalling = false;
+                waitingForLanding = false;
+                failGame();
+            }
+        }
+    }
+    
+    function failGame() {
+        isGameActive = false;
+        pendingProfit = 0;
+        updateUI();
+        statusBar.innerText = `😭 خسرت الرهان! اضغط إعادة 😭`;
+        stopBackgroundMusic();
+        playFailSound();
+        addShake(8, 200);
+    }
+    
+    function dropFloor() {
+        if(!isGameActive) {
+            startNewGame();
+            return;
+        }
+        if(waitingForLanding || isFalling) return;
+        if(currentFloor >= MAX_FLOOR) return;
+        
+        waitingForLanding = true;
+        isFalling = true;
+        fallPosX = swinging.x;
+        fallPosY = swinging.y;
+        fallW = swinging.w;
+        fallH = swinging.h;
+        fallFloorNum = currentFloor + 1;
+        fallVelY = 0;
+        
+        playDropSound();
+        
+        setTimeout(() => {
+            if(isFalling && waitingForLanding) {
+                checkLanding();
+            }
+        }, 50);
+    }
+    
+    function cashout() {
+        if(!isGameActive) return;
+        if(pendingProfit > 0) {
+            balance += pendingProfit;
+            pendingProfit = 0;
+            winAmount = 0;
+            updateUI();
+            statusBar.innerText = `💰 سحبت ${Math.floor(balance)} عملة! ابدأ من جديد 💰`;
+            isGameActive = false;
+            stopBackgroundMusic();
+            playCashoutSound();
+        } else {
+            statusBar.innerText = `⚠️ لا توجد أرباح للسحب بعد ⚠️`;
+        }
+    }
+    
+    function resetGame() {
+        isGameActive = true;
+        isFalling = false;
+        waitingForLanding = false;
+        currentFloor = 0;
+        pendingProfit = 0;
+        winAmount = 0;
+        
+        builtFloors = [];
+        addGround();
+        resetSwingingPosition();
+        
+        cameraY = 0;
+        updateUI();
+        statusBar.innerText = `✨ تم إعادة اللعبة! اضغط إسقاط ✨`;
+        
+        if(audioCtx && bgMusicGain) {
+            stopBackgroundMusic();
+            startBackgroundMusic();
+        }
+    }
+    
+    function startNewGame() {
+        if(balance < BET_AMOUNT) {
+            statusBar.innerText = `⚠️ رصيدك غير كافٍ! ⚠️`;
+            return;
+        }
+        
+        balance -= BET_AMOUNT;
+        isGameActive = true;
+        isFalling = false;
+        waitingForLanding = false;
+        currentFloor = 0;
+        pendingProfit = 0;
+        winAmount = 0;
+        
+        builtFloors = [];
+        addGround();
+        resetSwingingPosition();
+        
+        cameraY = 0;
+        updateUI();
+        statusBar.innerText = `🎯 بدأت البناء! هدفك الطابق ${MAX_FLOOR} 🎯`;
+        
+        if(audioCtx) {
+            if(audioCtx.state === 'suspended') {
+                audioCtx.resume();
+            }
+            startBackgroundMusic();
+        }
+    }
+    
+    function updateUI() {
+        const balanceSpan = document.getElementById('balance');
+        balanceSpan.innerText = Math.floor(balance);
+        
+        const multiplierBadge = document.getElementById('multiplierBadge');
+        if(isGameActive && currentFloor < MAX_FLOOR) {
+            let nextMulti = getMultiplier(currentFloor+1);
+            multiplierBadge.innerText = `🎯 طابق ${currentFloor+1}: ${nextMulti.toFixed(2)}x`;
+        } else if(isGameActive && currentFloor >= MAX_FLOOR) {
+            multiplierBadge.innerText = `🏆 🏆 القمة 🏆 🏆`;
+        } else {
+            multiplierBadge.innerText = `🏆 مضاعف: --`;
+        }
+        
+        const statusDiv = document.getElementById('statusBar');
+        if(isGameActive && pendingProfit > 0) {
+            statusDiv.innerText = `🌟 الربح الحالي: ${Math.floor(pendingProfit)} عملة - اضغط سحب 🌟`;
+        }
+    }
+    
+    // ------------------- المؤثرات المتلاشية -------------------
+    let floatingMultipliers = [];
+    
+    function addFloatingMultiplier(x, y, value) {
+        floatingMultipliers.push({
+            x: x, y: y, value: value.toFixed(1), life: 1.0
+        });
+    }
+    
+    function updateFloatingMultipliers() {
+        for(let i = 0; i < floatingMultipliers.length; i++) {
+            floatingMultipliers[i].life -= 0.02;
+            floatingMultipliers[i].y -= 1.2;
+            if(floatingMultipliers[i].life <= 0) {
+                floatingMultipliers.splice(i,1);
+                i--;
+            }
+        }
+    }
+    
+    function drawFloatingMultipliers(camY) {
+        for(let fm of floatingMultipliers) {
+            ctx.globalAlpha = fm.life;
+            ctx.font = `bold ${24 * fm.life}px 'Poppins'`;
+            ctx.fillStyle = "#FFD700";
+            ctx.shadowBlur = 8;
+            ctx.fillText(`${fm.value}x`, fm.x - 20, fm.y - 20 + camY);
+            ctx.globalAlpha = 1;
+        }
+        ctx.shadowBlur = 0;
+    }
+    
+    // ------------------- نظام الصوت -------------------
+    let audioCtx = null;
+    let bgMusicGain = null;
+    let sfxGain = null;
+    let bgMusicInterval = null;
+    let isMusicPlaying = false;
+    
+    function initAudio() {
+        if(audioCtx) return;
+        try {
+            audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            bgMusicGain = audioCtx.createGain();
+            sfxGain = audioCtx.createGain();
+            bgMusicGain.gain.value = 0.12;
+            sfxGain.gain.value = 0.35;
+            bgMusicGain.connect(audioCtx.destination);
+            sfxGain.connect(audioCtx.destination);
+        } catch(e){ console.log("audio not supported"); }
+    }
+    
+    function startBackgroundMusic() {
+        if(!audioCtx || !isGameActive) return;
+        if(isMusicPlaying) return;
+        try {
+            isMusicPlaying = true;
+            if(bgMusicInterval) clearInterval(bgMusicInterval);
+            const notes = [261.63, 293.66, 329.63, 261.63, 349.23, 293.66];
+            let noteIdx = 0;
+            bgMusicInterval = setInterval(() => {
+                if(!isMusicPlaying || !audioCtx || audioCtx.state !== 'running' || !isGameActive) return;
+                const osc = audioCtx.createOscillator();
+                const gainNode = audioCtx.createGain();
+                osc.connect(gainNode);
+                gainNode.connect(bgMusicGain);
+                osc.type = 'sine';
+                osc.frequency.value = notes[noteIdx % notes.length];
+                gainNode.gain.value = 0.08;
+                osc.start();
+                gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1.2);
+                osc.stop(audioCtx.currentTime + 1.1);
+                noteIdx++;
+            }, 1400);
+        } catch(e) { console.log("music error"); }
+    }
+    
+    function stopBackgroundMusic() {
+        if(bgMusicInterval) {
+            clearInterval(bgMusicInterval);
+            bgMusicInterval = null;
+        }
+        isMusicPlaying = false;
+    }
+    
+    function playDropSound() {
+        if(!audioCtx || audioCtx.state !== 'running') return;
+        try {
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            osc.connect(gainNode);
+            gainNode.connect(sfxGain);
+            osc.type = 'sine';
+            osc.frequency.value = 310;
+            gainNode.gain.value = 0.3;
+            osc.start();
+            gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.3);
+            osc.stop(audioCtx.currentTime + 0.28);
+            
+            const osc2 = audioCtx.createOscillator();
+            const gain2 = audioCtx.createGain();
+            osc2.connect(gain2);
+            gain2.connect(sfxGain);
+            osc2.type = 'sine';
+            osc2.frequency.value = 180;
+            gain2.gain.value = 0.15;
+            osc2.start();
+            gain2.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.4);
+            osc2.stop(audioCtx.currentTime + 0.35);
+        } catch(e){}
+    }
+    
+    function playImpactSound() {
+        if(!audioCtx || audioCtx.state !== 'running') return;
+        try {
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            osc.connect(gainNode);
+            gainNode.connect(sfxGain);
+            osc.type = 'triangle';
+            osc.frequency.value = 220;
+            gainNode.gain.value = 0.4;
+            osc.start();
+            gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.2);
+            osc.stop(audioCtx.currentTime + 0.18);
+            
+            const osc2 = audioCtx.createOscillator();
+            const gain2 = audioCtx.createGain();
+            osc2.connect(gain2);
+            gain2.connect(sfxGain);
+            osc2.type = 'square';
+            osc2.frequency.value = 440;
+            gain2.gain.value = 0.25;
+            osc2.start();
+            gain2.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.25);
+            osc2.stop(audioCtx.currentTime + 0.22);
+        } catch(e){}
+    }
+    
+    function playFailSound() {
+        if(!audioCtx || audioCtx.state !== 'running') return;
+        try {
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            osc.connect(gainNode);
+            gainNode.connect(sfxGain);
+            osc.type = 'sawtooth';
+            osc.frequency.value = 130;
+            gainNode.gain.value = 0.35;
+            osc.start();
+            gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.5);
+            osc.stop(audioCtx.currentTime + 0.48);
+        } catch(e){}
+    }
+    
+    function playCashoutSound() {
+        if(!audioCtx || audioCtx.state !== 'running') return;
+        try {
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            osc.connect(gainNode);
+            gainNode.connect(sfxGain);
+            osc.type = 'sine';
+            osc.frequency.value = 523.25;
+            gainNode.gain.value = 0.3;
+            osc.start();
+            gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.4);
+            osc.stop(audioCtx.currentTime + 0.38);
+        } catch(e){}
+    }
+    
+    // ------------------- الرسم الرئيسي -------------------
+    function drawWithCamera() {
+        const shake = getShakeOffset();
+        ctx.save();
+        ctx.translate(shake.x, shake.y);
+        
+        drawSkyAndClouds(cameraY);
+        
+        ctx.save();
+        ctx.translate(0, cameraY);
+        
+        for(let floor of builtFloors) {
+            drawFancyFloor(floor.x, floor.y, floor.w, floor.h, floor.floorNumber, floor.isGround);
+        }
+        
+        if(isGameActive && !waitingForLanding && !isFalling && currentFloor < MAX_FLOOR) {
+            ctx.beginPath();
+            ctx.moveTo(swinging.pivotX, swinging.pivotY);
+            ctx.lineTo(swinging.x, swinging.y - swinging.h/2 + 5);
+            ctx.strokeStyle = "#FFD700";
+            ctx.lineWidth = 3;
+            ctx.shadowBlur = 6;
+            ctx.stroke();
+            drawFancyFloor(swinging.x, swinging.y, swinging.w, swinging.h, currentFloor+1, false);
+        } else if(isFalling) {
+            drawFancyFloor(fallPosX, fallPosY, fallW, fallH, fallFloorNum, false);
+        }
+        
+        if(isGameActive && pendingProfit > 0) {
+            ctx.font = "bold 26px 'Poppins'";
+            ctx.fillStyle = "#FFD700";
+            ctx.shadowBlur = 8;
+            ctx.fillText(`💰 ${Math.floor(pendingProfit)}`, canvas.width-120, 55 + cameraY);
+        }
+        
+        ctx.restore();
+        drawFloatingMultipliers(cameraY);
+        
+        ctx.strokeStyle = "#FFD700";
+        ctx.lineWidth = 3;
+        ctx.strokeRect(5, 5, canvas.width-10, canvas.height-10);
+        
+        ctx.restore();
+    }
+    
+    function drawSkyAndClouds(camY) {
+        const grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
+        grad.addColorStop(0, "#87CEEB");
+        grad.addColorStop(0.5, "#B0E0FF");
+        grad.addColorStop(1, "#D6EAF8");
+        ctx.fillStyle = grad;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        for(let cloud of clouds) {
+            ctx.fillStyle = "rgba(255,255,250,0.9)";
+            ctx.shadowBlur = 12;
+            ctx.beginPath();
+            ctx.ellipse(cloud.x, cloud.y + camY * 0.05, cloud.w/2, cloud.h/2, 0, 0, Math.PI*2);
+            ctx.ellipse(cloud.x + cloud.w*0.4, cloud.y - cloud.h*0.2, cloud.w*0.5, cloud.h*0.6, 0, 0, Math.PI*2);
+            ctx.ellipse(cloud.x - cloud.w*0.3, cloud.y - cloud.h*0.15, cloud.w*0.45, cloud.h*0.55, 0, 0, Math.PI*2);
+            ctx.fill();
+        }
+        ctx.shadowBlur = 0;
+        
+        ctx.fillStyle = "#FFD700";
+        for(let i = 0; i < 50; i++) {
+            ctx.globalAlpha = 0.12 + Math.sin(Date.now() * 0.002 + i) * 0.08;
+            ctx.fillRect((i * 97) % canvas.width, (i * 53) % canvas.height, 2, 2);
+        }
+        ctx.globalAlpha = 1;
+    }
+    
+    function resizeCanvas() {
+        const rect = canvas.parentElement.getBoundingClientRect();
+        canvas.width = rect.width;
+        canvas.height = rect.height;
+        addGround();
+        resetSwingingPosition();
+        initClouds();
+    }
+    
+    function gameLoop() {
+        updateShake();
+        if(isFalling) updateFall();
+        updateSwing();
+        updateClouds();
+        updateFloatingMultipliers();
+        drawWithCamera();
+        requestAnimationFrame(gameLoop);
+    }
+    
+    // ------------------- بدء اللعبة -------------------
+    window.addEventListener('resize', resizeCanvas);
+    
+    document.getElementById('dropBtn').addEventListener('click', () => {
+        if(audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+        if(!isGameActive) startNewGame();
+        else dropFloor();
+    });
+    
+    document.getElementById('cashoutBtn').addEventListener('click', () => {
+        if(audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+        cashout();
+    });
+    
+    document.getElementById('resetBtn').addEventListener('click', () => {
+        resetGame();
+    });
+    
+    resizeCanvas();
+    initClouds();
     addGround();
     resetSwingingPosition();
     updateUI();
-    statusBar.innerText = "🔄 تمت إعادة اللعبة! اضغط إسقاط للبدء";
-    stopBackgroundMusic();
-}
-
-function addShake(intensity = 6, duration = 150) {
-    shakeIntensity = intensity;
-    shakeDuration = duration;
-}
-
-// ========== الكاميرا والسحب ==========
-let cameraY = 0;
-let shakeIntensity = 0;
-let shakeDuration = 0;
-
-function updateShake() {
-    if(shakeDuration > 0) {
-        shakeDuration -= 16;
-        if(shakeDuration <= 0) shakeIntensity = 0;
-    } else {
-        shakeIntensity = 0;
-    }
-}
-
-function getShakeOffset() {
-    if(shakeIntensity <= 0) return { x: 0, y: 0 };
-    return {
-        x: (Math.random() - 0.5) * shakeIntensity,
-        y: (Math.random() - 0.5) * shakeIntensity * 0.5
-    };
-}
-
-// ========== الغيوم ==========
-let clouds = [];
-
-function initClouds() {
-    clouds = [];
-    for(let i = 0; i < 6; i++) {
-        clouds.push({
-            x: Math.random() * canvas.width,
-            y: 40 + Math.random() * 130,
-            w: 70 + Math.random() * 70,
-            h: 35 + Math.random() * 25,
-            speed: 0.08 + Math.random() * 0.2
-        });
-    }
-}
-
-function updateClouds() {
-    for(let cloud of clouds) {
-        cloud.x += cloud.speed;
-        if(cloud.x > canvas.width + 200) cloud.x = -250;
-    }
-}
-
-function drawSkyAndClouds(camY) {
-    const grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
-    grad.addColorStop(0, "#87CEEB");
-    grad.addColorStop(0.5, "#B0E0FF");
-    grad.addColorStop(1, "#D6EAF8");
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    gameLoop();
+    initAudio();
     
-    for(let cloud of clouds) {
-        ctx.fillStyle = "rgba(255,255,250,0.9)";
-        ctx.shadowBlur = 12;
-        ctx.beginPath();
-        ctx.ellipse(cloud.x, cloud.y + camY * 0.05, cloud.w/2, cloud.h/2, 0, 0, Math.PI*2);
-        ctx.ellipse(cloud.x + cloud.w*0.4, cloud.y - cloud.h*0.2, cloud.w*0.5, cloud.h*0.6, 0, 0, Math.PI*2);
-        ctx.ellipse(cloud.x - cloud.w*0.3, cloud.y - cloud.h*0.15, cloud.w*0.45, cloud.h*0.55, 0, 0, Math.PI*2);
-        ctx.fill();
-    }
-    ctx.shadowBlur = 0;
-    
-    ctx.fillStyle = "#FFD700";
-    for(let i = 0; i < 50; i++) {
-        ctx.globalAlpha = 0.12 + Math.sin(Date.now() * 0.002 + i) * 0.08;
-        ctx.fillRect((i * 97) % canvas.width, (i * 53) % canvas.height, 2, 2);
-    }
-    ctx.globalAlpha = 1;
-}
-
-function drawWithCamera() {
-    updateShake();
-    let shake = getShakeOffset();
-    ctx.save();
-    ctx.translate(shake.x, shake.y);
-    
-    // تحديث الكاميرا لتتبع أعلى طابق
-    if(builtFloors.length > 0) {
-        let highestFloor = builtFloors[builtFloors.length - 1];
-        let targetCam = Math.max(0, highestFloor.y - canvas.height/2 + 100);
-        cameraY = cameraY * 0.9 + targetCam * 0.1;
-    }
-    
-    ctx.translate(0, -cameraY);
-    
-    drawSkyAndClouds(cameraY);
-    
-    // رسم جميع الطوابق
-    for(let floor of builtFloors) {
-        drawFancyFloor(floor.x, floor.y, floor.w, floor.h, floor.floorNumber, floor.isGround);
-    }
-    
-    // رسم الطابق المتأرجح
-    if(isGameActive && !waitingForLanding && !isFalling && currentFloor < MAX_FLOOR) {
-        ctx.beginPath();
-        ctx.moveTo(swinging.pivotX, swinging.pivotY);
-        ctx.lineTo(swinging.x, swinging.y - swinging.h/2 + 5);
-        ctx.strokeStyle = "#FFD700";
-        ctx.lineWidth = 3;
-        ctx.shadowBlur = 6;
-        ctx.stroke();
-        drawFancyFloor(swinging.x, swinging.y, swinging.w, swinging.h, currentFloor+1, false);
-    } else if(isFalling) {
-        drawFancyFloor(fallPosX, fallPosY, fallW, fallH, fallFloorNum, false);
-    }
-    
-    // عرض الأرباح المعلقة
-    if(isGameActive && pendingProfit > 0) {
-        ctx.font = "bold 26px 'Poppins'";
-        ctx.fillStyle = "#FFD700";
-        ctx.shadowBlur = 8;
-        ctx.fillText(`💎 ${Math.floor(pendingProfit)}`, canvas.width-130, 55 + cameraY);
-    }
-    
-    ctx.restore();
-    
-    // إطار خارجي
-    ctx.strokeStyle = "#FFD700";
-    ctx.lineWidth = 3;
-    ctx.strokeRect(5, 5, canvas.width-10, canvas.height-10);
-}
-
-// ========== المؤثرات البصرية ==========
-let floatingMultipliers = [];
-
-function addFloatingMultiplier(value, x, y) {
-    floatingMultipliers.push({ value, x, y, life: 1.0 });
-}
-
-function updateFloatingMultipliers() {
-    for(let i = 0; i < floatingMultipliers.length; i++) {
-        floatingMultipliers[i].life -= 0.02;
-        floatingMultipliers[i].y -= 1.2;
-        if(floatingMultipliers[i].life <= 0) {
-            floatingMultipliers.splice(i,1);
-            i--;
-        }
-    }
-}
-
-function drawFloatingMultipliers(camY) {
-    for(let fm of floatingMultipliers) {
-        ctx.globalAlpha = fm.life;
-        ctx.font = `bold ${20 * fm.life + 12}px 'Poppins'`;
-        ctx.fillStyle = "#FFD700";
-        ctx.shadowBlur = 6;
-        ctx.fillText(`+${fm.value.toFixed(1)}x`, fm.x, fm.y - 30 + camY);
-    }
-    ctx.globalAlpha = 1;
-}
-
-// ========== الإعدادات والتشغيل ==========
-function resizeCanvas() {
-    const rect = canvas.parentElement.getBoundingClientRect();
-    canvas.width = rect.width;
-    canvas.height = rect.height;
-    addGround();
-    resetSwingingPosition();
-    initClouds();
-}
-
-function gameLoop() {
-    updateShake();
-    if(isFalling) updateFall();
-    updateSwing();
-    updateClouds();
-    updateFloatingMultipliers();
-    drawWithCamera();
-    requestAnimationFrame(gameLoop);
-}
-
-// أزرار التحكم
-const dropBtn = document.getElementById('dropBtn');
-const cashoutBtn = document.getElementById('cashoutBtn');
-const resetBtn = document.getElementById('resetBtn');
-
-dropBtn.addEventListener('click', () => {
-    if(audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
-    if(isGameActive) dropFloor();
-});
-
-cashoutBtn.addEventListener('click', () => {
-    if(audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
-    cashout();
-});
-
-resetBtn.addEventListener('click', () => {
-    resetGame();
-});
-
-// بدء اللعبة
-resizeCanvas();
-initClouds();
-addGround();
-resetSwingingPosition();
-updateUI();
-gameLoop();
-initAudio();
-
-// تفعيل الصوت عند أول نقرة
-document.body.addEventListener('click', () => {
-    if(audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
-}, { once: true });
+    document.body.addEventListener('click', () => {
+        if(audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+    }, { once: true });
 </script>
 </body>
 </html>
