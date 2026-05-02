@@ -2,105 +2,95 @@
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-    <title>لعبة البناء المتأرجح - أبراج الحظ</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>أبراج الحظ - لعبة البناء المتأرجح</title>
     <style>
         * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            margin: 0;
-            min-height: 100vh;
-            background: linear-gradient(145deg, #0a2f2a 0%, #0a1f1a 100%);
-            display: flex;
-            justify-content: center;
-            align-items: center;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            background: linear-gradient(145deg, #0a2f2a 0%, #061a15 100%);
             font-family: 'Segoe UI', 'Poppins', 'Cairo', sans-serif;
-            touch-action: manipulation;
+            touch-action: pan-x pan-y;
         }
 
-        /* حاوية اللعبة */
-        .game-container {
-            background: rgba(0, 0, 0, 0.45);
-            border-radius: 64px;
-            padding: 20px 25px 30px 25px;
-            backdrop-filter: blur(6px);
-            box-shadow: 0 20px 35px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1);
-            margin: 20px;
+        /* الحاوية الرئيسية ملء الشاشة */
+        .game-fullscreen {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            background: radial-gradient(circle at 30% 20%, #2d6a4f33, #0a1f1a);
+        }
+
+        /* منطقة اللعبة (الكانفس) - تأخذ كل المساحة المتاحة */
+        .canvas-area {
+            flex: 1;
+            min-height: 0;
+            position: relative;
+            background: #87CEEB;
+            background-image: radial-gradient(circle at 25% 40%, rgba(255,245,200,0.25) 2%, transparent 2.5%);
+            background-size: 45px 45px;
         }
 
         canvas {
             display: block;
-            margin: 0 auto;
-            border-radius: 48px;
-            box-shadow: 0 12px 28px black;
-            background: #87CEEB;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
             cursor: pointer;
-            background-image: radial-gradient(circle at 30% 40%, rgba(255,240,200,0.2) 2%, transparent 2.5%);
-            background-size: 35px 35px;
         }
 
-        /* لوحة المعلومات */
-        .info-panel {
-            background: #1e2a24e0;
-            backdrop-filter: blur(8px);
-            border-radius: 60px;
-            margin-top: 20px;
-            padding: 15px 25px;
+        /* الشريط السفلي - فقط أزرار ومعلومات */
+        .bottom-bar {
+            background: #1a2a24f0;
+            backdrop-filter: blur(16px);
+            border-top: 2px solid #ffd966aa;
+            padding: 12px 20px;
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            gap: 12px;
-            font-weight: bold;
-            border: 1px solid #ffd966aa;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            gap: 15px;
+            box-shadow: 0 -5px 20px rgba(0,0,0,0.4);
+            z-index: 10;
         }
 
-        .stat {
-            background: #00000077;
-            padding: 8px 18px;
-            border-radius: 40px;
+        .balance-card {
+            background: #00000088;
+            padding: 6px 18px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
             color: #f9e7b3;
-            text-shadow: 0 2px 2px black;
-            font-size: 1.3rem;
-            letter-spacing: 1px;
+            font-weight: bold;
+            font-size: 1.2rem;
         }
 
-        .stat span {
+        .balance-card span {
             color: #ffd966;
             font-size: 1.6rem;
             font-weight: 900;
-            margin-left: 8px;
         }
 
-        .bet-area {
-            display: flex;
-            gap: 12px;
-            background: #00000055;
-            padding: 5px 15px;
-            border-radius: 50px;
-            align-items: center;
-        }
-
-        .bet-area label {
-            color: #eee;
-            font-size: 1.1rem;
-        }
-
-        .bet-input {
-            background: #fef3c7;
-            border: none;
-            font-size: 1.3rem;
-            font-weight: bold;
-            width: 100px;
-            text-align: center;
+        .bet-fixed {
+            background: #e67e22;
+            padding: 6px 20px;
             border-radius: 40px;
-            padding: 6px 0;
-            font-family: monospace;
-            color: #3b2a1f;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            box-shadow: inset 0 -2px 0 #a04000;
         }
 
         button {
@@ -108,46 +98,45 @@
             border: none;
             font-weight: bold;
             font-size: 1.2rem;
-            padding: 8px 22px;
+            padding: 8px 28px;
             border-radius: 60px;
             color: #2d1f00;
             cursor: pointer;
-            transition: 0.1s linear;
-            box-shadow: 0 4px 0 #8b5a2b;
+            transition: 0.07s linear;
+            box-shadow: 0 5px 0 #8b5a2b;
             font-family: inherit;
+            min-width: 110px;
         }
 
         button:active {
             transform: translateY(2px);
-            box-shadow: 0 1px 0 #8b5a2b;
+            box-shadow: 0 2px 0 #8b5a2b;
         }
 
         .cashout-btn {
             background: #2ecc71;
-            box-shadow: 0 4px 0 #1f8f4b;
+            box-shadow: 0 5px 0 #1f8f4b;
             color: white;
             text-shadow: 0 1px 1px darkgreen;
         }
 
         .reset-btn {
             background: #e67e22;
-            box-shadow: 0 4px 0 #b45f1b;
+            box-shadow: 0 5px 0 #b45f1b;
         }
 
-        .floor-mult {
+        .drop-btn {
+            background: #3498db;
+            box-shadow: 0 5px 0 #1f618d;
+            color: white;
+            font-size: 1.3rem;
+        }
+
+        .status-text {
             background: #000000aa;
+            padding: 5px 16px;
             border-radius: 30px;
-            padding: 5px 12px;
             font-size: 0.9rem;
-            color: #ffecb3;
-            text-align: center;
-        }
-
-        .status {
-            background: #2c2c2ccc;
-            padding: 6px 18px;
-            border-radius: 28px;
-            font-size: 1rem;
             color: #ffe5a3;
         }
 
@@ -155,151 +144,147 @@
             background: gold;
             color: #1f3a2f;
             border-radius: 30px;
-            padding: 5px 15px;
+            padding: 5px 18px;
             font-weight: bold;
+            font-size: 1rem;
         }
 
-        @keyframes pulse {
-            0% { opacity: 0.7; text-shadow: 0 0 0px gold;}
-            100% { opacity: 1; text-shadow: 0 0 6px gold;}
-        }
-        .excited {
-            animation: pulse 0.5s infinite alternate;
-        }
-
-        footer {
-            font-size: 12px;
-            text-align: center;
-            color: #b9ad6e;
-            margin-top: 12px;
-        }
         @media (max-width: 700px) {
-            .stat span { font-size: 1.3rem;}
-            button { padding: 6px 16px; font-size: 1rem; }
-            .bet-input { width: 75px;}
+            .bottom-bar { gap: 8px; padding: 10px 12px; }
+            button { padding: 6px 16px; font-size: 0.9rem; min-width: 80px; }
+            .balance-card span { font-size: 1.3rem; }
+            .multiplier-badge { font-size: 0.75rem; padding: 4px 10px; }
+            .status-text { font-size: 0.7rem; }
         }
     </style>
 </head>
 <body>
-<div>
-    <div class="game-container">
-        <canvas id="gameCanvas" width="1000" height="550" style="width:100%; height:auto; max-width:1000px; aspect-ratio:1000/550"></canvas>
-        
-        <div class="info-panel">
-            <div class="stat">💰 الرصيد: <span id="balanceDisplay">2000</span></div>
-            <div class="bet-area">
-                <label>🎲 الرهان:</label>
-                <input type="number" id="betAmount" class="bet-input" value="50" step="10" min="10" max="2000">
-                <button id="placeBetBtn" style="background:#f39c12;">🚀 رهان</button>
-            </div>
-            <div class="multiplier-badge" id="currentMultiBadge">مضاعف الطابق: 1.00x</div>
-            <button id="cashoutBtn" class="cashout-btn">💰 جمع الأرباح</button>
-            <button id="resetGameBtn" class="reset-btn">🔄 إعادة تعيين</button>
-        </div>
-        <div style="display: flex; justify-content: space-between; margin-top: 12px;">
-            <div class="status" id="floorStatus">🏗️ الطابق الحالي: 0 / 0</div>
-            <div class="status" id="gameStatusMsg">⚡ اضغط 'رهان' لبدء البناء</div>
-        </div>
-        <footer>🎯 القاعدة: يجب أن يستقر الطابق على القاعدة أو 50% فوق الطابق السابق ➕ كل طابق يزيد السرعة قليلاً 🌟</footer>
+<div class="game-fullscreen">
+    <div class="canvas-area">
+        <canvas id="gameCanvas"></canvas>
+    </div>
+    <div class="bottom-bar">
+        <div class="balance-card">💰 الرصيد: <span id="balanceDisplay">2000</span></div>
+        <div class="bet-fixed">🎲 الرهان: 2000 ثابت</div>
+        <div class="multiplier-badge" id="multiplierBadge">🏆 مضاعف: 0.00x</div>
+        <button id="dropBtn" class="drop-btn">⬇️ إفلات الطابق</button>
+        <button id="cashoutBtn" class="cashout-btn">💰 جمع الأرباح</button>
+        <button id="resetBtn" class="reset-btn">🔄 إعادة</button>
+    </div>
+    <div style="background: #0f1915dd; text-align: center; padding: 5px; font-size: 12px; color: #e6cba0;">
+        <span id="gameStatusMsg">✨ اضغط "إفلات الطابق" لبدء البناء ✨</span>
     </div>
 </div>
 
 <script>
     (function(){
-        // ------------------- إعدادات المضاعفات حسب الطابق (المعطى)
+        // ---------- إعدادات اللعبة ----------
+        const canvas = document.getElementById('gameCanvas');
+        let ctx = canvas.getContext('2d');
+        
+        // مضاعفات الطوابق (حسب المطلوب)
         const MULTIPLIERS = {
             1: 0.5, 2: 0.7, 3: 0.9, 4: 1.1, 5: 1.3,
             6: 1.5, 7: 1.7, 8: 3.0, 9: 5.0, 10: 7.0,
             11: 9.0, 12: 11.0, 13: 15.0
         };
-        const MAX_FLOOR = 13;      // أقصى طابق 13
-
-        // عناصر HTML
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-        const balanceSpan = document.getElementById('balanceDisplay');
-        const betInput = document.getElementById('betAmount');
-        const placeBtn = document.getElementById('placeBetBtn');
-        const cashoutBtn = document.getElementById('cashoutBtn');
-        const resetBtn = document.getElementById('resetGameBtn');
-        const floorStatusSpan = document.getElementById('floorStatus');
-        const gameStatusSpan = document.getElementById('gameStatusMsg');
-        const currentMultiBadge = document.getElementById('currentMultiBadge');
-
+        const MAX_FLOOR = 13;
+        const FIXED_BET = 2000;   // رهان ثابت
+        
         // متغيرات الحالة
-        let balance = 2000;               // رصيد ثابت (فيشة الرهان 2000)
-        let currentBet = 0;               // قيمة الرهان الحالي (إذا كان في جولة)
-        let currentFloor = 0;              // آخر طابق تم بناؤه بنجاح (0 يعني لم يبنى بعد)
-        let isGameActive = false;           // هل يوجد رهان نشط و لم يخسر أو يجمع؟
-        let pendingWin = 0;                 // الأرباح الحالية (قبل الجمع)
+        let balance = 2000;                 // رصيد المستخدم
+        let currentBet = 0;                // الرهان (سيكون 2000 عند بدء الجولة)
+        let currentFloor = 0;              // آخر طابق تم بناؤه بنجاح (0 = لا شيء)
+        let isGameActive = false;           // هل توجد جولة نشطة (رهان مفعل و لم يخسر أو يجمع)
+        let pendingProfit = 0;              // الأرباح المتراكمة (لا تضاف للرصيد الا عند الجمع)
         
-        // إعدادات التأرجح للطابق المتحرك (سقوط من أعلى)
-        let swingAngle = 0;          // زاوية البندول بالراديان
-        let swingSpeed = 0.045;      // السرعة الزاوية (تزداد مع كل طابق)
-        let maxSwing = 0.95;          // أقصى زاوية بالراديان (~54 درجة)
-        let direction = 1;            // اتجاه التأرجح
+        // عناصر HTML
+        const balanceSpan = document.getElementById('balanceDisplay');
+        const multiplierBadge = document.getElementById('multiplierBadge');
+        const gameStatusSpan = document.getElementById('gameStatusMsg');
+        const dropBtn = document.getElementById('dropBtn');
+        const cashoutBtn = document.getElementById('cashoutBtn');
+        const resetBtn = document.getElementById('resetBtn');
         
-        // موقع الطابق المتحرك الحالي (الذي يحاول اللاعب تثبيته)
-        let movingFloorX = 0;          // مركز x للطابق المتأرجح
-        let movingFloorY = 0;
-        let movingFloorWidth = 100;
-        let movingFloorHeight = 22;
+        // ---------- الطوابق المبنية (ثابتة) ----------
+        let builtFloors = [];    // كل طابق ثابت { x, y, w, h, floorNumber }
         
-        // الطوابق المبنية (ثابتة)
-        let builtFloors = [];   // مصفوفة { x, y, width, height, floorNumber }
+        // معطيات القاعدة الأرضية (ستتغير حسب حجم الكانفس)
+        let ground = { x: 0, y: 0, w: 220, h: 22 };
         
-        // القاعدة الأرضية
-        const groundY = canvas.height - 38;
-        const groundXStart = canvas.width/2 - 140;
-        const groundWidth = 280;
-        const groundHeight = 18;
+        // الطابق المُعلَّق المتأرجح
+        let swingingFloor = {
+            x: 0, y: 0,            // المركز
+            w: 90,
+            h: 28,
+            angle: 0,
+            speed: 0.045,
+            direction: 1,
+            maxAngle: 0.85,
+            pivotX: 0,
+            pivotY: 65,            // نقطة تعليق من الأعلى (نسبة)
+            ropeLength: 170
+        };
         
-        // ثوابت الطوابق
-        const FLOOR_W = 96;
-        const FLOOR_H = 22;
-        const BASE_Y_OFFSET = 32;   // أول طابق فوق القاعدة
+        // حالة السقوط الحر (عند الضغط على زر الإفلات)
+        let isFalling = false;
+        let fallVelocityY = 0;
+        let fallPosX = 0, fallPosY = 0;
+        let fallWidth = 90, fallHeight = 28;
+        let fallFloorNumber = 0;   // رقم الطابق الذي نحاول وضعه
         
-        // متغيرات الرسم والموسيقى (ويب Audio API)
-        let bgMusic = null;
-        let soundEnabled = true;
-        let ambianceGain = null;
+        // متغيرات الـ 50% للتحقق
+        let waitingForLanding = false; // بعد الإفلات ننتظر الارتطام
+        
+        // موسيقى خلفية (نظام بسيط)
         let audioCtx = null;
+        let bgGain = null;
+        let melodyInterval = null;
+        let soundEnabled = true;
         
-        // تهيئة الصوت (موسيقى خفيفة)
+        // وظائف الصوت
         function initAudio() {
             if(audioCtx) return;
             try {
                 audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-                ambianceGain = audioCtx.createGain();
-                ambianceGain.gain.value = 0.35;
-                ambianceGain.connect(audioCtx.destination);
-                // إنشاء موسيقى خلفية بسيطة (loop باستخدام Oscillator هو غير مناسب , سنستخدم مولد نغمات متكرر)
-                // سأصنع موجة بسيطة متكررة (نغمة لطيفة) باستخدام setInterval? نفضل أستعمال Buffer? أسهل: تشغيل Oscillator دوري بسيط لكنه موسيقى خفيفة.
-                // لتجنب تعقيد, نستخدم Oscillator يعاد إنشاؤه؟ لكن ذلك يسبب تقطيع. سأقوم بصنع "نغمة ambient" بسيطة باستخدام setInterval وتتابع ونغمات لطيفة.
-                // لكن الأجمل عمل sound effect في الخلفية بطريقة "موسيقى خلفية متكررة" حبيبة: نستخدم旋律 بسيطة.
-                playBackgroundMelody();
+                bgGain = audioCtx.createGain();
+                bgGain.gain.value = 0.25;
+                bgGain.connect(audioCtx.destination);
+                playAmbientMelody();
             } catch(e){ console.log("audio not supported"); }
         }
         
-        let melodyInterval = null;
-        let melodyNotes = [261.63, 293.66, 329.63, 261.63, 349.23, 293.66]; // نغمات هادئة
-        let noteIndex = 0;
-        function playBackgroundMelody() {
+        function playAmbientMelody() {
             if(melodyInterval) clearInterval(melodyInterval);
             melodyInterval = setInterval(() => {
                 if(!soundEnabled || !audioCtx || audioCtx.state !== 'running') return;
+                const notes = [262, 294, 330, 262, 349, 330];
+                const idx = Math.floor(Math.random() * notes.length);
                 const osc = audioCtx.createOscillator();
                 const gainNode = audioCtx.createGain();
                 osc.connect(gainNode);
-                gainNode.connect(ambianceGain);
+                gainNode.connect(bgGain);
                 osc.type = 'sine';
-                osc.frequency.value = melodyNotes[noteIndex % melodyNotes.length];
-                gainNode.gain.value = 0.12;
+                osc.frequency.value = notes[idx];
+                gainNode.gain.value = 0.1;
                 osc.start();
-                gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1.2);
-                osc.stop(audioCtx.currentTime + 1.2);
-                noteIndex++;
-            }, 2800);
+                gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 1.5);
+                osc.stop(audioCtx.currentTime + 1.4);
+            }, 3200);
+        }
+        
+        function playBuildSound() {
+            if(!soundEnabled || !audioCtx || audioCtx.state !== 'running') return;
+            const osc = audioCtx.createOscillator();
+            const gainNode = audioCtx.createGain();
+            osc.connect(gainNode);
+            gainNode.connect(bgGain);
+            osc.type = 'sine';
+            osc.frequency.value = 440;
+            gainNode.gain.value = 0.2;
+            osc.start();
+            gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.25);
+            osc.stop(audioCtx.currentTime + 0.23);
         }
         
         function playWinSound() {
@@ -307,24 +292,24 @@
             const osc = audioCtx.createOscillator();
             const gainNode = audioCtx.createGain();
             osc.connect(gainNode);
-            gainNode.connect(ambianceGain);
-            osc.type = 'sine';
+            gainNode.connect(bgGain);
+            osc.type = 'triangle';
             osc.frequency.value = 523.25;
-            gainNode.gain.value = 0.25;
+            gainNode.gain.value = 0.2;
             osc.start();
-            gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.6);
-            osc.stop(audioCtx.currentTime + 0.5);
+            gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.5);
+            osc.stop(audioCtx.currentTime + 0.48);
             setTimeout(()=>{
                 const osc2 = audioCtx.createOscillator();
                 const gain2 = audioCtx.createGain();
                 osc2.connect(gain2);
-                gain2.connect(ambianceGain);
+                gain2.connect(bgGain);
                 osc2.frequency.value = 659.25;
-                gain2.gain.value = 0.2;
+                gain2.gain.value = 0.18;
                 osc2.start();
-                gain2.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.7);
-                osc2.stop(audioCtx.currentTime + 0.6);
-            },150);
+                gain2.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.6);
+                osc2.stop(audioCtx.currentTime + 0.58);
+            },120);
         }
         
         function playFailSound() {
@@ -332,353 +317,424 @@
             const osc = audioCtx.createOscillator();
             const gainNode = audioCtx.createGain();
             osc.connect(gainNode);
-            gainNode.connect(ambianceGain);
+            gainNode.connect(bgGain);
             osc.type = 'sawtooth';
-            osc.frequency.value = 180;
+            osc.frequency.value = 160;
             gainNode.gain.value = 0.2;
             osc.start();
-            gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.5);
-            osc.stop(audioCtx.currentTime + 0.5);
+            gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.45);
+            osc.stop(audioCtx.currentTime + 0.43);
         }
         
-        function playBuildSound(){
-            if(!soundEnabled || !audioCtx || audioCtx.state !== 'running') return;
-            const osc = audioCtx.createOscillator();
-            const gainNode = audioCtx.createGain();
-            osc.connect(gainNode);
-            gainNode.connect(ambianceGain);
-            osc.frequency.value = 392;
-            gainNode.gain.value = 0.15;
-            osc.start();
-            gainNode.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.3);
-            osc.stop(audioCtx.currentTime + 0.25);
-        }
-        
-        // تحديث واجهة الرصيد
+        // تحديث واجهة المستخدم
         function updateUI() {
             balanceSpan.innerText = Math.floor(balance);
-            if(isGameActive && currentBet > 0){
-                let multi = getMultiplierForFloor(currentFloor+1);
-                let potential = currentBet * multi;
-                currentMultiBadge.innerText = `🎯 مضاعف الطابق ${currentFloor+1}: ${multi.toFixed(2)}x (ربح: ${Math.floor(potential)})`;
+            if(isGameActive && currentFloor > 0){
+                let nextMulti = (currentFloor + 1 <= MAX_FLOOR) ? MULTIPLIERS[currentFloor+1] : MULTIPLIERS[MAX_FLOOR];
+                multiplierBadge.innerText = `🎯 مضاعف الطابق ${currentFloor+1}: ${nextMulti.toFixed(2)}x`;
+            } else if(isGameActive && currentFloor === 0){
+                multiplierBadge.innerText = `🎯 مضاعف الطابق 1: 0.50x`;
             } else {
-                currentMultiBadge.innerText = `⚙️ مضاعف الطابق --`;
+                multiplierBadge.innerText = `🏆 مضاعف: ----`;
             }
-            floorStatusSpan.innerHTML = `🏗️ الطابق المبني: ${currentFloor} / ${MAX_FLOOR}`;
         }
         
-        function getMultiplierForFloor(floorNumber){
-            if(floorNumber <= 0) return 0;
-            if(floorNumber > MAX_FLOOR) return MULTIPLIERS[MAX_FLOOR] || 15;
-            return MULTIPLIERS[floorNumber] || (0.5 + (floorNumber-1)*0.2);
+        // الحصول على مضاعف الطابق المطلوب
+        function getMultiplier(floorNum) {
+            if(floorNum <= 0) return 0;
+            if(floorNum > MAX_FLOOR) return MULTIPLIERS[MAX_FLOOR];
+            return MULTIPLIERS[floorNum] || 0.5;
         }
         
-        // حساب السرعة الزاوية حسب الطابق الحالي (تزداد قليلا كل طابق)
-        function calcSwingSpeed(baseFloor){
-            // السرعة الأساسية 0.045 + زيادة 0.008 لكل طابق مبني (بحد أقصى 0.15)
-            let extra = Math.min(0.095, baseFloor * 0.007);
+        // حساب السرعة المتزايدة (تزداد قليلاً مع كل طابق)
+        function calcSwingSpeed(baseFloor) {
+            let extra = Math.min(0.09, baseFloor * 0.007);
             return 0.045 + extra;
         }
         
-        // بدء جولة جديدة (رهان)
-        function startBet() {
+        // بدء جولة جديدة (رهان ثابت 2000)
+        function startNewGame() {
             if(isGameActive){
-                gameStatusSpan.innerText = "⚠️ أنهِ الجولة أولاً أو اجمع!";
+                gameStatusSpan.innerText = "⚠️ أنهِ الجولة أولاً (اجمع أو اخسر)";
                 return;
             }
-            let betValue = parseInt(betInput.value);
-            if(isNaN(betValue) || betValue <= 0) betValue = 10;
-            if(betValue > balance){
-                gameStatusSpan.innerText = "❌ رصيد غير كافٍ!";
+            if(balance < FIXED_BET) {
+                gameStatusSpan.innerText = "❌ رصيدك أقل من 2000! أعد التعيين.";
                 return;
             }
-            if(betValue < 10) betValue = 10;
-            if(betValue > 2000) betValue = 2000;
-            
             // خصم الرهان
-            balance -= betValue;
-            currentBet = betValue;
-            pendingWin = 0;
+            balance -= FIXED_BET;
+            currentBet = FIXED_BET;
+            pendingProfit = 0;
             currentFloor = 0;
-            builtFloors = [];
             isGameActive = true;
+            waitingForLanding = false;
+            isFalling = false;
             
-            // إعادة تعيين معلمات التأرجح
-            swingAngle = 0;
-            direction = 1;
-            swingSpeed = calcSwingSpeed(0);
-            // بناء القاعدة (أرضية)
-            builtFloors.push({ x: groundXStart, y: groundY - groundHeight/2, width: groundWidth, height: groundHeight, isGround: true, floorNumber:0 });
+            // إعادة بناء الطوابق الثابتة (القاعدة فقط)
+            builtFloors = [];
+            addGround();
+            
+            // إعادة ضبط البندول (الطابق المتأرجح في الأعلى)
+            resetSwingingFloor();
+            swingingFloor.speed = calcSwingSpeed(0);
             
             updateUI();
-            gameStatusSpan.innerText = `🎉 بدأ بناء الطابق الأول! حرك الفأرة/المس لتثبيت الطابق 🎉`;
+            gameStatusSpan.innerText = "🎉 جولة جديدة! اضغط 'إفلات الطابق' لوضع الطابق الأول على القاعدة 🎉";
             playBuildSound();
             initAudio();
             if(audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
         }
         
-        // وظيفة محاولة تثبيت الطابق المتأرجح
-        function attemptPlaceFloor(){
+        function addGround() {
+            // القاعدة الأرضية في الأسفل بنسبة 85% من ارتفاع الكانفس تقريباً
+            let groundY = canvas.height - 42;
+            let groundX = canvas.width/2 - 110;
+            ground = { x: groundX, y: groundY, w: 220, h: 22 };
+            builtFloors.push({ 
+                x: groundX + ground.w/2, 
+                y: groundY + ground.h/2, 
+                w: ground.w, 
+                h: ground.h, 
+                floorNumber: 0, 
+                isGround: true 
+            });
+        }
+        
+        function resetSwingingFloor() {
+            let pivotX = canvas.width/2;
+            let pivotY = 70;
+            swingingFloor.pivotX = pivotX;
+            swingingFloor.pivotY = pivotY;
+            swingingFloor.angle = 0;
+            swingingFloor.direction = 1;
+            swingingFloor.maxAngle = 0.85;
+            // تحديث موقع الطابق حسب الزاوية
+            updateSwingPosition();
+        }
+        
+        function updateSwingPosition() {
+            let angle = swingingFloor.angle;
+            let offsetX = Math.sin(angle) * swingingFloor.ropeLength;
+            let centerX = swingingFloor.pivotX + offsetX;
+            let verticalOffset = (1 - Math.cos(angle * 0.7)) * 22;
+            let centerY = swingingFloor.pivotY + swingingFloor.ropeLength * 0.75 + verticalOffset;
+            swingingFloor.x = centerX;
+            swingingFloor.y = centerY;
+        }
+        
+        // تحديث حركة البندول (إذا لم يكن في حالة سقوط)
+        function updateSwing() {
+            if(isGameActive && !waitingForLanding && !isFalling) {
+                swingingFloor.angle += swingingFloor.direction * swingingFloor.speed;
+                if(swingingFloor.angle > swingingFloor.maxAngle) {
+                    swingingFloor.angle = swingingFloor.maxAngle;
+                    swingingFloor.direction = -1;
+                } else if(swingingFloor.angle < -swingingFloor.maxAngle) {
+                    swingingFloor.angle = -swingingFloor.maxAngle;
+                    swingingFloor.direction = 1;
+                }
+                updateSwingPosition();
+            }
+        }
+        
+        // دالة الإفلات - يبدأ السقوط الحر للطابق المتأرجح من موقعه الحالي
+        function dropFloor() {
             if(!isGameActive) {
-                gameStatusSpan.innerText = "لا توجد جولة نشطة، راهن أولا";
-                return false;
+                gameStatusSpan.innerText = "لا توجد جولة نشطة! راهن تلقائياً بزر 'إعادة' أو ابدأ جولة جديدة.";
+                return;
             }
-            if(currentFloor >= MAX_FLOOR){
-                // تم إكمال جميع الطوابق ، نجاح تلقائي + جمع تلقائي اختياري لكن نمنحه الجمع التلقائي
-                gameStatusSpan.innerText = "🏆 أكملت البرج بالكامل! تم جمع الأرباح تلقائياً 🏆";
-                cashout(true);
-                return false;
+            if(waitingForLanding || isFalling) {
+                gameStatusSpan.innerText = "الطابق في حالة سقوط بالفعل! انتظر.";
+                return;
             }
+            // نأخذ موقع الطابق المتأرجح الحالي
+            fallPosX = swingingFloor.x;
+            fallPosY = swingingFloor.y;
+            fallWidth = swingingFloor.w;
+            fallHeight = swingingFloor.h;
+            fallFloorNumber = currentFloor + 1;
+            isFalling = true;
+            waitingForLanding = true;
+            fallVelocityY = 2.5;   // سرعة أولية للهبوط
+            gameStatusSpan.innerText = `💨 الطابق ${fallFloorNumber} يسقط... انتظر الهبوط 💨`;
+        }
+        
+        // تحديث السقوط والتحقق من التصادم بنسبة 50%
+        function updateFall() {
+            if(!isFalling) return false;
+            // زيادة سرعة السقوط (جاذبية)
+            fallVelocityY += 0.8;
+            fallPosY += fallVelocityY;
             
-            // تحديد موقع الطابق الحالي المتأرجح
-            let targetFloorNumber = currentFloor + 1;
-            // إحداثيات الطابق المتأرجح (مركز)
-            let floorCenterX = movingFloorX;
-            let floorCenterY = movingFloorY;
-            let rect = { x: floorCenterX - FLOOR_W/2, y: floorCenterY - FLOOR_H/2, w: FLOOR_W, h: FLOOR_H };
-            
-            // القاعدة المرجعية: الطابق السابق (آخر طابق ثابت)
+            // الحصول على الجسم الذي سنرتطم به (آخر طابق مبني)
+            if(builtFloors.length === 0) return false;
             let lastFloor = builtFloors[builtFloors.length-1];
-            if(!lastFloor){
-                return false;
-            }
-            let lastRect = { x: lastFloor.x - lastFloor.width/2, y: lastFloor.y - lastFloor.height/2, w: lastFloor.width, h: lastFloor.height };
+            let lastLeft = lastFloor.x - lastFloor.w/2;
+            let lastRight = lastFloor.x + lastFloor.w/2;
+            let lastTop = lastFloor.y - lastFloor.h/2;
+            let lastBottom = lastFloor.y + lastFloor.h/2;
             
-            // التحقق من التداخل: يجب أن يكون 50% من الطابق الجديد فوق الطابق السابق
-            // نحسب المساحة المتداخلة في الإسقاط الأفقي (نسبة العرض المتداخل)
-            let overlapLeft = Math.max(rect.x, lastRect.x);
-            let overlapRight = Math.min(rect.x+rect.w, lastRect.x+lastRect.w);
-            let overlapWidth = overlapRight - overlapLeft;
-            if(overlapWidth <= 0){
-                gameStatusSpan.innerText = "💥 فشل! الطابق لم يلمس الطابق السابق! خسارة! 💥";
+            let fallLeft = fallPosX - fallWidth/2;
+            let fallRight = fallPosX + fallWidth/2;
+            let fallTop = fallPosY - fallHeight/2;
+            let fallBottom = fallPosY + fallHeight/2;
+            
+            // التحقق من التصادم العمودي (لمس السطح)
+            if(fallBottom >= lastTop && fallTop <= lastBottom && fallVelocityY >= 0) {
+                // التحقق من التداخل الأفقي بنسبة 50% من عرض الطابق الجديد
+                let overlapLeft = Math.max(fallLeft, lastLeft);
+                let overlapRight = Math.min(fallRight, lastRight);
+                let overlapWidth = overlapRight - overlapLeft;
+                let requiredOverlap = fallWidth * 0.5;
+                if(overlapWidth >= requiredOverlap) {
+                    // نجاح التثبيت
+                    let newFloorX = fallPosX;
+                    let newFloorY = lastTop - fallHeight/2;  // يثبت فوق السطح
+                    let newFloor = {
+                        x: newFloorX,
+                        y: newFloorY,
+                        w: fallWidth,
+                        h: fallHeight,
+                        floorNumber: fallFloorNumber
+                    };
+                    builtFloors.push(newFloor);
+                    currentFloor = fallFloorNumber;
+                    
+                    // حساب الأرباح المتراكمة (المضاعف حسب الطابق)
+                    let multiplier = getMultiplier(currentFloor);
+                    pendingProfit = currentBet * multiplier;
+                    
+                    playBuildSound();
+                    gameStatusSpan.innerText = `✅ تم بناء الطابق ${currentFloor}! المضاعف ${multiplier.toFixed(2)}x | أرباحك الحالية: ${Math.floor(pendingProfit)} 💰 اضغط "جمع" لسحبها`;
+                    updateUI();
+                    
+                    // إنهاء السقوط
+                    isFalling = false;
+                    waitingForLanding = false;
+                    
+                    // زيادة سرعة التأرجح للطابق التالي
+                    if(currentFloor < MAX_FLOOR) {
+                        swingingFloor.speed = calcSwingSpeed(currentFloor);
+                        resetSwingingFloor();
+                    } else {
+                        // تم الانتهاء من كل الطوابق
+                        gameStatusSpan.innerText = "🏆 أكملت البرج بالكامل! يمكنك جمع الأرباح 🏆";
+                        playWinSound();
+                    }
+                    return true;
+                } else {
+                    // فشل: لم يحقق 50% تداخل
+                    gameStatusSpan.innerText = `💥 تداخل ${Math.floor(overlapWidth)}px فقط (يلزم 50% = ${Math.floor(requiredOverlap)}px) 🔻 خسارة! 🔻`;
+                    loseGame();
+                    return false;
+                }
+            }
+            // إذا تجاوز الطابق أرضية اللوحة أو الأسفل بشكل مفرط -> خسارة
+            if(fallPosY + fallHeight/2 > canvas.height + 100) {
+                gameStatusSpan.innerText = "💀 الطابق سقط خارج الحدود! خسارة 💀";
                 loseGame();
                 return false;
             }
-            let requiredOverlap = FLOOR_W * 0.5; // 50% من عرض الطابق الجديد
-            if(overlapWidth < requiredOverlap){
-                gameStatusSpan.innerText = `💔 تداخل ${Math.floor(overlapWidth)}px فقط, يجب 50% من العرض (${requiredOverlap}px) خسارة!`;
-                loseGame();
-                return false;
-            }
-            
-            // التحقق العمودي: يجب أن يكون الطابق الجديد قريباً من السابق (يلمسه من الأعلى تقريبا)
-            let verticalGap = Math.abs(rect.y - (lastRect.y+lastRect.h));
-            if(verticalGap > 14){
-                gameStatusSpan.innerText = "⚠️ الطابق بعيد جداً عمودياً! خسارة!";
-                loseGame();
-                return false;
-            }
-            
-            // نجاح التثبيت !!!
-            playBuildSound();
-            // إضافة الطابق الحالي إلى المبنى
-            let newFloor = {
-                x: floorCenterX,
-                y: floorCenterY,
-                width: FLOOR_W,
-                height: FLOOR_H,
-                floorNumber: targetFloorNumber
-            };
-            builtFloors.push(newFloor);
-            currentFloor = targetFloorNumber;
-            
-            // حساب الأرباح المعلقة بناءً على المضاعف الحالي
-            let multiplier = getMultiplierForFloor(currentFloor);
-            pendingWin = currentBet * multiplier;
-            
-            updateUI();
-            
-            // إذا وصل لأخر طابق ، إتمام الفوز
-            if(currentFloor >= MAX_FLOOR){
-                gameStatusSpan.innerText = "🎉 أكملت كل الطوابق! أرباحك جاهزة للجمع! 🎉";
-                playWinSound();
-                updateUI();
-                return true;
-            }
-            
-            // زيادة السرعة قليلاً لكل طابق
-            swingSpeed = calcSwingSpeed(currentFloor);
-            gameStatusSpan.innerText = `✅ تم بناء الطابق ${currentFloor}! المضاعف ${multiplier.toFixed(2)}x │ أرباحك الحالية: ${Math.floor(pendingWin)} 💎`;
-            updateUI();
             return true;
         }
         
-        function loseGame(){
+        function loseGame() {
             if(!isGameActive) return;
-            // خسارة كاملة: الرهان محسوم مسبقا, يخسر كل تقدمه, we reset state, لا أرباح
-            isGameActive = false;
-            currentBet = 0;
-            pendingWin = 0;
-            currentFloor = 0;
-            builtFloors = [];
             playFailSound();
-            gameStatusSpan.innerText = "💀 خسارة! لقد سقط الطابق! ابدأ رهاناً جديداً 💀";
-            updateUI();
-        }
-        
-        // جمع الأرباح (Cashout)
-        function cashout(forceAuto = false){
-            if(!isGameActive && !forceAuto){
-                gameStatusSpan.innerText = "لا توجد أرباح نشطة للجمع";
-                return;
-            }
-            if(pendingWin <= 0 && isGameActive){
-                gameStatusSpan.innerText = "⚠️ لم تحقق أرباح بعد، ابن طابقاً أولاً!";
-                return;
-            }
-            let profit = Math.floor(pendingWin);
-            if(profit > 0){
-                balance += profit;
-                playWinSound();
-                gameStatusSpan.innerText = `💰 قمت بجمع ${profit} ! رصيدك الآن ${Math.floor(balance)} 💰`;
-            } else {
-                gameStatusSpan.innerText = `❗ لا يوجد ربح للجمع.`;
-            }
-            // إنهاء الجولة
             isGameActive = false;
             currentBet = 0;
-            pendingWin = 0;
+            pendingProfit = 0;
             currentFloor = 0;
             builtFloors = [];
+            isFalling = false;
+            waitingForLanding = false;
+            updateUI();
+            gameStatusSpan.innerText = "😭 خسارة! ابدأ جولة جديدة (اضغط إعادة أو بدأ تلقائي) 😭";
+        }
+        
+        // جمع الأرباح (لا يضاف ربح الا عند الضغط)
+        function cashout() {
+            if(!isGameActive) {
+                gameStatusSpan.innerText = "لا توجد أرباح نشطة للجمع! ابدأ جولة أولاً.";
+                return;
+            }
+            if(pendingProfit <= 0) {
+                gameStatusSpan.innerText = "⚠️ لم تحقق أي أرباح بعد! ابنِ طابقاً أولاً ثم اجمع.";
+                return;
+            }
+            let profitToAdd = Math.floor(pendingProfit);
+            balance += profitToAdd;
+            playWinSound();
+            gameStatusSpan.innerText = `💰 تم جمع ${profitToAdd} ! رصيدك الآن ${Math.floor(balance)} 💰`;
+            // إنهاء الجولة (حفظ الأرباح)
+            isGameActive = false;
+            currentBet = 0;
+            pendingProfit = 0;
+            currentFloor = 0;
+            builtFloors = [];
+            isFalling = false;
+            waitingForLanding = false;
             updateUI();
         }
         
-        function resetGameFull(){
+        function resetGameFull() {
             balance = 2000;
             isGameActive = false;
             currentBet = 0;
-            pendingWin = 0;
+            pendingProfit = 0;
             currentFloor = 0;
             builtFloors = [];
+            isFalling = false;
+            waitingForLanding = false;
+            addGround();   // إعادة القاعدة
             updateUI();
-            gameStatusSpan.innerText = "تم إعادة التعيين. رصيدك 2000";
+            gameStatusSpan.innerText = "🔄 تم إعادة التعيين. الرصيد 2000. اضغط إعادة أو جولة جديدة يدوياً (ستبدأ تلقائياً بالرهان)";
             if(audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
         }
         
-        // تحديث حركة البندول (الطابق المتحرك) حسب السرعة
-        function updateSwing(){
-            if(!isGameActive) return;
-            swingAngle += direction * swingSpeed;
-            if(swingAngle > maxSwing){
-                swingAngle = maxSwing;
-                direction = -1;
-            } else if(swingAngle < -maxSwing){
-                swingAngle = -maxSwing;
-                direction = 1;
-            }
-            // تحديد نقطة التعليق في أعلى المنتصف
-            let pivotX = canvas.width/2;
-            let pivotY = 45;   // حبل من الأعلى
-            let ropeLength = 170;
-            // إزاحة أفقية
-            let offsetX = Math.sin(swingAngle) * ropeLength;
-            let centerX = pivotX + offsetX;
-            // الموقع الرأسي ثابت تقريبا (يتأرجح مثل البندول)
-            let centerY = pivotY + ropeLength * (1 - Math.cos(swingAngle*0.6)) * 0.3 + 35;
-            movingFloorX = centerX;
-            movingFloorY = centerY;
-        }
-        
-        // الرسم الكامل
-        function draw() {
-            ctx.clearRect(0,0,canvas.width,canvas.height);
-            // السماء
-            ctx.fillStyle = "#b0e2ff";
-            ctx.fillRect(0,0,canvas.width,canvas.height);
-            ctx.fillStyle = "#f9e0a0";
-            for(let i=0;i<80;i++) ctx.fillRect(20+ i*37, 40, 2, 2);
-            // رسم القاعدة
-            let ground = builtFloors.find(f=>f.isGround) || { x: groundXStart, y: groundY - groundHeight/2, width: groundWidth, height: groundHeight };
-            ctx.shadowBlur=0;
-            ctx.fillStyle = "#b97f44";
-            ctx.fillRect(ground.x-ground.width/2, ground.y-ground.height/2, ground.width, ground.height);
-            ctx.fillStyle = "#9c5e2c";
-            ctx.fillRect(ground.x-ground.width/2+5, ground.y-ground.height/2, ground.width-10, 5);
-            
-            // رسم الطوابق المبنية
-            for(let i=1;i<builtFloors.length;i++){
-                let f = builtFloors[i];
-                ctx.fillStyle = "#ddbb77";
-                ctx.shadowBlur=4;
-                ctx.fillRect(f.x - f.width/2, f.y - f.height/2, f.width, f.height);
-                ctx.fillStyle = "#b97f44";
-                ctx.fillRect(f.x - f.width/2+3, f.y - f.height/2, f.width-6, 5);
-                ctx.fillStyle = "white";
-                ctx.font = "bold 16px 'Segoe UI'";
-                ctx.shadowBlur=2;
-                ctx.fillStyle = "#4a2a0e";
-                ctx.fillText(`${f.floorNumber}`, f.x-10, f.y+6);
-            }
-            
-            // رسم الحبل والطابق المتأرجح (الحالي)
-            if(isGameActive && currentFloor < MAX_FLOOR){
+        // رسم طابع جميل: شباكين وباب
+        function drawFancyFloor(x, y, w, h, floorNum, isGround=false) {
+            ctx.fillStyle = "#DEB887";
+            ctx.shadowBlur = 3;
+            ctx.fillRect(x - w/2, y - h/2, w, h);
+            ctx.fillStyle = "#C19A6B";
+            ctx.fillRect(x - w/2 + 5, y - h/2, w - 10, 6);
+            if(!isGround) {
+                // شباكان صغيران
+                ctx.fillStyle = "#87CEEB";
+                ctx.fillRect(x - w/3 - 8, y - 4, 18, 18);
+                ctx.fillRect(x + w/3 - 10, y - 4, 18, 18);
+                ctx.fillStyle = "#2C3E50";
+                ctx.fillRect(x - w/3 - 6, y - 2, 14, 14);
+                ctx.fillRect(x + w/3 - 8, y - 2, 14, 14);
+                // باب صغير
+                ctx.fillStyle = "#8B4513";
+                ctx.fillRect(x - 11, y + h/2 - 18, 22, 18);
+                ctx.fillStyle = "#F1C40F";
                 ctx.beginPath();
-                ctx.moveTo(canvas.width/2, 45);
-                ctx.lineTo(movingFloorX, movingFloorY - FLOOR_H/2+5);
-                ctx.strokeStyle = "#8B5A2B";
-                ctx.lineWidth = 4;
-                ctx.stroke();
-                ctx.fillStyle = "#f4bc6e";
-                ctx.shadowBlur=6;
-                ctx.fillRect(movingFloorX - FLOOR_W/2, movingFloorY - FLOOR_H/2, FLOOR_W, FLOOR_H);
-                ctx.fillStyle = "#c9863a";
-                ctx.fillRect(movingFloorX - FLOOR_W/2+4, movingFloorY - FLOOR_H/2, FLOOR_W-8, 6);
-                ctx.fillStyle = "brown";
-                ctx.font = "bold 14px monospace";
-                ctx.fillText(`${currentFloor+1}`, movingFloorX-6, movingFloorY+4);
-            }
-            // نص حماسي
-            ctx.font = "bold 20vmin 'Poppins'";
-            ctx.fillStyle = "#fff8e7aa";
-            if(isGameActive && pendingWin>0) {
-                ctx.font = "bold 26px system-ui";
-                ctx.fillStyle = "#ffd966";
-                ctx.fillText(`💰 ${Math.floor(pendingWin)}`, canvas.width-120, 55);
+                ctx.arc(x - 6, y + h/2 - 10, 2, 0, 2*Math.PI);
+                ctx.fill();
+                // رقم الطابق
+                ctx.font = "bold 16px 'Segoe UI'";
+                ctx.fillStyle = "#4A2A1E";
+                ctx.shadowBlur = 1;
+                ctx.fillText(`${floorNum}`, x - 8, y + 6);
+            } else {
+                ctx.fillStyle = "#9C5E2C";
+                ctx.fillRect(x - w/2 + 8, y - h/2, w-16, 5);
             }
         }
         
-        // حلقة التحديث
-        let lastTimestamp=0;
-        function animate(){
+        // رسم الحبل والطابق المتأرجح
+        function drawSwinging() {
+            if(isGameActive && !waitingForLanding && !isFalling) {
+                ctx.beginPath();
+                ctx.moveTo(swingingFloor.pivotX, swingingFloor.pivotY);
+                ctx.lineTo(swingingFloor.x, swingingFloor.y - swingingFloor.h/2 + 6);
+                ctx.strokeStyle = "#8B5A2B";
+                ctx.lineWidth = 3;
+                ctx.stroke();
+                drawFancyFloor(swingingFloor.x, swingingFloor.y, swingingFloor.w, swingingFloor.h, currentFloor+1, false);
+            } else if(isFalling) {
+                // رسم الطابق الساقط
+                drawFancyFloor(fallPosX, fallPosY, fallWidth, fallHeight, fallFloorNumber, false);
+            }
+        }
+        
+        function drawBackground() {
+            ctx.fillStyle = "#b0e2ff";
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            // غيوم
+            ctx.fillStyle = "#f9f3d9aa";
+            ctx.beginPath();
+            ctx.ellipse(80, 50, 45, 35, 0, 0, Math.PI*2);
+            ctx.ellipse(120, 45, 50, 38, 0, 0, Math.PI*2);
+            ctx.fill();
+            ctx.beginPath();
+            ctx.ellipse(canvas.width-100, 70, 55, 40, 0, 0, Math.PI*2);
+            ctx.ellipse(canvas.width-140, 65, 45, 35, 0, 0, Math.PI*2);
+            ctx.fill();
+        }
+        
+        function draw() {
+            if(!ctx) return;
+            drawBackground();
+            // رسم جميع الطوابق المبنية
+            for(let i=0;i<builtFloors.length;i++) {
+                let f = builtFloors[i];
+                if(f.isGround) {
+                    ctx.fillStyle = "#B97F44";
+                    ctx.fillRect(f.x - f.w/2, f.y - f.h/2, f.w, f.h);
+                    ctx.fillStyle = "#9C5E2C";
+                    ctx.fillRect(f.x - f.w/2+5, f.y - f.h/2, f.w-10, 6);
+                } else {
+                    drawFancyFloor(f.x, f.y, f.w, f.h, f.floorNumber, false);
+                }
+            }
+            drawSwinging();
+            // كتابة حماسية
+            if(isGameActive && pendingProfit > 0) {
+                ctx.font = "bold 26px 'Poppins'";
+                ctx.fillStyle = "#FFD966";
+                ctx.shadowBlur = 4;
+                ctx.fillText(`🏆 ${Math.floor(pendingProfit)}`, canvas.width-110, 48);
+            }
+        }
+        
+        function resizeCanvas() {
+            const container = canvas.parentElement;
+            const rect = container.getBoundingClientRect();
+            canvas.width = rect.width;
+            canvas.height = rect.height;
+            // إعادة ضبط مواقع القاعدة والطوابق حسب الحجم الجديد
+            addGround();
+            if(!isGameActive && builtFloors.length === 0) addGround();
+            resetSwingingFloor();
+            if(isFalling) {
+                // نحافظ على نفس الوضع النسبي للسقوط لكن نعيد ضبط بسيط
+            }
+        }
+        
+        // حلقة التحديث الرئيسية
+        function gameLoop() {
+            if(isFalling) {
+                updateFall();
+            }
             updateSwing();
             draw();
-            requestAnimationFrame(animate);
+            requestAnimationFrame(gameLoop);
         }
         
-        // التعامل مع محاولة التثبيت عند النقر أو اللمس
-        function handlePlaceTap(e){
-            e.preventDefault();
-            if(isGameActive){
-                attemptPlaceFloor();
+        // أحداث
+        window.addEventListener('resize', () => { resizeCanvas(); });
+        dropBtn.addEventListener('click', () => {
+            if(audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
+            if(!isGameActive) {
+                startNewGame();
             } else {
-                gameStatusSpan.innerText = "ابدأ رهان أولاً!";
+                dropFloor();
             }
-        }
-        
-        // الأحداث
-        canvas.addEventListener('click', handlePlaceTap);
-        canvas.addEventListener('touchstart', handlePlaceTap);
-        placeBtn.addEventListener('click', ()=>{
-            if(audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
-            startBet();
         });
-        cashoutBtn.addEventListener('click', ()=>{
+        cashoutBtn.addEventListener('click', () => {
             if(audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
-            cashout(false);
+            cashout();
         });
-        resetBtn.addEventListener('click', ()=>{
+        resetBtn.addEventListener('click', () => {
             resetGameFull();
+            if(audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
         });
         
-        // ضبط أولي
-        resetGameFull();
-        builtFloors.push({ x: groundXStart, y: groundY - groundHeight/2, width: groundWidth, height: groundHeight, isGround: true, floorNumber:0 });
+        // بدء اللعبة
+        resizeCanvas();
+        addGround();
         updateUI();
-        animate();
-        // بدء صوت تلقائي بعد أي تفاعل
-        document.body.addEventListener('click', ()=>{
+        gameLoop();
+        initAudio();
+        // السماح بالصوت بعد أول تفاعل
+        document.body.addEventListener('click', () => {
             if(audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
-        }, {once: true});
+        }, { once: true });
     })();
 </script>
 </body>
