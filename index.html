@@ -46,17 +46,17 @@
             cursor: pointer;
         }
 
-        /* الشريط السفلي - جميع الأزرار في صف واحد */
+        /* الشريط السفلي - أزرار مرتفعة قليلاً */
         .bottom-bar {
             background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
             backdrop-filter: blur(20px);
             border-top: 2px solid #FFD700;
-            padding: 12px 20px;
+            padding: 16px 20px 18px 20px;
             display: flex;
             flex-wrap: nowrap;
             justify-content: center;
             align-items: center;
-            gap: 12px;
+            gap: 14px;
             box-shadow: 0 -10px 30px rgba(0,0,0,0.8), inset 0 1px 0 rgba(255,215,0,0.3);
             z-index: 10;
             overflow-x: auto;
@@ -65,14 +65,14 @@
 
         .balance-card {
             background: linear-gradient(145deg, #000000, #1a1a1a);
-            padding: 6px 18px;
+            padding: 8px 20px;
             border-radius: 60px;
             display: flex;
             align-items: center;
             gap: 10px;
             color: #FFD700;
             font-weight: bold;
-            font-size: 0.95rem;
+            font-size: 1rem;
             border: 1px solid #FFD70055;
             box-shadow: 0 0 12px rgba(255,215,0,0.3);
             flex-shrink: 0;
@@ -80,18 +80,18 @@
 
         .balance-card span {
             color: #FFD700;
-            font-size: 1.4rem;
+            font-size: 1.5rem;
             font-weight: 900;
             text-shadow: 0 0 8px rgba(255,215,0,0.5);
         }
 
         .bet-fixed {
             background: linear-gradient(145deg, #FFD700, #DAA520);
-            padding: 6px 20px;
+            padding: 8px 22px;
             border-radius: 60px;
             color: #000000;
             font-weight: bold;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
             border: 1px solid #FFF0AA;
             flex-shrink: 0;
@@ -101,26 +101,26 @@
             background: linear-gradient(145deg, #000000, #1c1c1c);
             color: #FFD700;
             border-radius: 60px;
-            padding: 6px 16px;
+            padding: 8px 18px;
             font-weight: bold;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
             border: 1px solid #FFD700;
             box-shadow: 0 0 12px rgba(255,215,0,0.4);
             flex-shrink: 0;
         }
 
-        /* أزرار متدرجة لامعة - كلها في صف واحد */
+        /* مجموعة الأزرار */
         .btn-group {
             display: flex;
-            gap: 10px;
+            gap: 12px;
             flex-shrink: 0;
         }
 
         button {
             border: none;
             font-weight: bold;
-            font-size: 0.9rem;
-            padding: 8px 20px;
+            font-size: 0.95rem;
+            padding: 10px 24px;
             border-radius: 60px;
             cursor: pointer;
             transition: all 0.12s ease;
@@ -180,19 +180,19 @@
         .status-bar {
             background: #000000dd;
             text-align: center;
-            padding: 5px;
+            padding: 6px;
             font-size: 12px;
             color: #FFD700;
             border-top: 1px solid #FFD70033;
         }
 
         @media (max-width: 850px) {
-            .bottom-bar { gap: 8px; padding: 8px 12px; }
-            button { padding: 6px 14px; font-size: 0.75rem; }
-            .balance-card span { font-size: 1.1rem; }
-            .balance-card { padding: 4px 12px; }
-            .multiplier-badge { padding: 4px 12px; font-size: 0.7rem; }
-            .bet-fixed { padding: 4px 14px; font-size: 0.75rem; }
+            .bottom-bar { gap: 8px; padding: 12px 12px 14px 12px; }
+            button { padding: 7px 16px; font-size: 0.8rem; }
+            .balance-card span { font-size: 1.2rem; }
+            .balance-card { padding: 5px 12px; }
+            .multiplier-badge { padding: 5px 12px; font-size: 0.75rem; }
+            .bet-fixed { padding: 5px 14px; font-size: 0.8rem; }
         }
     </style>
 </head>
@@ -245,8 +245,8 @@
         const cashoutBtn = document.getElementById('cashoutBtn');
         const resetBtn = document.getElementById('resetBtn');
         
-        // ---------- الكاميرا: ترتفع مع البناء لنظل نرى الطابق المتأرجح ----------
-        let cameraY = 0;           // مقدار إزاحة الكاميرا لأعلى (كلما بنينا طابق نرفع الكاميرا)
+        // ---------- الكاميرا: تنزل للأسفل (ناقص) بدل أن ترتفع ----------
+        let cameraY = 0;           // إزاحة الكاميرا (تتحرك للأسفل مع كل طابق)
         let shakeIntensity = 0;
         let shakeDuration = 0;
         
@@ -272,35 +272,22 @@
             };
         }
         
-        // ---------- الطيور والغيوم (خلفية جميلة) ----------
-        let birds = [];
-        for(let i = 0; i < 7; i++) {
-            birds.push({
-                x: Math.random() * 2000 - 400,
-                y: 60 + Math.random() * 150,
-                size: 12 + Math.random() * 10,
-                speed: 0.5 + Math.random() * 1.0,
-                wing: Math.random() * Math.PI * 2
-            });
-        }
-        
+        // ---------- غيوم جميلة (بدون طيور) ----------
         let clouds = [];
-        for(let i = 0; i < 5; i++) {
-            clouds.push({
-                x: Math.random() * canvas.width,
-                y: 40 + Math.random() * 120,
-                w: 70 + Math.random() * 60,
-                h: 35 + Math.random() * 20,
-                speed: 0.1 + Math.random() * 0.25
-            });
+        function initClouds() {
+            clouds = [];
+            for(let i = 0; i < 6; i++) {
+                clouds.push({
+                    x: Math.random() * canvas.width,
+                    y: 40 + Math.random() * 130,
+                    w: 70 + Math.random() * 70,
+                    h: 35 + Math.random() * 25,
+                    speed: 0.08 + Math.random() * 0.2
+                });
+            }
         }
         
-        function updateBirdsAndClouds() {
-            for(let bird of birds) {
-                bird.x += bird.speed;
-                bird.wing = (bird.wing + 0.1) % (Math.PI * 2);
-                if(bird.x > canvas.width + 300) bird.x = -200;
-            }
+        function updateClouds() {
             for(let cloud of clouds) {
                 cloud.x += cloud.speed;
                 if(cloud.x > canvas.width + 200) cloud.x = -250;
@@ -308,49 +295,33 @@
         }
         
         function drawSkyAndClouds(camY) {
-            // سماء متدرجة
+            // سماء متدرجة جميلة
             const grad = ctx.createLinearGradient(0, 0, 0, canvas.height);
             grad.addColorStop(0, "#87CEEB");
-            grad.addColorStop(0.6, "#B0E0FF");
-            grad.addColorStop(1, "#E0F0FF");
+            grad.addColorStop(0.5, "#B0E0FF");
+            grad.addColorStop(1, "#D6EAF8");
             ctx.fillStyle = grad;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             
-            // غيوم بيضاء ناعمة
+            // غيوم بيضاء ناعمة (لا تتأثر بالكاميرا)
             for(let cloud of clouds) {
-                ctx.fillStyle = "rgba(255,255,245,0.85)";
+                ctx.fillStyle = "rgba(255,255,250,0.9)";
                 ctx.shadowBlur = 12;
                 ctx.beginPath();
-                ctx.ellipse(cloud.x, cloud.y + camY * 0.08, cloud.w/2, cloud.h/2, 0, 0, Math.PI*2);
+                ctx.ellipse(cloud.x, cloud.y + camY * 0.05, cloud.w/2, cloud.h/2, 0, 0, Math.PI*2);
                 ctx.ellipse(cloud.x + cloud.w*0.4, cloud.y - cloud.h*0.2, cloud.w*0.5, cloud.h*0.6, 0, 0, Math.PI*2);
                 ctx.ellipse(cloud.x - cloud.w*0.3, cloud.y - cloud.h*0.15, cloud.w*0.45, cloud.h*0.55, 0, 0, Math.PI*2);
                 ctx.fill();
             }
             ctx.shadowBlur = 0;
-        }
-        
-        function drawBirds(camY) {
-            for(let bird of birds) {
-                ctx.save();
-                ctx.translate(bird.x, bird.y + camY * 0.05);
-                ctx.fillStyle = "#2c2c2c";
-                let wingSin = Math.sin(bird.wing);
-                ctx.beginPath();
-                ctx.moveTo(0, 0);
-                ctx.quadraticCurveTo(-bird.size * 0.55, -bird.size * 0.4 + wingSin * 4, -bird.size, -bird.size * 0.3);
-                ctx.quadraticCurveTo(-bird.size * 0.45, 0, 0, 0);
-                ctx.fill();
-                ctx.beginPath();
-                ctx.moveTo(0, 0);
-                ctx.quadraticCurveTo(bird.size * 0.55, -bird.size * 0.4 - wingSin * 3, bird.size, -bird.size * 0.3);
-                ctx.quadraticCurveTo(bird.size * 0.45, 0, 0, 0);
-                ctx.fill();
-                ctx.beginPath();
-                ctx.arc(0, 2, bird.size * 0.2, 0, Math.PI*2);
-                ctx.fillStyle = "#FFD700";
-                ctx.fill();
-                ctx.restore();
+            
+            // لمعات ذهبية خفيفة
+            ctx.fillStyle = "#FFD700";
+            for(let i = 0; i < 50; i++) {
+                ctx.globalAlpha = 0.12 + Math.sin(Date.now() * 0.002 + i) * 0.08;
+                ctx.fillRect((i * 97) % canvas.width, (i * 53) % canvas.height, 2, 2);
             }
+            ctx.globalAlpha = 1;
         }
         
         // ---------- عناصر البناء ----------
@@ -500,7 +471,7 @@
             isGameActive = true;
             waitingForLanding = false;
             isFalling = false;
-            cameraY = 0;      // إعادة الكاميرا لأعلى الشاشة (نبدأ من القاعدة)
+            cameraY = 0;      // إعادة الكاميرا إلى الصفر
             addGround();
             swinging.speed = calcSwingSpeed(0);
             resetSwingingPosition();
@@ -573,8 +544,9 @@
                     playBuildSound();
                     addShake(7, 160);
                     
-                    // رفع الكاميرا للأعلى بدلاً من النزول (نرفع الرؤية ليبقى الطابق المتأرجح ظاهراً)
-                    cameraY += 46;
+                    // الكاميرا تنزل للأسفل (ناقص) بدل أن ترتفع
+                    // بحيث تبقى القاعدة والأبراج في مكانها نسبياً ويظهر الطابق المتأرجح
+                    cameraY -= 46;
                     
                     gameStatusSpan.innerText = `✅ الطابق ${currentFloor} ثبُت! مضاعف ${multiplier.toFixed(2)}x | الأرباح: ${Math.floor(pendingProfit)}`;
                     updateUI();
@@ -660,24 +632,16 @@
             if(audioCtx && audioCtx.state === 'suspended') audioCtx.resume();
         }
         
-        // الرسم الرئيسي مع الكاميرا الصاعدة
+        // الرسم الرئيسي مع الكاميرا
         function drawWithCamera() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             
-            // رسم السماء والغيوم (ثابتة جميلة)
+            // رسم السماء والغيوم (تتحرك قليلاً مع الكاميرا لجمال الحركة)
             drawSkyAndClouds(cameraY);
-            
-            // نجوم ذهبية خفيفة
-            ctx.fillStyle = "#FFD700";
-            for(let i = 0; i < 60; i++) {
-                ctx.globalAlpha = 0.15 + Math.sin(Date.now() * 0.002 + i) * 0.1;
-                ctx.fillRect((i * 83) % canvas.width, (i * 49) % canvas.height, 2, 2);
-            }
-            ctx.globalAlpha = 1;
             
             let shake = getShakeOffset();
             ctx.save();
-            ctx.translate(shake.x, shake.y - cameraY);  // الكاميرا ترتفع للأعلى بمقدار cameraY
+            ctx.translate(shake.x, shake.y - cameraY);  // الكاميرا تنزل للأسفل كلما بنينا طابقاً
             
             // رسم الطوابق المبنية
             for(let i=0; i<builtFloors.length; i++) {
@@ -706,7 +670,7 @@
                 drawFancyFloor(fallPosX, fallPosY, fallW, fallH, fallFloorNum, false);
             }
             
-            // عرض الأرباح بلمعة ذهبية (مرتبطة بالكاميرا)
+            // عرض الأرباح بلمعة ذهبية
             if(isGameActive && pendingProfit > 0) {
                 ctx.font = "bold 26px 'Poppins'";
                 ctx.fillStyle = "#FFD700";
@@ -715,9 +679,6 @@
             }
             
             ctx.restore();
-            
-            // رسم الطيور فوق كل شيء (تشتيت)
-            drawBirds(cameraY * 0.05);
             
             // إطار ذهبي
             ctx.strokeStyle = "#FFD700";
@@ -821,17 +782,14 @@
             canvas.height = rect.height;
             addGround();
             resetSwingingPosition();
-            // إعادة توزيع الغيوم والطيور حسب الحجم الجديد
-            for(let i=0; i<clouds.length; i++) {
-                if(clouds[i].x > canvas.width) clouds[i].x = Math.random() * canvas.width;
-            }
+            initClouds();  // إعادة توزيع الغيوم
         }
         
         function gameLoop() {
             updateShake();
             if(isFalling) updateFall();
             updateSwing();
-            updateBirdsAndClouds();
+            updateClouds();
             drawWithCamera();
             requestAnimationFrame(gameLoop);
         }
@@ -851,6 +809,7 @@
         });
         
         resizeCanvas();
+        initClouds();
         addGround();
         resetSwingingPosition();
         updateUI();
